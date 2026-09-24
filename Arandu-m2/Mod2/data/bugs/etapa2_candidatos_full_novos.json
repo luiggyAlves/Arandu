@@ -1,0 +1,552 @@
+[
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_066.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_069.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_084.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_164.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_185.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_200.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_235.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_248.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_267.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_279.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_321.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_377.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_387.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_396.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_425.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_373.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_184.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_187.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_349.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_393.py",
+    "padrao_suspeito": "compara_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_420.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_421.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_435.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_016.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_067.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_114.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_120.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_122.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_129.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_134.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_135.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_194.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_196.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_215.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_251.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_255.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_301.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_320.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_339.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_360.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_407.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_415.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_430.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_119.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_141.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_161.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_245.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_246.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_283.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_353.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_361.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_385.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_362.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_058.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_090.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_113.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_115.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_152.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_165.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_191.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_211.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_220.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_256.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_298.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_304.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_308.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_309.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_315.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_326.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_343.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_369.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_405.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_427.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_008.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_010.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_244.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_258.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_325.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_386.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_391.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_329.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_260.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_262.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_305.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_044.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_089.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_110.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_111.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_145.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_190.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_193.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_219.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_250.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_259.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_306.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_341.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_366.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_374.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_403.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_210.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_299.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_381.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_413.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_096.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_104.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_107.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_108.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_109.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_402.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_418.py",
+    "padrao_suspeito": "if_else_bool_literal"
+  }
+]

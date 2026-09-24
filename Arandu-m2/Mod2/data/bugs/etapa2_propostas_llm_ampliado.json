@@ -1,0 +1,516 @@
+[
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_561.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug vem de uma condição de atalho (x>=max(seq)) que retorna len(seq) mesmo quando x é igual ao máximo, um erro lógico de limite, não um equívoco conceitual do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "6",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_137.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_066.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é a ausência de um return fora do loop para sequências vazias/sem match; nenhum equívoco do catálogo corresponde a essa omissão estrutural.",
+    "testes_falhos": [
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_136.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "media",
+    "justificativa_llm": "O aluno escreve 'return True' seguido de 'continue', sugerindo que acredita que o return não interrompe imediatamente a execução do laço.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_249.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_293.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_4",
+    "arquivo": "wrong_4_039.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug decorre de comparar tuplas inteiras em vez do campo idade (i > largest ao invés de i[1] > largest[1]), o que não corresponde a nenhum equívoco do catálogo listado.",
+    "testes_falhos": [
+      {
+        "input": "sort_age([(\"M\", 35), (\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 35), ('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 35), ('M', 30), ('M', 23), ('M', 17), ('F', 19), ('F', 18)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 30), ('M', 23), ('M', 17), ('F', 19), ('F', 18)]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_4",
+    "arquivo": "wrong_4_057.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug vem de comparar tuplas inteiras (person > oldest) em vez do campo de idade, o que é um erro de lógica de comparação não coberto pelo catálogo.",
+    "testes_falhos": [
+      {
+        "input": "sort_age([(\"M\", 35), (\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 35), ('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 35), ('M', 30), ('M', 23), ('M', 17), ('F', 19), ('F', 18)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 30), ('M', 23), ('M', 17), ('F', 19), ('F', 18)]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_4",
+    "arquivo": "wrong_4_192.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug decorre de ordenar pela tupla inteira (nome depois idade) e reverter tudo, não correspondendo a nenhum equívoco do catálogo listado.",
+    "testes_falhos": [
+      {
+        "input": "sort_age([(\"M\", 35), (\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 35), ('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 35), ('M', 30), ('M', 23), ('M', 17), ('F', 19), ('F', 18)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 30), ('M', 23), ('M', 17), ('F', 19), ('F', 18)]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_3",
+    "arquivo": "wrong_3_041.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug decorre de usar set(), que não preserva ordem, não de algum equívoco conceitual da lista fornecida; nenhum item se aplica.",
+    "testes_falhos": [
+      {
+        "input": "remove_extras([1, 5, 1, 1, 3, 2])",
+        "esperado": "[1, 5, 3, 2]",
+        "obtido": "[1, 2, 3, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_043.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug vem de usar 'in' (substring/membership) em vez de '==' para comparar dia/mês, causando contagens incorretas; nenhum equívoco do catálogo corresponde a essa troca de operador.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_046.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug decorre de um erro de lógica algorítmica (reaplicar a checagem de unicidade sobre o mês, exigindo contagem==1 novamente), não de nenhum equívoco conceitual da lista sobre semântica de linguagem.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_073.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O erro é lógico: o aluno conta quantos dias únicos existem no mês e exige count==1, em vez de verificar se existe pelo menos um dia único (any). Isso não corresponde a nenhum equívoco do catálogo, que trata de outros aspectos sintáticos/semânticos.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_147.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug vem de exigir que exista exatamente um mês com dia único (b==1) em vez de retornar assim que um for encontrado; nenhum equívoco do catálogo captura essa lógica de contagem incorreta.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_159.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_183.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "media",
+    "justificativa_llm": "O bug é o 'return False' dentro do else no loop, encerrando a busca no primeiro dia não único; nenhum item do catálogo descreve esse padrão de retorno prematuro em loop com else.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_209.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é apenas um erro de indexação (i[1] em vez de i[0]) em unique_month, não corresponde a nenhum equívoco conceitual do catálogo listado.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_229.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "media",
+    "justificativa_llm": "O aluno evita retornar imediatamente ao encontrar um dia único, sobrescrevendo 'res' a cada iteração, como se o retorno só devesse ocorrer no fim do laço.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_280.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_317.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "media",
+    "justificativa_llm": "O bug vem de retornar False no primeiro item que falha dentro do loop, encerrando a busca prematuramente; nenhum item do catálogo descreve especificamente esse erro de controle de fluxo em loops com retorno antecipado incorreto.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_039.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/elif/else para converter a contagem em um booleano, em vez de usar diretamente 'len(tup) == 1', introduzindo um terceiro ramo espúrio que retorna None em vez de False.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_116.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é o uso de else com return False dentro do laço, que interrompe a iteração no primeiro dia testado; nenhum equívoco do catálogo descreve esse erro de controle de fluxo em loops.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_121.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "media",
+    "justificativa_llm": "O bug vem de retornar False assim que o primeiro mês bate, interrompendo a busca em vez de continuar o loop; nenhum equívoco do catálogo descreve esse erro específico de controle de fluxo.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_140.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_142.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "media",
+    "justificativa_llm": "O bug é retornar False no 'else' dentro do loop, encerrando a busca na primeira iteração; nenhum equívoco do catálogo descreve esse padrão de retorno prematuro em laço.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_065.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug vem de substituir a lógica genérica (chamar unique_day) por uma verificação hardcoded de dias '18'/'19', não de um equívoco conceitual de programação listado no catálogo.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  }
+]

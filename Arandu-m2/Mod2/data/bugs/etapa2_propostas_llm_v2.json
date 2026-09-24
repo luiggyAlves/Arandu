@@ -1,0 +1,707 @@
+[
+  {
+    "questao": "question_3",
+    "arquivo": "wrong_3_208.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug não é conceitual, mas algorítmico: o código modifica a lista enquanto a itera (remove elementos), alterando índices e pulando comparações. A abordagem correta (verificar contra elementos já processados) não está catalogada como misconception.",
+    "testes_falhos": [
+      {
+        "input": "remove_extras([1, 5, 1, 1, 3, 2])",
+        "esperado": "[1, 5, 3, 2]",
+        "obtido": "[1, 2, 3, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_3",
+    "arquivo": "wrong_3_209.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug não decorre de um equívoco conceitual sobre semântica de linguagem, mas de uma escolha algorítmica incorreta: o aluno ordena a lista (alterando a ordem original), enquanto a referência preserva a ordem de primeira ocorrência. Nenhuma ficha do catálogo aborda confusão sobre efeitos colaterais de operações ou preservação de ordem em estruturas de dados.",
+    "testes_falhos": [
+      {
+        "input": "remove_extras([1, 5, 1, 1, 3, 2])",
+        "esperado": "[1, 5, 3, 2]",
+        "obtido": "[1, 2, 3, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[1, 3, 4, 5]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_3",
+    "arquivo": "wrong_3_251.py",
+    "equivoco_id_proposto": "AssignmentCopiesObject",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno atribui `result = lst`, acreditando que cria uma cópia independente. Na verdade, ambas as variáveis apontam para o mesmo objeto lista. Remover elementos durante a iteração sobre esse objeto causa saltos de índice e perda de elementos.",
+    "testes_falhos": [
+      {
+        "input": "remove_extras([1, 5, 1, 1, 3, 2])",
+        "esperado": "[1, 5, 3, 2]",
+        "obtido": "[5, 1, 3, 2]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_3",
+    "arquivo": "wrong_3_292.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é causado pelo uso de `lst.remove(i)` que remove apenas a primeira ocorrência de cada valor duplicado, não garantindo ordem correta. A lógica de rastrear duplicatas em `remove` é fundamentalmente diferente da abordagem correta de construir uma nova lista com primeiras ocorrências.",
+    "testes_falhos": [
+      {
+        "input": "remove_extras([1, 5, 1, 1, 3, 2])",
+        "esperado": "[1, 5, 3, 2]",
+        "obtido": "[5, 1, 3, 2]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_3",
+    "arquivo": "wrong_3_293.py",
+    "equivoco_id_proposto": "ConditionalIsSequence",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-elif em sequência, acreditando que ambas as condições são testadas independentemente. Na verdade, elif impede que a segunda condição seja avaliada se a primeira for verdadeira, causando perda de elementos duplicados na lista `remove`.",
+    "testes_falhos": [
+      {
+        "input": "remove_extras([1, 5, 1, 1, 3, 2])",
+        "esperado": "[1, 5, 3, 2]",
+        "obtido": "[5, 1, 3, 2]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      },
+      {
+        "input": "remove_extras([3, 4, 5, 1, 3])",
+        "esperado": "[3, 4, 5, 1]",
+        "obtido": "[4, 5, 1, 3]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_4",
+    "arquivo": "wrong_4_008.py",
+    "equivoco_id_proposto": "AssignmentCopiesObject",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno atribui `lst = lst[0:j]+[this]+lst[j:]` acreditando que isso modifica a lista original, mas na verdade cria uma nova lista e a variável local `lst` passa a referenciar apenas essa nova cópia, perdendo a referência à lista original que deveria ser modificada in-place. Isso causa corrupção dos dados e repetição de elementos.",
+    "testes_falhos": [
+      {
+        "input": "sort_age([(\"M\", 35), (\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 35), ('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 35), ('M', 35), ('M', 35), ('M', 35), ('M', 35), ('M', 35)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('M', 23), ('F', 19), ('F', 19), ('F', 19), ('F', 19)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18)]",
+        "obtido": "[('M', 30), ('M', 30), ('M', 30), ('M', 30)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"M\", 23), (\"F\", 19), (\"M\", 30)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19)]",
+        "obtido": "[('M', 30), ('M', 30), ('M', 30)]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_4",
+    "arquivo": "wrong_4_307.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno implementou selection sort (crescente) em vez de bubble sort (decrescente) usado na referência. O bug é algorítmico: compara elementos diretamente (i < smallest) sem acessar o índice [1] da tupla, e ordena em ordem crescente em vez de decrescente. Nenhuma ficha do catálogo explica essa escolha algorítmica incorreta.",
+    "testes_falhos": [
+      {
+        "input": "sort_age([(\"M\", 35), (\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 35), ('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('F', 18), ('F', 19), ('M', 17), ('M', 23), ('M', 30), ('M', 35)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30), (\"M\", 17)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18), ('M', 17)]",
+        "obtido": "[('F', 18), ('F', 19), ('M', 17), ('M', 23), ('M', 30)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"F\", 18), (\"M\", 23), (\"F\", 19), (\"M\", 30)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19), ('F', 18)]",
+        "obtido": "[('F', 18), ('F', 19), ('M', 23), ('M', 30)]",
+        "ok": false
+      },
+      {
+        "input": "sort_age([(\"M\", 23), (\"F\", 19), (\"M\", 30)])",
+        "esperado": "[('M', 30), ('M', 23), ('F', 19)]",
+        "obtido": "[('F', 19), ('M', 23), ('M', 30)]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_5",
+    "arquivo": "wrong_5_058.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é que o aluno não remove elementos de `lst` dentro do loop, então `max(lst)` retorna sempre o mesmo valor. Isso não corresponde a nenhum equívoco conceitual do catálogo — é um erro de lógica algorítmica, não uma misconception sobre semântica de linguagem.",
+    "testes_falhos": [
+      {
+        "input": "top_k([9, 9, 4, 9, 7, 9, 3, 1, 6], 5)",
+        "esperado": "[9, 9, 9, 9, 7]",
+        "obtido": "[9, 9, 9, 9, 9]",
+        "ok": false
+      },
+      {
+        "input": "top_k([9, 8, 4, 5, 7, 2, 3, 1, 6], 5)",
+        "esperado": "[9, 8, 7, 6, 5]",
+        "obtido": "[9, 9, 9, 9, 9]",
+        "ok": false
+      },
+      {
+        "input": "top_k([4, 5, 2, 3, 1, 6], 6)",
+        "esperado": "[6, 5, 4, 3, 2, 1]",
+        "obtido": "[6, 6, 6, 6, 6, 6]",
+        "ok": false
+      },
+      {
+        "input": "top_k([4, 5, 2, 3, 1, 6], 3)",
+        "esperado": "[6, 5, 4]",
+        "obtido": "[6, 6, 6]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_5",
+    "arquivo": "wrong_5_059.py",
+    "equivoco_id_proposto": "OutsideInFunctionNesting",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno aninharam `lst.remove(max(lst))` dentro de `append()`, sem perceber que `remove()` retorna None. Isso acontece porque o aluno não compreendeu que chamadas aninhadas são avaliadas de dentro para fora: primeiro `remove()` executa (retornando None), depois esse None é passado a `append()`.",
+    "testes_falhos": [
+      {
+        "input": "top_k([9, 9, 4, 9, 7, 9, 3, 1, 6], 5)",
+        "esperado": "[9, 9, 9, 9, 7]",
+        "obtido": "[None, None, None, None, None]",
+        "ok": false
+      },
+      {
+        "input": "top_k([9, 8, 4, 5, 7, 2, 3, 1, 6], 5)",
+        "esperado": "[9, 8, 7, 6, 5]",
+        "obtido": "[None, None, None, None, None]",
+        "ok": false
+      },
+      {
+        "input": "top_k([4, 5, 2, 3, 1, 6], 6)",
+        "esperado": "[6, 5, 4, 3, 2, 1]",
+        "obtido": "[None, None, None, None, None, None]",
+        "ok": false
+      },
+      {
+        "input": "top_k([4, 5, 2, 3, 1, 6], 3)",
+        "esperado": "[6, 5, 4]",
+        "obtido": "[None, None, None]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_5",
+    "arquivo": "wrong_5_093.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é que o código ignora o parâmetro `k` e sempre retorna `result[:3]` (hardcoded), em vez de retornar os `k` maiores elementos. Este é um erro lógico de implementação, não um equívoco conceitual sobre Python.",
+    "testes_falhos": [
+      {
+        "input": "top_k([9, 9, 4, 9, 7, 9, 3, 1, 6], 5)",
+        "esperado": "[9, 9, 9, 9, 7]",
+        "obtido": "[9, 9, 9]",
+        "ok": false
+      },
+      {
+        "input": "top_k([9, 8, 4, 5, 7, 2, 3, 1, 6], 5)",
+        "esperado": "[9, 8, 7, 6, 5]",
+        "obtido": "[9, 8, 7]",
+        "ok": false
+      },
+      {
+        "input": "top_k([4, 5, 2, 3, 1, 6], 6)",
+        "esperado": "[6, 5, 4, 3, 2, 1]",
+        "obtido": "[6, 5, 4]",
+        "ok": false
+      },
+      {
+        "input": "top_k([4, 5, 2, 3, 1, 6], 0)",
+        "esperado": "[]",
+        "obtido": "[6, 5, 4]",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_422.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else para mapear o resultado de uma comparação para booleano (linhas 8-11 em unique_day e linhas 17-19 em unique_month), quando deveria retornar diretamente o resultado da expressão lógica. Em unique_month, a lógica fica incompleta: retorna False apenas se counter > 1, mas retorna True caso contrário, incluindo quando counter == 0 (bug real do teste).",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": " | equivoco_id inválido devolvido pelo LLM: 'MapToBooleanWithIfStatement'"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_423.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else explícito para retornar True/False em vez de retornar diretamente a comparação. Em unique_month, isso deixa o else retornar True quando counter==1, violando a lógica que exige exatamente 1 ocorrência (not counter > 1).",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_567.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno verifica `if seq == False` para testar se a sequência está vazia, quando deveria simplesmente usar `if not seq` ou `if len(seq) == 0`. Isso causa falha quando seq é uma lista/tupla vazia, pois a comparação nunca é verdadeira e o código nunca retorna 0.",
+    "testes_falhos": [
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_021.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno acredita que é necessário um if-statement para mapear uma expressão booleana para um valor booleano. Em vez de retornar simplesmente `count == 1`, usa if-elif-else retornando True/False/string, causando retorno incorreto quando o dia/mês não existe.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "'Not a day in possible_birthdays'",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "'Not a month in possible_birthdays'",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_025.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa uma lista `checker` e retornos condicionais para verificar unicidade, quando deveria contar ocorrências e comparar o resultado com 1. Acredita que precisa de estrutura condicional para mapear contagem a booleano, em vez de usar uma expressão direta.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_029.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug ocorre porque o aluno conta TODOS os dias/meses na lista, não apenas os que aparecem uma única vez. A lógica `tpl.count(date) > 1` retorna False quando há duplicatas, mas True quando há 0 ou 1 ocorrência — invertendo o resultado para o caso de 0 ocorrências.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_048.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa um if-statement explícito para mapear o resultado da contagem para um booleano (if result > 1: return False; return True), quando poderia simplesmente retornar a expressão booleana diretamente (return count == 1). Isso cria lógica invertida: retorna False quando há mais de 1 ocorrência, mas True quando há 0 — o oposto do esperado.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_060.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa estruturas de if-else para mapear uma condição booleana (contagem) a um resultado True/False, quando poderia usar a comparação diretamente. Em `unique_day`, construir uma tupla e depois testar seu tamanho é desnecessário; `count == 1` é direto e correto.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_061.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else desnecessariamente para converter uma expressão booleana em bool, retornando True/False explicitamente. A lógica `len(days) <= 1` deveria ser `len(days) == 1`, mas o erro conceitual é acreditar que a conversão exige uma estrutura condicional.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_062.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa estruturas if-else para converter uma condição booleana em bool (verificando se n>1 para retornar False/True), quando poderia simplesmente retornar a expressão booleana diretamente. Isso não causa erro lógico aqui, mas revela a crença subjacente que motiva o padrão de código verboso que desvia da abordagem elegante da referência.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_171.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug em contains_unique_day ocorre porque o aluno filtra para exatamente 1 resultado, mas deveria retornar True se QUALQUER dia no mês é único. A lógica está invertida: filtra meses, depois filtra dias únicos, depois verifica se há exatamente 1 — deveria verificar se há PELO MENOS 1.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_172.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno coloca `return False` dentro do loop após a primeira iteração (no else), fazendo-o retornar prematuramente. Deveria retornar False apenas após verificar todos os dias do mês, não na primeira iteração que não satisfaz a condição.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_173.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno coloca `return False` dentro do loop `for`, fazendo-o retornar na primeira iteração. Deveria acumular verificações e retornar False apenas após o loop completo, demonstrando crença de que return no meio não interrompe imediatamente.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_179.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno coloca um `return False` dentro do loop `for` em `contains_unique_day`, fazendo-o retornar após checar apenas o primeiro dia do mês. Deveria retornar `False` apenas após verificar todos os dias, acreditando que precisa guardar o resultado para retornar depois.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_180.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day, o aluno coloca um 'return False' dentro do loop (no else), acreditando que precisa retornar dentro da iteração. A lógica correta é retornar False apenas após verificar todos os dias, não na primeira iteração que não satisfaz a condição.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_181.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "No loop de `contains_unique_day`, o aluno retorna False no `else` da primeira iteração, não permitindo que o loop continue verificando os outros dias. O aluno deveria retornar False apenas após verificar todos os dias, deixando o return cedo demais interromper a lógica.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_188.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day, o aluno coloca um 'return False' dentro do loop, fazendo-o retornar imediatamente após verificar o primeiro dia, em vez de continuar iterando sobre todos os dias do mês. O aluno aparentemente acredita que precisa retornar apenas após processar tudo, não percebendo que o return interrompe a execução imediatamente.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_189.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day do aluno, o return False está dentro do loop for, fazendo-o retornar prematuramente na primeira iteração. O aluno deveria retornar False apenas após verificar todos os dias do mês, não interromper o loop no primeiro elemento.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  }
+]

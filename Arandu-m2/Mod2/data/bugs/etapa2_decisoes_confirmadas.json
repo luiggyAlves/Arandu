@@ -1,0 +1,42 @@
+[
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_567.py",
+    "equivoco_id": "ComparisonWithBoolLiteral",
+    "confianca": "media",
+    "decisao_humana": "confirmado",
+    "justificativa_revisao": "O código faz `if seq == False:` para tentar detectar sequência vazia. Uma tupla/lista nunca é literalmente igual a `False` (mesmo vazia), então essa comparação nunca é verdadeira e o caso `search(100, [])` nunca retorna 0. Reescrevendo com a concepção correta da ficha (usar a expressão diretamente: `if not seq:`) o bug desaparece — passa no teste de falseabilidade. É uma generalização um pouco além do exemplo literal da ficha (que fala de comparar uma expressão BOOLEANA a True/False; aqui é uma sequência comparada a False), mas o mecanismo raiz — tentar testar 'vazio/falso' via `== False` em vez de usar o valor diretamente em contexto booleano — é o mesmo."
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_021.py",
+    "equivoco_id": "MapToBooleanWithIf",
+    "confianca": "alta",
+    "decisao_humana": "confirmado",
+    "justificativa_revisao": "unique_day usa `if counter==1: return True elif counter>1: return False else: return \"Not a day...\"` — um if/elif de 3 ramos pra mapear uma contagem a um booleano, e o ramo 'else' (contagem 0) retorna uma STRING em vez de False. Reescrevendo com a concepção correta (`return counter == 1`, direto), o caso contagem==0 resolve sozinho como False — o bug desaparece. Passa no teste de falseabilidade."
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_039.py",
+    "equivoco_id": "MapToBooleanWithIf",
+    "confianca": "alta",
+    "decisao_humana": "confirmado",
+    "justificativa_revisao": "unique_day usa `if len(tup)==1: return True elif len(tup)>1: return False elif len(tup)==0: return None` — mesmo padrão do wrong_2_021 (chain de 3 ramos ao invés de uma expressão booleana direta), mas o ramo do meio/fim retorna None em vez de False. Reescrevendo como `return len(tup)==1`, o bug desaparece. Passa no teste de falseabilidade. Escolhido como segundo exemplo do mesmo equívoco por ter uma manifestação de código visivelmente diferente da do wrong_2_021 (tupla+len ao invés de contador inteiro, e None ao invés de string como sentinela errado)."
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_107.py",
+    "equivoco_id": "ParenthesesOnlyIfArgument",
+    "confianca": "alta",
+    "decisao_humana": "confirmado",
+    "justificativa_revisao": "unique_day faz `if count_dates == 1:` em vez de `if count_dates(date, possible_birthdays) == 1:` — comparando a FUNÇÃO (objeto) com o número 1, o que nunca é verdadeiro. Chamar a função com `()` (mesmo com argumentos obrigatórios, o mecanismo raiz é o mesmo da ficha: acreditar que dá pra tratar uma função como se já fosse seu resultado sem os parênteses) resolve o bug — passa no teste de falseabilidade. Padrão idêntico confirmado em outros 2 arquivos (wrong_2_108, wrong_2_109), só variando a constante comparada (0, 1, 2)."
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_258.py",
+    "equivoco_id": "ParenthesesOnlyIfArgument",
+    "confianca": "alta",
+    "decisao_humana": "confirmado",
+    "justificativa_revisao": "contains_unique_day faz `if not unique_day and not unique_month:` sem chamar nenhuma das duas funções — `not <função>` é sempre False (função é um objeto truthy), então a condição é sempre False e a função sempre cai no `else: return True`. Chamar as funções com os argumentos certos resolve o bug — passa no teste de falseabilidade. Escolhido como segundo exemplo do mesmo equívoco por ter uma manifestação de código visivelmente diferente do wrong_2_107 (duas referências negadas com 'and', em vez de uma comparação numérica). Padrão idêntico confirmado em outros 6 arquivos (wrong_2_260, 261, 262, 263, 304, 305, 306)."
+  }
+]

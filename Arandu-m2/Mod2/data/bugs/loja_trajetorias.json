@@ -1,0 +1,114 @@
+[
+  {
+    "trajetoria_id": "traj_refactory_q1_567",
+    "bug_id": "refactory_q1_567",
+    "equivoco": "ComparisonWithBoolLiteral",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -1,10 +1,5 @@\n def search(x, seq):\n-    for i, elem in enumerate(seq):\n-        if seq == False:\n-            return 0\n-        elif x <= elem:\n+    for i in range(len(seq)):\n+        if x <= seq[i]:\n             return i\n-        elif i == (len(seq)-1):\n-            return i+1\n-        else:\n-            continue\n+    return len(seq)",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 2,
+      "variavel": "retorno",
+      "esperado": "0",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q2_021",
+    "bug_id": "refactory_q2_021",
+    "equivoco": "MapToBooleanWithIf",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -1,34 +1,19 @@\n def unique_day(day, possible_birthdays):\n-    possible_days = tuple(map(lambda x: x[1], possible_birthdays))\n-    counter = 0\n-    for possible_day in possible_days:\n-        if day == possible_day:\n-            counter = counter + 1\n-    if counter == 1:\n-        return True\n-    elif counter > 1:\n-        return False\n-    else:\n-        return \"Not a day in possible_birthdays\"\n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[1] == day:\n+            count += 1\n+    return count == 1\n \n def unique_month(month, possible_birthdays):\n-    possible_months = tuple(map(lambda x: x[0], possible_birthdays))\n-    counter = 0\n-    for possible_month in possible_months:\n-        if month == possible_month:\n-            counter = counter + 1\n-    if counter == 1:\n-        return True\n-    elif counter > 1:\n-        return False\n-    else:\n-        return \"Not a month in possible_birthdays\"  \n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month:\n+            count += 1\n+    return count == 1\n \n def contains_unique_day(month, possible_birthdays):\n-    def contains_month(month, elem):\n-        return month == elem[0]\n-    pos_bd_containing_month = tuple(filter(lambda x: contains_month(month, x), possible_birthdays))\n-    for element in pos_bd_containing_month:\n-        if unique_day(element[1], possible_birthdays) == True:\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n             return True\n     return False",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 12,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "'Not a day in possible_birthdays'",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q2_039",
+    "bug_id": "refactory_q2_039",
+    "equivoco": "MapToBooleanWithIf",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -1,31 +1,19 @@\n def unique_day(day, possible_birthdays):\n-    tup = ()\n-    for i in possible_birthdays:\n-        if i[1] == day:\n-            tup += (i[1],)\n-    if len(tup) == 1:\n-        return True\n-    elif len(tup) > 1:\n-        return False\n-    elif len(tup) == 0:\n-        return None\n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[1] == day:\n+            count += 1\n+    return count == 1\n \n def unique_month(month, possible_birthdays):\n-    tup = ()\n-    for i in possible_birthdays:\n-        if i[0] == month:\n-            tup += (i[0],)\n-    if len(tup) == 1:\n-        return True\n-    else:\n-        return False\n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month:\n+            count += 1\n+    return count == 1\n \n def contains_unique_day(month, possible_birthdays):\n-    tup = ()\n-    for date in possible_birthdays:\n-        if date[0] == month:\n-            tup += (date,)\n-    for bday in tup:\n-        if unique_day(bday[1], possible_birthdays):\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n             return True\n     return False",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 11,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q2_107",
+    "bug_id": "refactory_q2_107",
+    "equivoco": "ParenthesesOnlyIfArgument",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -1,19 +1,19 @@\n-def count_dates(date, possible_birthdays):\n+def unique_day(day, possible_birthdays):\n     count = 0\n-    for i in possible_birthdays:\n-        if i[1] == date:\n+    for birthday in possible_birthdays:\n+        if birthday[1] == day:\n             count += 1\n-    return count\n-\n-def unique_day(date, possible_birthdays):\n-    if count_dates == 1:\n-        return True\n-    else:\n-        return False\n-    \n+    return count == 1\n \n def unique_month(month, possible_birthdays):\n-    return\n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month:\n+            count += 1\n+    return count == 1\n \n def contains_unique_day(month, possible_birthdays):\n-    return \n+    for birthday in possible_birthdays:\n+        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n+            return True\n+    return False",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 16,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q2_258",
+    "bug_id": "refactory_q2_258",
+    "equivoco": "ParenthesesOnlyIfArgument",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -1,17 +1,19 @@\n-def unique_day(date, possible_birthdays):\n-    if date in possible_birthdays[1]: \n-        return False\n-    else:\n-        return True\n+def unique_day(day, possible_birthdays):\n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[1] == day:\n+            count += 1\n+    return count == 1\n \n def unique_month(month, possible_birthdays):\n-    if month in possible_birthdays[0]:\n-        return False\n-    else:\n-        return True\n+    count = 0\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month:\n+            count += 1\n+    return count == 1\n \n def contains_unique_day(month, possible_birthdays):\n-    if not unique_day and not unique_month: \n-        return False\n-    else: \n-        return True \n+    for birthday in possible_birthdays:\n+        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n+            return True\n+    return False",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 9,
+      "variavel": "retorno",
+      "esperado": "True",
+      "obtido": "False",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q2_021_v1",
+    "bug_id": "refactory_q2_021_v1",
+    "equivoco": "MapToBooleanWithIf",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -3,27 +3,17 @@\n     for birthday in possible_birthdays:\n         if birthday[1] == day:\n             count += 1\n-    if count == 1:\n-        return True\n-    elif count > 1:\n-        return False\n-    else:\n-        return \"Not a day in possible_birthdays\"\n+    return count == 1\n \n def unique_month(month, possible_birthdays):\n     count = 0\n     for birthday in possible_birthdays:\n         if birthday[0] == month:\n             count += 1\n-    if count == 1:\n-        return True\n-    elif count > 1:\n-        return False\n-    else:\n-        return \"Not a month in possible_birthdays\"\n+    return count == 1\n \n def contains_unique_day(month, possible_birthdays):\n     for birthday in possible_birthdays:\n-        if birthday[0] == month and unique_day(birthday[1], possible_birthdays) == True:\n+        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n             return True\n     return False",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 11,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "'Not a day in possible_birthdays'",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q2_107_v1",
+    "bug_id": "refactory_q2_107_v1",
+    "equivoco": "ParenthesesOnlyIfArgument",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -13,9 +13,7 @@\n     return count == 1\n \n def contains_unique_day(month, possible_birthdays):\n-    # O bug persiste: compara-se o objeto da funcao unica com um inteiro\n-    # sem usar parenteses para passar os argumentos (mesmo que obrigatorios no escopo global)\n-    if unique_month == True: \n-        return True\n-    else:\n-        return False\n+    for birthday in possible_birthdays:\n+        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n+            return True\n+    return False",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 21,
+      "variavel": "retorno",
+      "esperado": "True",
+      "obtido": "False",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  },
+  {
+    "trajetoria_id": "traj_refactory_q1_567_v2",
+    "bug_id": "refactory_q1_567_v2",
+    "equivoco": "ComparisonWithBoolLiteral",
+    "diff_textual": "--- errado\n+++ referencia\n@@ -1,10 +1,5 @@\n def search(x, seq):\n     for i in range(len(seq)):\n-        if seq == True:\n-            return 0\n-        elif x <= seq[i]:\n+        if x <= seq[i]:\n             return i\n-        elif i == (len(seq)-1):\n-            return i+1\n-        else:\n-            continue\n+    return len(seq)",
+    "assinatura_comportamental": {
+      "primeira_linha_divergente": 2,
+      "variavel": "retorno",
+      "esperado": "0",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dica_que_destravou": null
+  }
+]

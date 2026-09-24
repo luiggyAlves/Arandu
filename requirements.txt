@@ -1,0 +1,5 @@
+# Dependências do M3 (Treinador).
+# O núcleo roda só com a biblioteca padrão do Python (servidor web, sessão,
+# modelo do aluno). A única dependência externa é o cliente da OpenAI, usado
+# quando há OPENAI_API_KEY no .env (sem a chave, roda com o MockLLM).
+openai>=1.0

@@ -1,0 +1,42 @@
+{
+  "gerado_em": "2026-09-23T22:30:50",
+  "timeout_segundos": 8,
+  "por_questao": {
+    "question_1": {
+      "erro_execucao": 279,
+      "falha_silenciosa": 296,
+      "passa_tudo": 0,
+      "total": 575
+    },
+    "question_2": {
+      "erro_execucao": 139,
+      "falha_silenciosa": 296,
+      "passa_tudo": 0,
+      "total": 435
+    },
+    "question_3": {
+      "erro_execucao": 193,
+      "falha_silenciosa": 111,
+      "passa_tudo": 4,
+      "total": 308
+    },
+    "question_4": {
+      "erro_execucao": 151,
+      "falha_silenciosa": 147,
+      "passa_tudo": 59,
+      "total": 357
+    },
+    "question_5": {
+      "erro_execucao": 63,
+      "falha_silenciosa": 45,
+      "passa_tudo": 0,
+      "total": 108
+    }
+  },
+  "total_geral": {
+    "erro_execucao": 825,
+    "falha_silenciosa": 895,
+    "passa_tudo": 63,
+    "total": 1783
+  }
+}

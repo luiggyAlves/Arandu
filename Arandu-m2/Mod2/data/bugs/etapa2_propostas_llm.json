@@ -1,0 +1,813 @@
+[
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_140.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é lógico: condição invertida (seq[i] < x em vez de x <= seq[i]) e range reduzido, não corresponde a nenhum equívoco conceitual do catálogo listado.",
+    "testes_falhos": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "esperado": "6",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "esperado": "3",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "esperado": "2",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "esperado": "0",
+        "obtido": "3",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "0",
+        "obtido": "6",
+        "ok": false
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "2",
+        "obtido": "0",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_092.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "media",
+    "justificativa_llm": "O bug decorre de erro lógico na comparação (usar > em vez de <=) e ausência de um retorno final fora do laço, não de nenhum equívoco conceitual listado no catálogo.",
+    "testes_falhos": [
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "2",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_074.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é a ausência de tratamento do caso de laço vazio/sem retorno (falta de um return default), não corresponde a nenhum equívoco do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_183.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug decorre de uso incorreto de seq.index(i)-1 e ausência de retorno padrão para caso não encontrado, um erro lógico de indexação sem correspondência clara com os equívocos do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "esperado": "6",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "esperado": "3",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "esperado": "2",
+        "obtido": "1",
+        "ok": false
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "esperado": "0",
+        "obtido": "-1",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "4",
+        "ok": false
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "0",
+        "obtido": "-1",
+        "ok": false
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "2",
+        "obtido": "1",
+        "ok": false
+      },
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_356.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é apenas usar < em vez de <=, um erro de operador relacional, não correspondendo a nenhum equívoco conceitual do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "2",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "6",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_331.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é a ausência do return final (len(seq)) após o loop, causando None; nenhum item do catálogo trata desse equívoco específico.",
+    "testes_falhos": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "esperado": "6",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "esperado": "3",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "2",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_009.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é lógico: a condição 'elem < x < elem+1' e a ausência de return final não correspondem a nenhum equívoco do catálogo, que trata de conceitos de linguagem/sintaxe, não de erro de lógica de busca.",
+    "testes_falhos": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "esperado": "6",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "esperado": "3",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "esperado": "2",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "2",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_132.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "baixa",
+    "justificativa_llm": "O bug é a ausência de um return após o loop (cobrindo seq vazia ou último elemento), causando retorno implícito None; nenhum equívoco do catálogo corresponde a essa omissão específica.",
+    "testes_falhos": [
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_180.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug ocorre porque o aluno colocou a checagem de sequência vazia dentro do loop for, que nunca executa quando seq é vazia; nenhum equívoco do catálogo descreve essa suposição sobre laços vazios.",
+    "testes_falhos": [
+      {
+        "input": "search(100, [])",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "search(-100, ())",
+        "esperado": "0",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_1",
+    "arquivo": "wrong_1_259.py",
+    "equivoco_id_proposto": "MultipleValuesReturn",
+    "confianca_llm": "media",
+    "justificativa_llm": "O aluno retorna x (o valor buscado) em vez do índice i, como se retornar o valor encontrado fosse equivalente a retornar sua posição, confundindo o que a função deve devolver.",
+    "testes_falhos": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "esperado": "6",
+        "obtido": "42",
+        "ok": false
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "esperado": "3",
+        "obtido": "42",
+        "ok": false
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "5",
+        "ok": false
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "esperado": "2",
+        "obtido": "7",
+        "ok": false
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "esperado": "1",
+        "obtido": "3",
+        "ok": false
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "esperado": "0",
+        "obtido": "3",
+        "ok": false
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "5",
+        "obtido": "10",
+        "ok": false
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "0",
+        "obtido": "6",
+        "ok": false
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "esperado": "2",
+        "obtido": "0",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_331.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_322.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "media",
+    "justificativa_llm": "O erro é lógico: o aluno testa apenas counter>1 para 'não único', ignorando o caso counter==0, o que não corresponde a nenhum equívoco conceitual do catálogo listado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_239.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é usar count<=1 em vez de count==1, tratando zero ocorrências como 'único'; isso é um erro lógico de comparação, não corresponde a nenhum equívoco do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_423.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "media",
+    "justificativa_llm": "O aluno reescreve 'count == 1' como if/else retornando True/False, e ao fazer isso esquece o caso counter==0, causando o bug em unique_month.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_071.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_323.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "ValueError: Resposta do LLM não contém JSON reconhecível: ''"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_278.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para transformar a contagem em True/False (e para decidir o retorno em contains_unique_day) em vez de retornar diretamente a expressão booleana, causando lógica invertida e retorno prematuro no loop.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_270.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é usar 'counter <= 1' em vez de 'counter == 1', um erro lógico de comparação sem relação com os equívocos conceituais listados.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_027.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é um erro lógico na condição de unicidade (trata contagem 0 como única), não corresponde a nenhum equívoco do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_370.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug real é unique_month e contains_unique_day terem apenas 'return' vazio, não implementados; nenhum equívoco do catálogo corresponde a essa causa (funções deixadas incompletas).",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  }
+]

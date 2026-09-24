@@ -1,0 +1,413 @@
+[
+  {
+    "bug_id": "refactory_q1_567",
+    "question_id": "question_1",
+    "codigo_errado": "def search(x, seq):\n    for i, elem in enumerate(seq):\n        if seq == False:\n            return 0\n        elif x <= elem:\n            return i\n        elif i == (len(seq)-1):\n            return i+1\n        else:\n            continue\n",
+    "codigo_referencia": "def search(x, seq):\n    for i in range(len(seq)):\n        if x <= seq[i]:\n            return i\n    return len(seq)",
+    "testes": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "output_esperado": "6"
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "output_esperado": "3"
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "output_esperado": "1"
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "output_esperado": "2"
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "output_esperado": "1"
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "5"
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "2"
+      },
+      {
+        "input": "search(100, [])",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(-100, ())",
+        "output_esperado": "0"
+      }
+    ],
+    "equivoco_progmiscon": "ComparisonWithBoolLiteral",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 2,
+      "variavel": "retorno",
+      "esperado": "0",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "refactory",
+    "aprovado_por_validador": null
+  },
+  {
+    "bug_id": "refactory_q2_021",
+    "question_id": "question_2",
+    "codigo_errado": "def unique_day(day, possible_birthdays):\n    possible_days = tuple(map(lambda x: x[1], possible_birthdays))\n    counter = 0\n    for possible_day in possible_days:\n        if day == possible_day:\n            counter = counter + 1\n    if counter == 1:\n        return True\n    elif counter > 1:\n        return False\n    else:\n        return \"Not a day in possible_birthdays\"\n\ndef unique_month(month, possible_birthdays):\n    possible_months = tuple(map(lambda x: x[0], possible_birthdays))\n    counter = 0\n    for possible_month in possible_months:\n        if month == possible_month:\n            counter = counter + 1\n    if counter == 1:\n        return True\n    elif counter > 1:\n        return False\n    else:\n        return \"Not a month in possible_birthdays\"  \n\ndef contains_unique_day(month, possible_birthdays):\n    def contains_month(month, elem):\n        return month == elem[0]\n    pos_bd_containing_month = tuple(filter(lambda x: contains_month(month, x), possible_birthdays))\n    for element in pos_bd_containing_month:\n        if unique_day(element[1], possible_birthdays) == True:\n            return True\n    return False\n",
+    "codigo_referencia": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n            return True\n    return False\n",
+    "testes": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      }
+    ],
+    "equivoco_progmiscon": "MapToBooleanWithIf",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 12,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "'Not a day in possible_birthdays'",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "refactory",
+    "aprovado_por_validador": null
+  },
+  {
+    "bug_id": "refactory_q2_039",
+    "question_id": "question_2",
+    "codigo_errado": "def unique_day(day, possible_birthdays):\n    tup = ()\n    for i in possible_birthdays:\n        if i[1] == day:\n            tup += (i[1],)\n    if len(tup) == 1:\n        return True\n    elif len(tup) > 1:\n        return False\n    elif len(tup) == 0:\n        return None\n\ndef unique_month(month, possible_birthdays):\n    tup = ()\n    for i in possible_birthdays:\n        if i[0] == month:\n            tup += (i[0],)\n    if len(tup) == 1:\n        return True\n    else:\n        return False\n\ndef contains_unique_day(month, possible_birthdays):\n    tup = ()\n    for date in possible_birthdays:\n        if date[0] == month:\n            tup += (date,)\n    for bday in tup:\n        if unique_day(bday[1], possible_birthdays):\n            return True\n    return False\n",
+    "codigo_referencia": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n            return True\n    return False\n",
+    "testes": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      }
+    ],
+    "equivoco_progmiscon": "MapToBooleanWithIf",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 11,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "refactory",
+    "aprovado_por_validador": null
+  },
+  {
+    "bug_id": "refactory_q2_107",
+    "question_id": "question_2",
+    "codigo_errado": "def count_dates(date, possible_birthdays):\n    count = 0\n    for i in possible_birthdays:\n        if i[1] == date:\n            count += 1\n    return count\n\ndef unique_day(date, possible_birthdays):\n    if count_dates == 1:\n        return True\n    else:\n        return False\n    \n\ndef unique_month(month, possible_birthdays):\n    return\n\ndef contains_unique_day(month, possible_birthdays):\n    return \n",
+    "codigo_referencia": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n            return True\n    return False\n",
+    "testes": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      }
+    ],
+    "equivoco_progmiscon": "ParenthesesOnlyIfArgument",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 16,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "refactory",
+    "aprovado_por_validador": null
+  },
+  {
+    "bug_id": "refactory_q2_258",
+    "question_id": "question_2",
+    "codigo_errado": "def unique_day(date, possible_birthdays):\n    if date in possible_birthdays[1]: \n        return False\n    else:\n        return True\n\ndef unique_month(month, possible_birthdays):\n    if month in possible_birthdays[0]:\n        return False\n    else:\n        return True\n\ndef contains_unique_day(month, possible_birthdays):\n    if not unique_day and not unique_month: \n        return False\n    else: \n        return True \n",
+    "codigo_referencia": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n            return True\n    return False\n",
+    "testes": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      }
+    ],
+    "equivoco_progmiscon": "ParenthesesOnlyIfArgument",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 9,
+      "variavel": "retorno",
+      "esperado": "True",
+      "obtido": "False",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "refactory",
+    "aprovado_por_validador": null
+  }
+]

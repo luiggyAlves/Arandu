@@ -1,0 +1,6 @@
+{
+  "codigo_aluno": "nota = int(input())\nif nota >= 5:\n    print(\"recuperação\")\nelif nota >= 7:\n    print(\"aprovado\")\nelse:\n    print(\"reprovado\")\n",
+  "codigo_ref": "nota = int(input())\nif nota >= 7:\n    print(\"aprovado\")\nelif nota >= 5:\n    print(\"recuperação\")\nelse:\n    print(\"reprovado\")\n",
+  "entrada": "9",
+  "id_chamada": "teste"
+}

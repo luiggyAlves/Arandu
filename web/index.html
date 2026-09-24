@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arandu — Treinador de Depuração</title>
+<style>
+  :root { --verde:#1B6B5A; --verde2:#0F3D34; --claro:#EAF3F1; --cinza:#5A5A5A; --erro:#b3261e; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, Segoe UI, Roboto, sans-serif; color:#1c1c1c; background:#f6f8f7; }
+  header { background:var(--verde2); color:#fff; padding:14px 20px; }
+  header h1 { margin:0; font-size:20px; }
+  header small { color:#bfe0d8; }
+  .wrap { display:grid; grid-template-columns: 1fr 340px; gap:16px; padding:16px; max-width:1200px; margin:0 auto; }
+  @media (max-width: 900px){ .wrap{ grid-template-columns:1fr; } }
+  .card { background:#fff; border:1px solid #dbe6e3; border-radius:10px; padding:14px; margin-bottom:14px; }
+  .card h2 { margin:0 0 8px; font-size:15px; color:var(--verde2); }
+  textarea#codigo { width:100%; height:220px; font-family: Consolas, monospace; font-size:13px;
+      border:1px solid #cdd8d5; border-radius:8px; padding:10px; resize:vertical; }
+  input[type=text]{ padding:8px; border:1px solid #cdd8d5; border-radius:8px; font-family:Consolas,monospace; }
+  button { background:var(--verde); color:#fff; border:0; border-radius:8px; padding:9px 14px;
+      font-size:14px; cursor:pointer; margin:4px 4px 0 0; }
+  button.sec { background:#e7efed; color:var(--verde2); }
+  button:disabled{ opacity:.5; cursor:not-allowed; }
+  pre { background:#0f1c19; color:#d8f0e9; padding:10px; border-radius:8px; overflow:auto; font-size:13px; }
+  .dica { background:var(--claro); border-left:4px solid var(--verde); padding:10px 12px; border-radius:6px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; font-family:Consolas,monospace; }
+  th,td { border:1px solid #dbe6e3; padding:4px 6px; text-align:left; vertical-align:top; }
+  th { background:var(--claro); }
+  .sinal { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2ebe8; font-size:13px; }
+  .sinal b { color:var(--verde2); }
+  .barra { height:6px; background:#e7efed; border-radius:4px; overflow:hidden; }
+  .barra > i { display:block; height:100%; background:var(--verde); }
+  .aviso { color:var(--cinza); font-size:12px; }
+  /* telinha do agente */
+  .agente { max-height:360px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;
+      font-size:13px; line-height:1.35; padding-right:4px; }
+  .linha { display:flex; gap:8px; align-items:flex-start; padding:5px 7px; border-radius:7px;
+      background:#f4f8f7; border:1px solid #e6efec; animation:surge .35s ease; }
+  .linha .ic { font-size:14px; line-height:1.35; }
+  .linha .tx { flex:1; }
+  .linha.decisao { background:#eef6f3; border-color:#cfe6df; }
+  .linha.decisao b { color:var(--verde2); }
+  .linha.leitura { background:#fff7ec; border-color:#f0e2c8; }
+  .linha.fala, .linha.dica { background:var(--claro); border-left:3px solid var(--verde); }
+  .linha.invest { background:#eef1fb; border-color:#d7ddf3; }
+  .linha.guard { background:#faf0ef; border-color:#f0d6d3; color:#7a3b36; }
+  @keyframes surge { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+  .interv { background:var(--claro); border-left:4px solid var(--verde); padding:10px 12px;
+      border-radius:6px; }
+  .interv .tag { display:inline-block; font-size:11px; font-weight:600; color:#fff;
+      background:var(--verde); padding:2px 8px; border-radius:10px; margin-bottom:6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Arandu — Treinador de Depuração</h1>
+  <small id="info">carregando…</small>
+</header>
+
+<div class="wrap">
+  <div>
+    <div class="card">
+      <h2 id="enunciado">…</h2>
+      <textarea id="codigo" spellcheck="false"></textarea>
+      <div style="margin-top:8px">
+        <input type="text" id="entrada" placeholder="entrada (ex.: 2 4 6)" style="width:100%; margin-bottom:8px">
+        <div>
+          <button onclick="rodar()">Rodar</button>
+          <button class="sec" onclick="verTrace()">Ver variáveis</button>
+          <button class="sec" onclick="pedirDica()">Pedir dica</button>
+          <button onclick="submeter()">Submeter correção</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card"><h2>Saída</h2><pre id="saida">—</pre></div>
+
+    <div class="card" id="cardTrace" style="display:none">
+      <h2>Variáveis passo a passo</h2>
+      <div style="max-height:220px; overflow:auto"><table id="trace"></table></div>
+    </div>
+
+    <div class="card" id="cardDica" style="display:none">
+      <h2>Dica do Treinador</h2>
+      <div class="dica" id="dica"></div>
+    </div>
+
+    <div class="card" id="cardExplica" style="display:none">
+      <h2 id="explicaTitulo">Explique o erro em uma frase</h2>
+      <div class="aviso" style="margin-bottom:8px">
+        Você será avaliado (de forma transparente) em: <b>identificou o erro</b>,
+        <b>explicou a causa</b> e <b>relacionou à correção</b>.
+      </div>
+      <textarea id="explicacao" placeholder="qual era o erro? (pode escrever em várias linhas)"
+                style="width:100%; min-height:80px; font-family:inherit; font-size:14px;
+                       padding:8px; border:1px solid #cdd8d5; border-radius:8px; resize:vertical;"></textarea>
+      <div style="margin-top:8px"><button onclick="explicar()">Enviar</button></div>
+    </div>
+
+    <div class="card" id="cardRubrica" style="display:none">
+      <h2>📝 Avaliação da sua explicação</h2>
+      <div id="rubrica"></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card" id="cardAgente">
+      <h2>🤖 Raciocínio do Agente <small style="color:var(--cinza);font-weight:normal">(ao vivo)</small></h2>
+      <div id="agente" class="agente"><span class="aviso">o agente está observando…</span></div>
+    </div>
+    <div class="card">
+      <h2>Sinais capturados (modelo do aluno)</h2>
+      <div id="painel"><span class="aviso">interaja para popular…</span></div>
+    </div>
+    <div class="card">
+      <h2>Domínio por equívoco</h2>
+      <div id="dominio"><span class="aviso">—</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- estado local de instrumentação ----
+let tInicio = Date.now(), primeiraExec = false;
+let lastLen = 0, lastEdit = 0, churn = 0, pausas = 0;
+
+const $ = id => document.getElementById(id);
+const ed = $("codigo");
+
+async function post(rota, corpo){ const r = await fetch(rota, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(corpo||{})}); return r.json(); }
+async function get(rota){ const r = await fetch(rota); return r.json(); }
+
+// ---- instrumentação de sinais (o que a interface capta) ----
+ed.addEventListener("input", () => {
+  const n = ed.value.length;
+  if (n < lastLen) churn += (lastLen - n);           // apagou/reescreveu
+  lastLen = n;
+  const agora = Date.now();
+  if (lastEdit && agora - lastEdit > 8000) pausas++;  // pausa longa
+  lastEdit = agora;
+});
+ed.addEventListener("paste", async (e) => {
+  // envia o TEXTO colado para o servidor distinguir cópia externa de trecho do próprio exercício
+  let txt = "";
+  try { txt = (e.clipboardData || window.clipboardData).getData("text") || ""; } catch(_){}
+  const r = await post("/evento", {tipo:"sinais", dados:{colagens_externas: 1, texto: txt}});
+  if (r && r.intervencao) mostrarIntervencao(r.intervencao);
+  atualizarAgente();
+});
+
+function sinais(obj){ post("/evento", {tipo:"sinais", dados:obj}); }
+function flushSinais(){                                // envia deltas de churn/pausas
+  if (churn || pausas){ sinais({churn_edicao: churn, pausas_longas: pausas}); churn = 0; pausas = 0; }
+}
+
+// ---- ações ----
+let pollAgente = null;
+async function iniciar(){
+  const info = await get("/info"); $("info").textContent = "LLM: " + info.llm + (info.build ? "  ·  " + info.build : "");
+  agenteLen = 0; $("agente").innerHTML = "<span class='aviso'>o agente está observando…</span>";
+  $("cardDica").style.display = "none"; $("cardRubrica").style.display = "none";
+  const r = await post("/iniciar");
+  mostrarBug(r);
+  atualizarAgente();
+  if (!pollAgente) pollAgente = setInterval(atualizarAgente, 2500);  // rede de segurança (cada ação já atualiza na hora)
+}
+function mostrarBug(r){
+  if (r.encerrada){ $("enunciado").textContent = "Sessão encerrada 🎉 (" + (r.motivo||"") + ")"; ed.value=""; return; }
+  if (r.bug){
+    $("enunciado").textContent = r.bug.enunciado;
+    ed.value = r.bug.codigo; lastLen = ed.value.length;
+    const ent = $("entrada");
+    if (r.bug.modo === "chamada"){
+      // pré-preenche com uma chamada de exemplo real: o aluno só troca os números
+      ent.value = r.bug.exemplo_entrada || "";
+      ent.placeholder = r.bug.exemplo_entrada || "chamada de função";
+      ent.scrollLeft = 0;   // mostra o início da chamada, não o fim
+    } else {
+      ent.value = "";
+      ent.placeholder = "entrada (ex.: 2 4 6)";
+    }
+    tInicio = Date.now(); primeiraExec = false;
+    $("cardTrace").style.display="none"; $("cardDica").style.display="none"; $("cardExplica").style.display="none";
+    $("saida").textContent = "—";
+  }
+  atualizarPainel();
+}
+async function rodar(){
+  if (!primeiraExec){ sinais({tempo_ate_primeira_execucao_s: Math.round((Date.now()-tInicio)/1000)}); primeiraExec = true; }
+  flushSinais();
+  const r = await post("/evento", {tipo:"rodou_entrada", dados:{entrada:$("entrada").value, codigo:ed.value}});
+  $("saida").textContent = (r.saida||"").trim() + (r.erro ? ("\n[erro] "+r.erro) : "");
+  if (r.intervencao) mostrarIntervencao(r.intervencao);
+  atualizarPainel(); atualizarAgente();
+}
+async function verTrace(){
+  const r = await post("/evento", {tipo:"ver_trace", dados:{entrada:$("entrada").value, codigo:ed.value}});
+  renderTrace(r.passos);
+  if (r.intervencao) mostrarIntervencao(r.intervencao);
+  atualizarPainel(); atualizarAgente();
+}
+function renderTrace(passos){
+  const t = $("trace"); t.innerHTML = "<tr><th>linha</th><th>código</th><th>variáveis</th></tr>";
+  (passos||[]).forEach(p => {
+    const vars = Object.entries(p.variaveis||{}).map(([k,v])=>k+"="+v).join(", ");
+    t.innerHTML += `<tr><td>${p.linha}</td><td>${(p.codigo||"").replace(/</g,"&lt;")}</td><td>${vars}${p.imprimiu?(" · imprimiu "+p.imprimiu):""}</td></tr>`;
+  });
+  $("cardTrace").style.display="block";
+}
+async function pedirDica(){
+  flushSinais();
+  $("dica").textContent = "investigando…"; $("cardDica").style.display="block";
+  const r = await post("/evento", {tipo:"pediu_dica", dados:{codigo:ed.value}});
+  mostrarIntervencao({mensagem: r.mensagem || "(sem dica)", proativa: false});
+  atualizarPainel(); atualizarAgente();
+}
+async function submeter(){
+  flushSinais();
+  const r = await post("/evento", {tipo:"submeteu_correcao", dados:{codigo:ed.value}});
+  if (r.resposta === "correcao_incompleta"){
+    const f = (r.falhas||[]).map(x=>`entrada ${x.entrada}: esperado ${x.esperado}, obteve ${x.obtido}`).join("\n");
+    $("saida").textContent = "Ainda falha:\n" + f;
+  } else if (r.resposta === "peca_explicacao"){
+    $("saida").textContent = r.mensagem;
+    $("cardExplica").style.display="block";
+  }
+  if (r.intervencao) mostrarIntervencao(r.intervencao);
+  atualizarPainel(); atualizarAgente();
+}
+let proxDesafio = null;
+async function explicar(){
+  const r = await post("/evento", {tipo:"explicou", dados:{texto:$("explicacao").value}});
+  $("explicacao").value=""; $("cardExplica").style.display="none";
+  if (r.rubrica){
+    proxDesafio = r;            // segura o próximo desafio até o aluno LER a avaliação
+    mostrarRubrica(r.rubrica);  // mostra a nota por dimensão e PAUSA
+  } else {
+    mostrarBug(r);
+  }
+}
+function continuarProximo(){
+  $("cardRubrica").style.display = "none";
+  if (proxDesafio){ mostrarBug(proxDesafio); proxDesafio = null; }
+}
+function mostrarRubrica(rub){
+  const pct = v => Math.round((v==null?0:v)*100);
+  const dims = [["Identificou o erro", rub.identificou],
+                ["Explicou a causa", rub.causa],
+                ["Relacionou à correção", rub.correcao]];
+  const box = $("rubrica"); box.innerHTML = "";
+  dims.forEach(([k,v])=>{
+    const d = document.createElement("div"); d.style.marginBottom = "6px";
+    d.innerHTML = `<div class="sinal"><span></span><b>${pct(v)}%</b></div><div class="barra"><i style="width:${pct(v)}%"></i></div>`;
+    d.querySelector("span").textContent = k; box.appendChild(d);
+  });
+  const nota = document.createElement("div"); nota.className = "sinal"; nota.style.marginTop = "6px";
+  nota.innerHTML = `<span><b>Nota geral</b></span><b>${pct(rub.nota)}%</b>`;
+  box.appendChild(nota);
+  if (rub.comentario){
+    const c = document.createElement("div"); c.className = "dica"; c.style.marginTop = "8px";
+    c.textContent = rub.comentario; box.appendChild(c);
+  }
+  const btn = document.createElement("button"); btn.textContent = "Continuar para o próximo desafio →";
+  btn.style.marginTop = "10px"; btn.onclick = continuarProximo; box.appendChild(btn);
+  $("cardRubrica").style.display = "block";
+}
+
+// ---- telinha do agente (raciocínio ao vivo) ----
+let agenteLen = 0, agenteEmVoo = false, ultimaPergunta = null;
+function classeLinha(ev){
+  if (ev.tipo) return ev.tipo;                 // leitura|decisao|fala|dica|invest
+  if (ev.icone === "🔒") return "guard";
+  if (ev.icone === "🔬") return "invest";
+  return "";
+}
+async function atualizarAgente(){
+  if (agenteEmVoo) return;                      // evita requisições de painel sobrepostas
+  agenteEmVoo = true;
+  let m;
+  try { m = await get("/painel"); }
+  catch(e){ return; }
+  finally { agenteEmVoo = false; }
+  const evs = m.eventos || [];
+  if (evs.length < agenteLen){ agenteLen = 0; $("agente").innerHTML = ""; }  // sessão reiniciou
+  if (evs.length === agenteLen) return;
+  const box = $("agente");
+  if (agenteLen === 0) box.innerHTML = "";
+  for (let i = agenteLen; i < evs.length; i++){
+    const ev = evs[i];
+    const d = document.createElement("div");
+    d.className = "linha " + classeLinha(ev);
+    d.innerHTML = `<span class="ic">${ev.icone||"•"}</span><span class="tx"></span>`;
+    d.querySelector(".tx").textContent = ev.texto || "";
+    box.appendChild(d);
+  }
+  agenteLen = evs.length;
+  box.scrollTop = box.scrollHeight;
+}
+function mostrarIntervencao(iv){
+  if (!iv) return;
+  ultimaPergunta = iv.espera_resposta ? (iv.mensagem || "") : null;
+  const proativa = iv.proativa !== false;
+  const tag = proativa ? "🤖 O agente decidiu intervir (sozinho)" : "🤖 Dica do agente";
+  $("cardDica").style.display = "block";
+  let extra = "";
+  if (iv.espera_resposta){
+    extra = `<div style="margin-top:8px;display:flex;gap:6px">
+        <input type="text" id="resposta" placeholder="responda ao treinador…" style="flex:1"
+               onkeydown="if(event.key==='Enter')responderTreinador()">
+        <button onclick="responderTreinador()">Responder</button></div>
+      <div id="feedbackResp" class="aviso" style="margin-top:6px"></div>`;
+  }
+  $("dica").innerHTML = `<span class="tag"></span><div class="txt"></div>${extra}`;
+  $("dica").querySelector(".tag").textContent = tag;
+  $("dica").querySelector(".txt").textContent = iv.mensagem || "";
+  // se o agente escolheu MOSTRAR_VALORES, ele já rodou o trace: exibe as variáveis
+  if (iv.trace && iv.trace.passos){ renderTrace(iv.trace.passos); }
+  atualizarAgente();
+}
+async function responderTreinador(){
+  const inp = $("resposta"); if (!inp) return;
+  const resposta = inp.value.trim(); if (!resposta) return;
+  inp.disabled = true;
+  const r = await post("/evento", {tipo:"respondeu_pergunta", dados:{pergunta: ultimaPergunta||"", resposta}});
+  if ($("feedbackResp")) $("feedbackResp").textContent = "🤖 " + (r.feedback || "");
+  atualizarPainel(); atualizarAgente();
+}
+
+// ---- painel de sinais ----
+async function atualizarPainel(){
+  const m = await get("/modelo");
+  const s = m.sinais_interface || {}, d = m.depuracao || {};
+  const linhas = [
+    ["Execuções", s.num_execucoes||0],
+    ["Entradas discriminantes (sozinho)", s.num_execucoes_proprias_discriminantes||0],
+    ["Usou o trace", s.usou_trace||0],
+    ["Tempo até 1ª execução (s)", s.tempo_ate_primeira_execucao_s ?? "—"],
+    ["Churn de edição", s.churn_edicao||0],
+    ["Colagens externas", s.colagens_externas||0],
+    ["Pausas longas", s.pausas_longas||0],
+    ["Bugs resolvidos", (m.bugs_resolvidos||[]).length],
+  ];
+  $("painel").innerHTML = linhas.map(([k,v])=>`<div class="sinal"><span>${k}</span><b>${v}</b></div>`).join("")
+    + "<hr><b style='color:var(--verde2)'>Depuração</b>"
+    + Object.entries(d).map(([k,v])=>`<div class="sinal"><span>${k}</span><b>${(v*100).toFixed(0)}%</b></div>`).join("");
+  const dom = m.dominio_por_equivoco || {};
+  $("dominio").innerHTML = Object.keys(dom).length ? Object.entries(dom).map(([k,v])=>
+    `<div style="margin-bottom:6px"><div class="sinal"><span>${k}</span><b>${(v*100).toFixed(0)}%</b></div><div class="barra"><i style="width:${(v*100).toFixed(0)}%"></i></div></div>`).join("")
+    : "<span class='aviso'>—</span>";
+}
+
+iniciar();
+</script>
+</body>
+</html>

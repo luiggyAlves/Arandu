@@ -1,0 +1,305 @@
+[
+  {
+    "bug_id": "refactory_q2_021_v1",
+    "bug_original_id": "refactory_q2_021",
+    "numero_tentativa": 1,
+    "question_id": "question_2",
+    "codigo_errado": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    if count == 1:\n        return True\n    elif count > 1:\n        return False\n    else:\n        return \"Not a day in possible_birthdays\"\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    if count == 1:\n        return True\n    elif count > 1:\n        return False\n    else:\n        return \"Not a month in possible_birthdays\"\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays) == True:\n            return True\n    return False",
+    "codigo_referencia": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n            return True\n    return False\n",
+    "testes": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      }
+    ],
+    "equivoco_progmiscon": "MapToBooleanWithIf",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 11,
+      "variavel": "retorno",
+      "esperado": "False",
+      "obtido": "'Not a day in possible_birthdays'",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "construtor_variacao",
+    "aprovado_por_validador": true
+  },
+  {
+    "bug_id": "refactory_q2_107_v1",
+    "bug_original_id": "refactory_q2_107",
+    "numero_tentativa": 1,
+    "question_id": "question_2",
+    "codigo_errado": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    # O bug persiste: compara-se o objeto da funcao unica com um inteiro\n    # sem usar parenteses para passar os argumentos (mesmo que obrigatorios no escopo global)\n    if unique_month == True: \n        return True\n    else:\n        return False",
+    "codigo_referencia": "def unique_day(day, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[1] == day:\n            count += 1\n    return count == 1\n\ndef unique_month(month, possible_birthdays):\n    count = 0\n    for birthday in possible_birthdays:\n        if birthday[0] == month:\n            count += 1\n    return count == 1\n\ndef contains_unique_day(month, possible_birthdays):\n    for birthday in possible_birthdays:\n        if birthday[0] == month and unique_day(birthday[1], possible_birthdays):\n            return True\n    return False\n",
+    "testes": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "output_esperado": "True"
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "output_esperado": "False"
+      }
+    ],
+    "equivoco_progmiscon": "ParenthesesOnlyIfArgument",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 21,
+      "variavel": "retorno",
+      "esperado": "True",
+      "obtido": "False",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "construtor_variacao",
+    "aprovado_por_validador": true
+  },
+  {
+    "bug_id": "refactory_q1_567_v1",
+    "bug_original_id": "refactory_q1_567",
+    "numero_tentativa": 1,
+    "question_id": "question_1",
+    "codigo_errado": "def search(x, seq):\n    if seq == False:\n        return 0\n    for i in range(len(seq)):\n        if x <= seq[i]:\n            return i\n    return len(seq)",
+    "codigo_referencia": "def search(x, seq):\n    for i in range(len(seq)):\n        if x <= seq[i]:\n            return i\n    return len(seq)",
+    "testes": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "output_esperado": "6"
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "output_esperado": "3"
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "output_esperado": "1"
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "output_esperado": "2"
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "output_esperado": "1"
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "5"
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "2"
+      },
+      {
+        "input": "search(100, [])",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(-100, ())",
+        "output_esperado": "0"
+      }
+    ],
+    "equivoco_progmiscon": "ComparisonWithBoolLiteral",
+    "diff_comportamental": null,
+    "dificuldade": null,
+    "origem": "construtor_variacao",
+    "aprovado_por_validador": false,
+    "motivo_reprovacao": "criterio (b) falhou -- a variacao passou em TODOS os testes (consertou o bug sem querer)"
+  },
+  {
+    "bug_id": "refactory_q1_567_v2",
+    "bug_original_id": "refactory_q1_567",
+    "numero_tentativa": 2,
+    "question_id": "question_1",
+    "codigo_errado": "def search(x, seq):\n    for i in range(len(seq)):\n        if seq == True:\n            return 0\n        elif x <= seq[i]:\n            return i\n        elif i == (len(seq)-1):\n            return i+1\n        else:\n            continue",
+    "codigo_referencia": "def search(x, seq):\n    for i in range(len(seq)):\n        if x <= seq[i]:\n            return i\n    return len(seq)",
+    "testes": [
+      {
+        "input": "search(42, (-5, 1, 3, 5, 7, 10))",
+        "output_esperado": "6"
+      },
+      {
+        "input": "search(42, [1, 5, 10])",
+        "output_esperado": "3"
+      },
+      {
+        "input": "search(5, (1, 5, 10))",
+        "output_esperado": "1"
+      },
+      {
+        "input": "search(7, [1, 5, 10])",
+        "output_esperado": "2"
+      },
+      {
+        "input": "search(3, (1, 5, 10))",
+        "output_esperado": "1"
+      },
+      {
+        "input": "search(-5, (1, 5, 10))",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(10, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "5"
+      },
+      {
+        "input": "search(-100, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(0, (-5, -1, 3, 5, 7, 10))",
+        "output_esperado": "2"
+      },
+      {
+        "input": "search(100, [])",
+        "output_esperado": "0"
+      },
+      {
+        "input": "search(-100, ())",
+        "output_esperado": "0"
+      }
+    ],
+    "equivoco_progmiscon": "ComparisonWithBoolLiteral",
+    "diff_comportamental": {
+      "primeira_linha_divergente": 2,
+      "variavel": "retorno",
+      "esperado": "0",
+      "obtido": "None",
+      "metodo": "fallback_retorno_final"
+    },
+    "dificuldade": null,
+    "origem": "construtor_variacao",
+    "aprovado_por_validador": true
+  }
+]

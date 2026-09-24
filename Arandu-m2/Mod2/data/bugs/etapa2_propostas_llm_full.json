@@ -1,0 +1,4766 @@
+[
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_066.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa um if-else desnecessário para mapear uma condição booleana a um valor bool. Em unique_day, acumula o dia em uma tupla e retorna True se não houver duplicata, quando deveria contar ocorrências e retornar count == 1 diretamente.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_069.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa `break` para sair do loop após encontrar a primeira ocorrência, acreditando que precisa verificar se há outras ocorrências depois. Na verdade, deveria contar TODAS as ocorrências e retornar se a contagem == 1, sem interromper cedo.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_084.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa estruturas if/else complexas para acumular valores em uma tupla e depois retornar True/False, quando deveria contar ocorrências e comparar diretamente com 1. A lógica de detecção de duplicatas é invertida: retorna False ao encontrar um segundo elemento, em vez de apenas contar e comparar o total.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_164.py",
+    "equivoco_id_proposto": "IfIsLoop",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno usa if/else dentro de um loop mas retorna imediatamente na primeira iteração, nunca checando todos os dias do mês. O código deveria continuar iterando para verificar se ALGUM dia é único, não retornar no primeiro.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_185.py",
+    "equivoco_id_proposto": "IfIsLoop",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day(), o aluno usa if/else dentro do loop mas ambas retornam True, causando retorno imediato na primeira iteração. O aluno parece crer que o if-else permite múltiplas iterações, quando na verdade cada branch retorna logo.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_200.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para mapear uma expressão booleana para um valor bool. Em `unique_day` e `unique_month`, a lógica `if total.count(...) > 1: return False else: return True` deveria ser simplificada para `return total.count(...) == 1`, evitando a inversão lógica implícita no padrão if/else.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_235.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear uma comparação booleana (count > 1) para True/False, quando poderia retornar diretamente a expressão booleana. A lógica está invertida: deveria retornar count == 1, não count > 1.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_248.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para converter o resultado da contagem em booleano, quando poderia usar diretamente a comparação. A lógica if unique > 1: return False; return True retorna True quando unique == 0, causando falso positivo — deveria ser 'return unique == 1' como na referência.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_267.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 321)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_279.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else desnecessariamente para mapear uma condição booleana (count > 1) para True/False, quando poderia retornar a comparação diretamente. Isso resulta em lógica invertida: retorna True quando count é 0 ou 1, quando deveria retornar True apenas quando count == 1.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_321.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno adicionou `return False` dentro do loop quando `count > 1`, fazendo a função retornar imediatamente. Porém, isso causa um bug: quando nenhuma ocorrência é encontrada (count permanece 0), a função retorna `True` ao sair do loop, o oposto do esperado. A causa raiz é não compreender que `return count == 1` avalia corretamente após o loop, não durante.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_377.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para mapear uma condição booleana a um valor True/False, quando deveria retornar diretamente a comparação. Em unique_day, 'return counter == 1' (referência) é mais claro e direto que 'if counter > 1: return False else: return True' (aluno).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_387.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear o resultado de uma comparação para um booleano (counter > 1 → False, else → True) quando poderia retornar diretamente a expressão booleana. Isso não é apenas estilo: a lógica resultante está invertida — deveria ser `return counter == 1`, não `return counter <= 1`.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_396.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear a condição (count >= 2) a um booleano, quando poderia retornar diretamente a expressão booleana. Reescrever como `return count == 1` (como na referência) evitaria o bug de lógica: o código do aluno retorna True quando count < 2, o que inclui count == 0, causando falsos positivos.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_425.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear uma condição booleana a um valor True/False, quando poderia retornar diretamente a comparação. Isso introduz lógica redundante: `counter > 1` retorna False, mas `counter == 0` também deveria retornar False (não True como o else faz).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_373.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno coloca `return` dentro do loop `for n`, fazendo a função retornar na primeira iteração. Acredita que precisa verificar todas as datas antes de retornar, quando na verdade o `return` interrompe imediatamente a execução.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_184.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno usa return dentro do loop sem compreender que isso interrompe imediatamente. O loop deveria verificar TODOS os dias do mês, mas retorna na primeira iteração, causando saídas prematuras com lógica invertida.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_187.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day, o aluno coloca return dentro do loop for, fazendo-o retornar após verificar apenas o primeiro dia do mês. A lógica deveria acumular verificações de todos os dias e retornar após o loop terminar, não no meio dele.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_349.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em unique_month, o aluno só retorna True quando encontra exatamente uma ocorrência, mas não retorna False explicitamente quando a condição não é atendida. A função retorna None implicitamente, causando falha nos testes. O aluno deveria retornar a comparação boolean diretamente como na referência, não depender de um return implícito no fim.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_393.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day, o aluno coloca o return True/False dentro do loop (com checagem do counter), causando retorno prematuro após processar apenas o primeiro elemento. A lógica deveria acumular e retornar após verificar todos os elementos, mas o return cedo interrompe a iteração antes de completar.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_420.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else explícito para retornar True/False baseado em uma comparação booleana, quando poderia retornar diretamente a expressão. Mais importante: em unique_month, usa '<=' em vez de '==' na condição, bug que seria evidente se retornasse diretamente 'count == 1'.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_421.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear uma condição booleana (count<=1) para True/False, quando poderia retornar diretamente a comparação. A lógica errada (<=1 em vez de ==1) só foi possível porque o if/else mascarou a intenção: retornar diretamente 'count == 1' revelaria imediatamente o erro de usar <= em vez de ==.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_435.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day, o aluno usa if/else dentro do loop com return em ambos os ramos, fazendo o loop terminar após o primeiro elemento. O código esperado não retorna imediatamente, deixando o loop continuar até encontrar um dia único. O aluno acredita que precisa retornar logo ao testar cada dia, em vez de deixar a estrutura de controle natural fazer seu trabalho.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_016.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 401)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_067.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usou if/else desnecessariamente para retornar True/False baseado em uma condição booleana (counter<=1), quando poderia retornar a condição diretamente (counter==1). Isso causou a lógica errada: counter<=1 inclui 0, retornando True quando não deveria.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_114.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 406)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_120.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno usa return dentro do if/else dentro do loop, acreditando que precisa retornar imediatamente em cada iteração. Na verdade, deveria continuar iterando sobre todos os meses para verificar a condição completa, retornando False apenas após examinar todas as datas.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_122.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que `contains_unique_day` foi hardcoded para retornar True apenas para \"May\" e \"June\", ignorando completamente a lógica correta (iterar sobre datas e verificar unicidade). Não é equívoco conceitual de linguagem, mas erro de lógica algorítmica puro.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_129.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para converter o resultado de uma comparação em booleano. Em unique_day e unique_month, a lógica if counter > 1: return False else: return True é equivalente a return counter == 1, que é exatamente o que o código de referência faz de forma direta.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_134.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno retorna False imediatamente ao encontrar um mês que não corresponde, em vez de permitir que o loop continue verificando todos os aniversários do mês solicitado. O return prematuro interrompe a busca antes de avaliar todos os candidatos.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_135.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno usa `continue` após encontrar um dia único, fazendo a função continuar o loop ao invés de retornar imediatamente. Quando não encontra um dia único no mês, retorna False antes de checar todos os nascimentos, porque não compreende que `return` interrompe a função imediatamente.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_194.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para converter uma condição booleana em True/False, quando poderia retornar a comparação diretamente. Mais criticamente, inicializa o contador em 1 em vez de 0, causando contagem incorreta: com 0 elementos, retorna True (x=1 não é > 2) em vez de False.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_196.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para converter um resultado booleano quando poderia usar a expressão diretamente. Em unique_day/month, usar `if x > 1: return False else: return True` em vez de `return x == 1` inverte a lógica: retorna True quando há >1 ocorrências, quando deveria retornar True apenas quando há exatamente 1.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_215.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno coloca `return` dentro do loop `for`, causando retorno prematuro na primeira iteração. Se o dia não for encontrado na primeira volta, a função retorna `None` implicitamente ao sair do loop sem `return`, em vez de contar todas as ocorrências e retornar um booleano.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_251.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear uma condição booleana em True/False, quando poderia retornar diretamente a comparação. A lógica correta é `return counter == 1`, não `if counter <= 1: return True`; o operador `<=` inclui zero, invertendo a lógica esperada.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_255.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else para mapear uma condição booleana para bool (count > 1 -> False/True), quando poderia usar a expressão diretamente. A concepção correta (return count == 1) retorna True apenas quando count é exatamente 1, enquanto o código do aluno retorna True quando count é 0 ou 1, causando falsos positivos.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_301.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal está em `contains_unique_day` que verifica apenas meses hardcoded ('June', 'May') ao invés de iteragir sobre `possible_birthdays` e usar as funções auxiliares. Isso é uma falha lógica de algoritmo, não um equívoco conceitual de programação.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_320.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno usa `return` dentro do loop `for t in month_day`, causando retorno imediato na primeira iteração. O aluno deveria acumular/verificar todas as datas do mês, mas o return antecipado impede isso, retornando True baseado apenas no primeiro elemento.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_339.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é o uso de 'in' (containment) em vez de '==' (equality): 'date in i' verifica se date é substring/elemento de i (tuple), não se equals i[1]. Mesmo corrigindo if/else para return, a condição de comparação permaneceria logicamente errada.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_360.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 417)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_407.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else desnecessariamente para mapear uma condição booleana a True/False. Em unique_day e unique_month, retorna counter<=1 diretamente quando deveria retornar counter==1; a estrutura if-else mascara a lógica incorreta (<=1 em vez de ==1).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_415.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else desnecessariamente para converter uma expressão booleana em bool. Reescrever como `return count == 1` (concepção correta) evitaria o bug, pois a lógica `if count>1: return False else: return True` é logicamente equivalente apenas quando count==1, mas o aluno não retorna quando count==0, causando True incorreto.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_430.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear uma condição booleana (`unique_num > 1`) para True/False, quando poderia retornar diretamente a comparação. A lógica está invertida: retorna False quando `unique_num > 1` (não único), True quando `unique_num <= 1`, mas deveria retornar `count == 1` (exatamente um).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_119.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função contains_unique_day, o aluno retorna dentro do loop (linhas com 'return True' e 'return False'), interrompendo a iteração prematuramente. O código deveria apenas retornar False fora do loop após verificar todos os meses, mas a estrutura if/else deferida força o retorno imediato no primeiro mês processado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_141.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day(), o aluno usa return True/False dentro do for loop com else, causando retorno prematuro na primeira iteração. A lógica deveria continuar iterando todos os dias do mês antes de retornar, não parar imediatamente.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_161.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno retorna False imediatamente após verificar o primeiro dia (índice 0), impedindo o loop de iterar pelos demais dias. O return prematuro deveria estar fora do loop, mas o aluno o coloca dentro dele, causando saída antecipada.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_245.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else desnecessariamente para retornar um booleano, quando poderia comparar o resultado diretamente. Além disso, inicializa x=1 em vez de x=0, causando contagem errada que resulta em lógica invertida (x>2 retorna False quando deveria contar exatamente 1 ocorrência).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_246.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para converter uma condição booleana em True/False quando poderia retornar a comparação diretamente. Em unique_day e unique_month, inicializa x=1 em vez de x=0, causando contagem incorreta; a lógica if/else complexa mascara o verdadeiro problema (inicialização errada do contador).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_283.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug é um erro de indexação: o aluno passa i[0] (mês) em vez de i[1] (dia) para unique_day. Não é um equívoco conceitual catalogado, mas um engano de mapeamento de dados.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_353.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno usa return True/False dentro do loop for, causando retorno prematuro na primeira iteração. A crença subjacente é que o loop precisa continuar até o final, então coloca lógica complexa (acumular em tupla) antes de retornar, quando deveria retornar assim que encontrar a condição.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_361.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug está em contains_unique_day comparar month com i[1] (dia) em vez de i[0] (mês). Isso é um erro lógico de indexação, não um equívoco conceitual do catálogo. A estrutura if/else é redundante mas não causa o bug.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_385.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para mapear uma condição booleana ao invés de retornar a expressão diretamente. Em unique_day e unique_month, a lógica if counter > 1: return False else: return True é equivalente a return counter == 1, mas a reescrita teria evitado o bug lógico e deixado claro que o retorno deveria ser quando counter == 1, não quando counter != 0.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_362.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else explícito para retornar True/False baseado em uma comparação booleana, quando poderia retornar a própria comparação. Mais criticamente, a função contains_unique_day foi reescrita incorretamente: verifica apenas se o mês é único, não se existe um dia único naquele mês, perdendo a chamada à função unique_day.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_058.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que `contains_unique_day` retorna `None` em vez de implementar a lógica esperada (iteração + condição). Isso não corresponde a nenhuma misconception do catálogo; é simplesmente código incompleto/abandonado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_090.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função `contains_unique_day` contém apenas `return` sem valor, retornando `None`. O aluno deixou a implementação incompleta, provavelmente sem entender que um `return` nú imediatamente encerra a função. A solução correta requer chamar a lógica dentro da função, não apenas retornar vazio.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_113.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que `contains_unique_day` retorna `None` (return vazio) ao invés de implementar a lógica necessária. Isso não é explicado pelo catálogo: a função está incompleta, não reflete um equívoco conceitual sobre como Python funciona.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_115.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que a função `contains_unique_day` está vazia (apenas `return` sem valor), retornando `None`. Isso não corresponde a nenhum equívoco conceitual listado — é simplesmente código incompleto/não implementado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_152.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug raiz é a função contains_unique_day estar vazia (return sem valor), não um equívoco conceitual sobre linguagem. Em unique_day/unique_month, iterar sobre elementos individuais em vez de tuplas é um erro lógico de indexação, não uma crença incorreta catalogada.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_165.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal em `contains_unique_day` está em iterar sobre índices (0, 1, 2...) em vez de valores reais de dias, passando um inteiro onde deveria passar um dia. A causa raiz é lógica algorítmica incorreta, não um equívoco conceitual do catálogo.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_191.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função `contains_unique_day` possui apenas `return` sem valor, retornando `None` em vez de executar a lógica necessária. O aluno deixou a implementação incompleta, provavelmente acreditando que poderia completar depois, demonstrando falta de compreensão de que `return` deve ocorrer imediatamente após determinar o resultado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_211.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função `contains_unique_day` possui apenas `return` sem valor, retornando `None`. O aluno não implementou a lógica de iteração e retorno condicional, deixando o `return` vazio como se adiasse a implementação real para depois.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_220.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função `contains_unique_day` tem apenas `return` sem valor, retornando None. O aluno não implementou a lógica que deveria iterar e retornar True/False, provavelmente acreditando que poderia deixar o retorno para depois ou não compreendendo que precisa retornar imediatamente dentro da função.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_256.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função contains_unique_day contém apenas 'return' sem valor, retornando None. O aluno evitou implementar a lógica de retorno imediato, acreditando erroneamente que precisava 'processar tudo antes'. A concepção correta seria retornar True/False logo ao encontrar a condição.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_298.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função contains_unique_day contém apenas 'return' sem valor, retornando None. O aluno evitou implementar a lógica de busca e retorno imediato, deixando uma função incompleta que jamais retorna o resultado esperado (True/False).",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_304.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno escreve `if not unique_day and not unique_month` sem invocar as funções (faltam parênteses e argumentos). Isso compara os objetos função contra truthiness, não seus retornos. O aluno acredita que precisava comparar contra valores booleanos literalmente em vez de chamar e usar o resultado.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_308.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para retornar True/False baseado em uma condição, quando poderia retornar a condição diretamente. Embora `unique_day` e `unique_month` funcionem, a função `contains_unique_day` foi deixada como `pass`, indicando dificuldade em compreender que expressões booleanas podem ser retornadas diretamente sem estrutura condicional explícita.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_309.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função contains_unique_day contém apenas 'return' sem valor, retornando None. O aluno não implementou a lógica, provavelmente planejando completá-la depois, demonstrando crença de que o return não precisa ocorrer imediatamente com um resultado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_315.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função contains_unique_day retorna None imediatamente (return sem valor) em vez de implementar a lógica de iteração e retorno condicional. O aluno aparentemente não entendeu que return encerra a função, deixando a implementação incompleta.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_326.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que `contains_unique_day` retorna `None` (implementação incompleta com apenas `return`), não uma causa conceitual. As funções `unique_day` e `unique_month` têm lógica correta, apenas estilo verboso (if/else desnecessário), que não causa o bug observado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_343.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é a implementação incompleta de `contains_unique_day`: a função retorna `None` (implicitamente) em vez de iterar pelos aniversários e retornar um booleano. Esta é uma omissão lógica do algoritmo, não um equívoco conceitual sobre linguagem de programação.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_369.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que `contains_unique_day` retorna `None` em vez de executar a lógica necessária (a função está vazia com apenas `return`). Isso não corresponde a nenhum equívoco conceitual do catálogo — é simplesmente código incompleto.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_405.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função contains_unique_day contém apenas 'return' sem valor, retornando None. O aluno deveria executar a lógica de busca e retorno imediatamente, mas deixou a função incompleta, possivelmente por não reconhecer que um 'return' vazio encerra a função instantaneamente.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_427.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "A função contains_unique_day só tem 'return' sem valor, retornando None. O aluno acredita que deve estruturar a lógica diferente (talvez adiando o retorno), em vez de retornar True/False imediatamente conforme a condição.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_008.py",
+    "equivoco_id_proposto": "AssignCompares",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função unique_day, o aluno compara `possible_birthdays[i][1] == days` mas nunca atualiza `days`; em vez disso, tenta usar `day = day + 1` (variável indefinida). O aluno confunde `==` (comparação) com `=` (atribuição), não incrementando o contador correto dentro do loop.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_010.py",
+    "equivoco_id_proposto": "AssignCompares",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função unique_day, o aluno usa `if possible_birthdays[i][1] == days:` e depois `day = day + 1`, comparando com a variável `days` (inicializada como 0) em vez do parâmetro `day` passado. O aluno confundiu a atribuição inicial `days = 0` com uma comparação, não capturando o valor correto a ser buscado.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_244.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para converter uma condição booleana em bool, quando poderia retornar a expressão diretamente. Inicializa x=1 e compara x>2, quando deveria contar desde 0 e comparar count==1. A lógica de contagem está fundamentalmente incorreta devido ao uso desnecessário de if/else que mascara a intenção real.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_258.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno testa `if not unique_day and not unique_month:` comparando nomes de função com valores booleanos, em vez de chamar as funções e verificar seus retornos. Deveria ser `if not unique_day(month, possible_birthdays) and not unique_month(month, possible_birthdays):`.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_325.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em unique_month, o aluno coloca o if/else dentro do loop, retornando True assim que count==1 na primeira iteração, ao invés de completar a contagem. Acredita que precisa verificar e retornar dentro do loop em vez de deixar o return sair após o loop terminar.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_386.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para retornar True/False baseado numa condição booleana (len(count) < 2), quando poderia retornar diretamente a comparação. Além disso, `contains_unique_day` tem apenas `return` sem valor, retornando None em vez de executar a lógica necessária.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_391.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else para retornar True/False baseado numa comparação, quando poderia retornar diretamente o resultado da comparação (count == 1). A lógica (count >= 2 -> False, else -> True) é equivalente a (count == 1), mas o padrão revela crença desnecessária em if/else para mapear condição booleana.",
+    "testes_falhos": [
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_329.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno coloca o return dentro do loop condicional, retornando True na primeira iteração sem contar todos os elementos. Acredita que precisa continuar processando antes de retornar o resultado final, quando na verdade deveria retornar imediatamente após o loop completo.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_260.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno testa `if not unique_day and not unique_month` sem chamar as funções. Isso compara os objetos função (sempre truthy) em vez de seus resultados, invertendo completamente a lógica. Chamar as funções com argumentos corretos resolveria o bug.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_262.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno escreve `if not unique_day and not unique_month:` testando os nomes das funções como booleanos ao invés de chamá-las. Deveria chamar as funções: `unique_day(birthday[1], possible_birthdays)` e `unique_month(month, possible_birthdays)`.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_305.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em contains_unique_day, o aluno escreve 'if not unique_day and not unique_month' testando os nomes das funções (sempre True) em vez de chamá-las com argumentos. Deveria chamar as funções: unique_day(birthday[1], possible_birthdays) e unique_month(birthday[0], possible_birthdays).",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_044.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para retornar True/False quando poderia retornar diretamente a comparação booleana. Na função unique_day, `if count==1: return True else: return False` deveria ser apenas `return count == 1`.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_089.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que as funções `unique_month` e `contains_unique_day` retornam `None` (corpo vazio) em vez de implementar a lógica. Em `unique_day`, há uma mutação desnecessária de `possible_birthdays` dentro do loop que não causa o bug de retorno `None` observado nos testes. O catálogo não possui ficha para \"funções não implementadas\"",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_110.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else desnecessariamente para retornar True/False em unique_day, quando poderia retornar diretamente a comparação booleana. Além disso, as funções unique_month e contains_unique_day têm apenas 'return' (None), quando deveriam implementar lógica similar.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_111.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno envolveu uma comparação booleana em if/else desnecessário em unique_day, quando poderia retornar diretamente o resultado da comparação. Mais criticamente, deixou unique_month e contains_unique_day apenas com 'return' vazio, retornando None em vez de implementar a lógica.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_145.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 394)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_190.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 373)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_193.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que unique_month() e contains_unique_day() retornam None (implicitamente) em vez de implementar a lógica correta. Isso não corresponde a nenhum equívoco conceitual do catálogo — é simplesmente código incompleto/não implementado, não uma crença incorreta sobre como Python funciona.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_219.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno deixou as funções unique_month e contains_unique_day vazias (retornam None implicitamente). Isso não é equívoco conceitual, mas sim omissão/incompletude do código. A lógica de unique_day está correta, só verbosa.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_250.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if-else para converter uma condição booleana em bool (value == 1) quando poderia retornar a comparação diretamente. Reescrevendo como `return value == 1`, o bug em unique_day seria evitado, e as funções vazias (unique_month e contains_unique_day) também precisariam ser implementadas com a mesma lógica direta.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_259.py",
+    "equivoco_id_proposto": "ComparisonWithBoolLiteral",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `contains_unique_day`, o aluno escreve `if not unique_day and not unique_month` testando os nomes das funções como booleanos, sem chamá-las. Deveria chamar as funções e testar seus retornos: `if not unique_day(...) and not unique_month(...)`.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"16\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"17\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_306.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que unique_month e contains_unique_day retornam None (não implementadas), não um equívoco conceitual de lógica. A função unique_day funciona, mas as demais estão incompletas—isso é ausência de implementação, não um misconception listado no catálogo.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_341.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 347)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_366.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que `unique_month` e `contains_unique_day` retornam `None` (corpo vazio) em vez de implementar a lógica. Isso não corresponde a nenhum equívoco conceitual do catálogo — é simplesmente código incompleto/não implementado.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_374.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": "alta",
+    "justificativa_llm": "O bug principal é que as funções unique_month e contains_unique_day retornam None (implicitamente) em vez de implementar a lógica necessária. Isso não é um equívoco conceitual catalogado, mas sim código incompleto/não implementado.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_403.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para retornar True/False baseado em uma comparação simples (counter == 1), quando poderia retornar a expressão booleana diretamente. Além disso, as funções unique_month e contains_unique_day retornam None por não implementarem a lógica, causando falha em todos os testes.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_210.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else desnecessariamente para retornar um booleano, quando poderia retornar diretamente a expressão. Além disso, a lógica está invertida: inicia com x=1 e compara x>2, quando deveria contar ocorrências começando em 0 e comparar com ==1.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_299.py",
+    "equivoco_id_proposto": "MapToBooleanWithIf",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno usa if/else explícito para converter uma comparação booleana em um valor bool (counter>1 → False/True), quando poderia retornar diretamente a expressão booleana. Mais importante: a lógica da condição está invertida (counter>1 retorna False quando deveria retornar True para >1), revelando confusão sobre quando usar if/else versus retornar a expressão diretamente.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_381.py",
+    "equivoco_id_proposto": null,
+    "confianca_llm": null,
+    "justificativa_llm": null,
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"3\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null,
+    "erro": "JSONDecodeError: Extra data: line 6 column 1 (char 443)"
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_413.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `unique_day` e `unique_month`, o aluno retorna imediatamente na primeira iteração do loop em vez de contar todas as ocorrências. Acredita que precisa processar todo o loop antes de retornar, quando na verdade um retorno antecipado corrompe a lógica de contagem.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_096.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno coloca `return count` dentro do loop, retornando imediatamente na primeira iteração com valor 1 ou 0, em vez de completar o loop e retornar a comparação final. Acredita que precisa guardar o resultado para retornar só ao final.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "1",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_104.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "O aluno coloca `return count` dentro do loop, interrompendo imediatamente na primeira iteração, em vez de completar a contagem e retornar apenas após. O código subsequente (`if count == 1...`) nunca executa, evidenciando crença de que return não interrompe imediatamente.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "1",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "0",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_107.py",
+    "equivoco_id_proposto": "ParenthesesOnlyIfArgument",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na linha `if count_dates == 1:`, o aluno compara a função em si com 1, em vez de chamá-la com `count_dates(date, possible_birthdays)`. Faltam os parênteses e argumentos necessários para invocar a função.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_108.py",
+    "equivoco_id_proposto": "ParenthesesOnlyIfArgument",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em `unique_day`, o aluno escreve `if count_dates == 0` comparando a função com 0, não chamando-a. Deveria ser `count_dates(date, possible_birthdays)` com parênteses. Sem eles, a função nunca é invocada e a condição sempre falsa.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_109.py",
+    "equivoco_id_proposto": "ParenthesesOnlyIfArgument",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função unique_day, o aluno escreve 'if count_dates == 2' sem chamar a função count_dates() com parênteses e argumentos. Isso compara o objeto função com o inteiro 2, retornando sempre False, em vez de chamar a função e comparar seu resultado.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_402.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Na função unique_day, o aluno retorna True/False imediatamente dentro do loop, interrompendo a iteração no primeiro elemento. Crê que precisa percorrer TODOS os elementos antes de retornar, mas não o faz. O retorno deveria acontecer após contar todas as ocorrências.",
+    "testes_falhos": [
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "True",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  },
+  {
+    "questao": "question_2",
+    "arquivo": "wrong_2_418.py",
+    "equivoco_id_proposto": "DeferredReturn",
+    "confianca_llm": "alta",
+    "justificativa_llm": "Em unique_day, o aluno retorna True/False dentro do loop na primeira iteração, sem contar todos os elementos. Acredita que precisa iterar completamente antes de retornar, quando na verdade deve retornar imediatamente após contar e comparar com 1.",
+    "testes_falhos": [
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"January\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"February\", ((\"January\",\"10\"),(\"February\",\"1\"),(\"February\",\"10\")))",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"March\", ((\"January\",\"1\"),(\"February\",\"1\")))",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"1\", ((\"January\",\"1\"),(\"January\",\"2\")))",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"18\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_day(\"19\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "False",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"May\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "unique_month(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"June\", tuple_of_possible_birthdays)",
+        "esperado": "True",
+        "obtido": "None",
+        "ok": false
+      },
+      {
+        "input": "contains_unique_day(\"July\", tuple_of_possible_birthdays)",
+        "esperado": "False",
+        "obtido": "None",
+        "ok": false
+      }
+    ],
+    "revisao_pendente": true,
+    "decisao_humana": null
+  }
+]

@@ -1,0 +1,23 @@
+# ===== segredos — NUNCA commitar =====
+.env
+
+# ===== gerados em runtime =====
+__pycache__/
+*.pyc
+logs/
+dados_alunos/
+
+# ===== temporários / lixo =====
+_to_delete/
+*.tmp
+
+# ===== M2: manter só os dados de bugs que o M3 usa =====
+# (Mod1/Mod3/Mod4, os scripts do pipeline, data.zip, out/ e o dataset bruto do
+#  Refactory são do módulo M2 — a equipe já os tem; ficam fora deste repo do M3)
+Arandu-m2/*
+!Arandu-m2/README.md
+!Arandu-m2/Mod2
+Arandu-m2/Mod2/*
+!Arandu-m2/Mod2/data
+Arandu-m2/Mod2/data/*
+!Arandu-m2/Mod2/data/bugs
