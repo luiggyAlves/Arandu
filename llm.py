@@ -14,7 +14,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 import json
 import os
+import threading
 
+import config
 from log import get_logger
 
 _log = get_logger("llm")
@@ -53,6 +55,54 @@ class LLM(ABC):
         ...
 
 
+class LimiteLLMExcedido(Exception):
+    """Teto de chamadas ao modelo nesta sessão."""
+
+
+# Serializa a medição do delta de tokens: o LLM interno é compartilhado
+# pelo processo, e duas sessões não podem misturar o acumulado.
+_trava_tokens = threading.Lock()
+
+
+class ContadorLLM(LLM):
+    """Envolve um LLM e acumula chamadas e tokens desta sessão."""
+
+    def __init__(self, inner: LLM):
+        self.inner = inner
+        self.chamadas = 0
+        self.tokens_entrada = 0
+        self.tokens_saida = 0
+        self.por_tarefa: dict[str, int] = {}
+
+    def chamar(self, tarefa: str, dados: dict) -> dict:
+        with _trava_tokens:
+            limite = config.MAX_CHAMADAS_LLM_SESSAO
+            if self.chamadas >= limite:
+                raise LimiteLLMExcedido(
+                    f"teto de {limite} chamadas ao modelo nesta sessão atingido")
+            te0 = int(getattr(self.inner, "tokens_entrada", 0) or 0)
+            ts0 = int(getattr(self.inner, "tokens_saida", 0) or 0)
+            try:
+                return self.inner.chamar(tarefa, dados)
+            finally:
+                te1 = int(getattr(self.inner, "tokens_entrada", 0) or 0)
+                ts1 = int(getattr(self.inner, "tokens_saida", 0) or 0)
+                self.tokens_entrada += max(0, te1 - te0)
+                self.tokens_saida += max(0, ts1 - ts0)
+                self.chamadas += 1
+                self.por_tarefa[tarefa] = self.por_tarefa.get(tarefa, 0) + 1
+
+    def resumo(self) -> dict:
+        """Totais desta sessão: chamadas e tokens, sem valor em dinheiro."""
+        return {
+            "chamadas": self.chamadas,
+            "tokens_entrada": self.tokens_entrada,
+            "tokens_saida": self.tokens_saida,
+            "por_tarefa": dict(self.por_tarefa),
+            "limite": config.MAX_CHAMADAS_LLM_SESSAO,
+        }
+
+
 # --------------------------------------------------------------------------- #
 # MockLLM — respostas roteirizadas para o cenário "contar pares".
 # Serve para rodar e testar o laço do Treinador SEM chave de API.
@@ -60,6 +110,8 @@ class LLM(ABC):
 class MockLLM(LLM):
     def __init__(self):
         self.chamadas = 0
+        self.tokens_entrada = 0
+        self.tokens_saida = 0
 
     def chamar(self, tarefa: str, dados: dict) -> dict:
         self.chamadas += 1

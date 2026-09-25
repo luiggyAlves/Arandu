@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 logs/
 dados_alunos/
+dados_sessoes/
 
 # ===== temporários / lixo =====
 _to_delete/

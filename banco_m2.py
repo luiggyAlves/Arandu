@@ -42,9 +42,25 @@ def _dificuldade(codigo: str) -> int:
     return max(1, min(5, d))
 
 
+# Globais do harness do Refactory que o runner não define. O nome vira o
+# literal só na chamada do teste (e no exemplo); o código do aluno não muda.
+_FIXTURES = {
+    "tuple_of_possible_birthdays":
+        '(("May","15"),("May","16"),("May","19"),("June","17"),("June","18"),'
+        '("July","14"),("July","16"),("August","14"),("August","15"),("August","17"))',
+}
+
+
+def _injetar_fixtures(texto: str) -> str:
+    for nome, literal in _FIXTURES.items():
+        texto = re.sub(rf"\b{re.escape(nome)}\b", literal, texto)
+    return texto
+
+
 def _mapear(b: dict) -> dict:
-    testes = [{"chamada": t["input"], "esperado": str(t["output_esperado"])}
+    testes = [{"chamada": _injetar_fixtures(t["input"]), "esperado": str(t["output_esperado"])}
               for t in b.get("testes", [])]
+    exemplo = _injetar_fixtures(testes[0]["chamada"] if testes else "")
     return {
         "id": b["bug_id"],
         "equivoco": b.get("equivoco_progmiscon", "Desconhecido"),
@@ -54,7 +70,7 @@ def _mapear(b: dict) -> dict:
         "cod_ref": b["codigo_referencia"],
         "modo": "chamada",
         "assinatura": _assinatura(b["codigo_referencia"]),
-        "exemplo_entrada": testes[0]["chamada"] if testes else "",   # p/ pré-preencher o campo
+        "exemplo_entrada": exemplo,   # p/ pré-preencher o campo
         "origem": b.get("origem", "refactory"),
         "testes": testes,
     }

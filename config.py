@@ -7,7 +7,7 @@ Tudo aqui é fácil de ajustar sem mexer na lógica.
 MAX_PASSOS_REACT = 6            # passos raciocina->age->observa por intervenção
 MAX_REGENERACOES_HIPOTESE = 2   # regenerações antes de cair pro modo direto
 MAX_REJEICOES_VERIFICADOR = 3   # reprovações seguidas antes de rebaixar
-MAX_CHAMADAS_LLM_SESSAO = 40    # teto global por sessão (protege a conta)
+MAX_CHAMADAS_LLM_SESSAO = 150   # teto global por sessão (protege a conta)
 
 # --- Sessão ---
 TIMEOUT_INATIVIDADE_S = 600     # 10 min sem interação -> encerra gentil
@@ -29,3 +29,6 @@ MODELO_LLM = "gpt-4o-mini"
 
 # --- Ferramentas ---
 MAX_PASSOS_TRACE = 200          # trunca traces longos (protege contexto/custo)
+
+# --- Validação do banco ---
+MAX_LINHAS_CONSERTO = 5

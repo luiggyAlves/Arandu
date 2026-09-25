@@ -102,7 +102,8 @@ class Treinador:
             "cod_aluno": cod_aluno, "cod_ref": cod_ref,
             "equivocos_possiveis": self._equivocos(),
         }).get("hipoteses", [])
-        log.append(("gerar_hipoteses", [h.get("id") for h in hipoteses]))
+        log.append(("gerar_hipoteses", [h.get("id") for h in hipoteses],
+                    {"hipoteses": list(hipoteses)}))
         _log.info("hipóteses iniciais: %s", [h.get("id") for h in hipoteses])
 
         ancoras: list[dict] = []
@@ -124,7 +125,8 @@ class Treinador:
                     hipoteses = self.llm.chamar("gerar_hipoteses", {
                         "cod_aluno": cod_aluno, "cod_ref": cod_ref,
                         "equivocos_possiveis": self._equivocos()}).get("hipoteses", hipoteses)
-                    log.append(("regenerar_hipoteses", regeneracoes))
+                    log.append(("regenerar_hipoteses", regeneracoes,
+                                {"hipoteses": list(hipoteses)}))
                     continue
                 break
 
@@ -132,8 +134,10 @@ class Treinador:
             for estimulo in candidatos:
                 tentadas.append(estimulo)
                 r = self._analisar(cod_aluno, cod_ref, estimulo, chamada)
-                ancoras.append(self._ancora(r))
-                log.append(("analisar", estimulo, f"divergiu={r['divergiu']}"))
+                ancora = self._ancora(r)
+                ancoras.append(ancora)
+                log.append(("analisar", estimulo, f"divergiu={r['divergiu']}",
+                            {"ancora": ancora}))
                 _log.info("analisar estimulo=%r divergiu=%s (aluno=%r ref=%r)",
                           estimulo, r["divergiu"], r["saida_aluno"].strip(), r["saida_ref"].strip())
                 if r["divergiu"]:
@@ -148,7 +152,11 @@ class Treinador:
                 "hipoteses": hipoteses, "resultado": tools.resumo_analise(resultado_div)})
             sobrev = set(poda.get("sobreviventes", []))
             novas = [h for h in hipoteses if h.get("id") in sobrev]
-            log.append(("podar", list(sobrev)))
+            sobrev_lista = list(sobrev)
+            log.append(("podar", sobrev_lista, {
+                "sobreviventes": sobrev_lista,
+                "raciocinio": poda.get("raciocinio", ""),
+            }))
             _log.info("podar -> sobreviventes=%s", list(sobrev))
 
             if not novas:
@@ -157,7 +165,8 @@ class Treinador:
                     hipoteses = self.llm.chamar("gerar_hipoteses", {
                         "cod_aluno": cod_aluno, "cod_ref": cod_ref,
                         "equivocos_possiveis": self._equivocos()}).get("hipoteses", [])
-                    log.append(("regenerar_hipoteses", regeneracoes))
+                    log.append(("regenerar_hipoteses", regeneracoes,
+                                {"hipoteses": list(hipoteses)}))
                     continue
                 break
             hipoteses = novas
@@ -165,8 +174,9 @@ class Treinador:
         conclusivo = len(hipoteses) == 1
         if not conclusivo:
             r = self._analisar(cod_aluno, cod_ref, entrada_falha, chamada)
-            ancoras.append(self._ancora(r, modo="direto"))
-            log.append(("fallback_direto", entrada_falha))
+            ancora = self._ancora(r, modo="direto")
+            ancoras.append(ancora)
+            log.append(("fallback_direto", entrada_falha, {"ancora": ancora}))
             _log.info("fallback direto com estimulo=%r", entrada_falha)
 
         eq = hipoteses[0] if hipoteses else None

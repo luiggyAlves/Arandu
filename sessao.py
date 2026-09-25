@@ -20,9 +20,11 @@ import time
 import tools
 import catalogo
 import config
+import registro
 from treinador import Treinador
 from modelo_aluno import ModeloAluno
 from verificador import verificar
+from llm import ContadorLLM
 from log import get_logger
 
 _log = get_logger("sessao")
@@ -34,14 +36,48 @@ ALUNO_TRABALHANDO = "aluno_trabalhando"
 AGUARDANDO_EXPLICACAO = "aguardando_explicacao"
 ENCERRADA = "encerrada"
 
+# Mesmo texto socrático usado quando o Verificador esgota as rejeições.
+_TEXTO_DICA_SEGURA = ("Qual a sua hipótese sobre o erro? Que entrada você "
+                      "poderia rodar para testá-la?")
+
+
+def _hips_evento(extra: dict) -> list[dict]:
+    """Hipóteses do log da investigação, no formato do painel."""
+    saida = []
+    for h in extra.get("hipoteses") or []:
+        if not isinstance(h, dict):
+            continue
+        eq = h.get("equivoco")
+        saida.append({
+            "id": h.get("id"),
+            "equivoco": eq,
+            "rotulo": (catalogo.CATALOGO.get(eq) or {}).get("nome"),
+            "descricao": h.get("descricao"),
+        })
+    return saida
+
+
+def _experimento_evento(passo, extra: dict) -> dict:
+    anc = extra.get("ancora") if isinstance(extra.get("ancora"), dict) else {}
+    return {
+        "entrada": anc.get("entrada", passo[1] if len(passo) > 1 else None),
+        "saida_aluno": anc.get("saida_aluno"),
+        "saida_ref": anc.get("saida_ref"),
+        "divergiu": anc.get("divergiu"),
+    }
+
 
 class Sessao:
     def __init__(self, id_aluno: str, banco: list[dict], treinador: Treinador,
-                 carregar_modelo: bool = True):
+                 carregar_modelo: bool = True, nome_llm: str = ""):
         # carregar_modelo=False começa um aluno do zero (útil para demo/testes)
         self.modelo = ModeloAluno.carregar(id_aluno) if carregar_modelo else ModeloAluno(id_aluno=id_aluno)
         self.banco = banco
         self.treinador = treinador
+        # cada sessão conta o próprio custo, mesmo compartilhando o LLM interno
+        if not isinstance(self.treinador.llm, ContadorLLM):
+            self.treinador.llm = ContadorLLM(self.treinador.llm)
+        self.registro = registro.RegistroSessao(id_aluno, nome_llm)
         self.estado = ESCOLHENDO_BUG
         self.bug = None
         self.cod_atual = ""          # código que o aluno tem agora (começa bugado)
@@ -100,6 +136,7 @@ class Sessao:
         self.ultima_acao_agente = None
         self._painel("📘", f"novo desafio ({bug.get('equivoco', '?')}) — observando o aluno")
         _log.info("novo bug: %s (equívoco=%s, modo=%s)", bug["id"], bug["equivoco"], bug.get("modo", "stdin"))
+        self.registro.novo_desafio(bug)
         return {"resposta": "novo_bug",
                 "bug": {"id": bug["id"], "codigo": bug["cod_bugado"], "enunciado": bug.get("enunciado", ""),
                         "modo": bug.get("modo", "stdin"), "assinatura": bug.get("assinatura", ""),
@@ -109,6 +146,8 @@ class Sessao:
     def _encerrar(self, motivo: str) -> dict:
         self.estado = ENCERRADA
         self.modelo.salvar()
+        self.registro.encerrar(motivo)
+        self._salvar_registro()
         return {"resposta": "encerrada", "motivo": motivo,
                 "estado": self.estado, "encerrada": True}
 
@@ -134,6 +173,10 @@ class Sessao:
                 self.modelo.salvar()
             except Exception:
                 pass
+        try:
+            self._salvar_registro()
+        except Exception:
+            pass
         return resp
 
     def _dispatch(self, tipo, dados):
@@ -181,6 +224,7 @@ class Sessao:
                     return {"resposta": "sinais_ok", "estado": self.estado, "encerrada": False}
                 self.modelo.registrar_sinais_interface(metrics)
                 self.colou_codigo_bug += 1
+                self.registro.colou_codigo()
                 self._hist("colou um código de fora no editor")
                 resp = {"resposta": "sinais_ok", "estado": self.estado, "encerrada": False}
                 interv = self._monitorar({"tipo": "colou_codigo_externo"})
@@ -198,6 +242,7 @@ class Sessao:
         self.modelo.registrar_sinais_interface({"usou_trace": 1})
         self.modelo.registrar_depuracao({"le_variaveis": True})
         self.usou_trace_bug += 1
+        self.registro.ver_trace()
         self._hist("abriu o visualizador de variáveis (trace)")
         self._painel("📗", "aluno abriu as variáveis — boa prática de depuração", {"tipo": "aluno"})
         # NÃO aciona o monitor aqui: abrir as variáveis é o aluno fazendo a coisa certa;
@@ -205,6 +250,17 @@ class Sessao:
         return {"resposta": "trace", "passos": r.get("passos", []),
                 "saida": r.get("saida", ""), "erro": r.get("erro"),
                 "estado": self.estado, "encerrada": False}
+
+    def custo(self) -> dict:
+        """Chamadas e tokens desta sessão (sem valor em dinheiro)."""
+        return self.treinador.llm.resumo()
+
+    def _salvar_registro(self) -> None:
+        self.registro.salvar(
+            self.custo(),
+            self.modelo.dominio_por_equivoco,
+            self.modelo.depuracao,
+        )
 
     def resumo_modelo(self) -> dict:
         """Snapshot do modelo do aluno (para o painel de sinais da interface)."""
@@ -294,10 +350,12 @@ class Sessao:
         # --- guarda-corpos (segurança; NÃO decidem quando ajudar) ---
         agora = time.time()
         if self.n_intervencoes >= config.MAX_INTERVENCOES_PROATIVAS:
-            self._painel("🔒", "(teto de intervenções atingido nesta sessão — só observando)")
+            self._painel("🔒", "(teto de intervenções atingido nesta sessão — só observando)",
+                         {"tipo": "guard"})
             return None
         if agora - self.ts_ultima_intervencao < config.COOLDOWN_INTERVENCAO_S:
-            self._painel("🔒", "(intervim há pouco — aguardo um instante para não atrapalhar)")
+            self._painel("🔒", "(intervim há pouco — aguardo um instante para não atrapalhar)",
+                         {"tipo": "guard"})
             return None
 
         interv = self._executar_acao(dec)
@@ -306,6 +364,7 @@ class Sessao:
             self.n_intervencoes += 1
             self.ja_intervim_bug = True
             self.ultima_acao_agente = {"acao": dec["acao"], "ts": agora}
+            self.registro.intervencao(dec["acao"])
         return interv
 
     def _executar_acao(self, dec: dict) -> dict | None:
@@ -323,7 +382,8 @@ class Sessao:
         envelope = {"texto": msg, "nivel": 2, "revela_solucao": False, "ancoras": []}
         vd = verificar(envelope, self.bug["cod_ref"], self.bug["testes"], exigir_ancora=False)
         if not vd["aprovado"]:
-            self._painel("🔒", "(o Verificador barrou a mensagem: " + vd["motivo"] + ")")
+            self._painel("🔒", "(o Verificador barrou a mensagem: " + vd["motivo"] + ")",
+                         {"tipo": "guard"})
             return None
         self._painel("💬", msg, {"tipo": "fala", "acao": acao})
         interv = {"acao": acao, "mensagem": msg, "proativa": True}
@@ -349,15 +409,41 @@ class Sessao:
         """Investigação completa (ReAct) + dica verificada. Usada tanto quando o
         aluno pede quanto quando o AGENTE decide dar a dica sozinho."""
         self.usou_dica = True
-        entrada_falha = self._entrada_que_falha()
-        res = self.treinador.intervir(
-            cod_aluno=self.cod_atual, cod_ref=self.bug["cod_ref"],
-            entrada_falha=entrada_falha, testes=self.bug["testes"], nivel_inicial=3,
-            chamada=self.chamada, assinatura=self.assinatura)
+        try:
+            entrada_falha = self._entrada_que_falha()
+            res = self.treinador.intervir(
+                cod_aluno=self.cod_atual, cod_ref=self.bug["cod_ref"],
+                entrada_falha=entrada_falha, testes=self.bug["testes"], nivel_inicial=3,
+                chamada=self.chamada, assinatura=self.assinatura)
+        except Exception as e:
+            self._painel("🔒", "não consegui investigar agora (" + str(e)[:120] + ")",
+                         {"tipo": "guard"})
+            return {"acao": "DAR_DICA", "mensagem": _TEXTO_DICA_SEGURA,
+                    "nivel": config.NIVEL_MIN, "proativa": (origem == "proativo")}
         self._painel_investigacao(res["investigacao"])
         env = res["envelope"]
         rotulo = "dica (o agente decidiu intervir)" if origem == "proativo" else "dica (a pedido do aluno)"
-        self._painel("💬", env["texto"], {"tipo": "dica", "nivel": env["nivel"], "rotulo": rotulo})
+        inv = res.get("investigacao") or {}
+        ancoras = []
+        for a in (inv.get("ancoras") or [])[-3:]:
+            if not isinstance(a, dict):
+                continue
+            ancoras.append({
+                "entrada": a.get("entrada"),
+                "saida_aluno": a.get("saida_aluno"),
+                "saida_ref": a.get("saida_ref"),
+                "divergiu": a.get("divergiu"),
+            })
+        vd = res.get("veredito") or {}
+        self._painel("💬", env["texto"], {
+            "tipo": "dica", "nivel": env["nivel"], "rotulo": rotulo,
+            "verificador": {
+                "aprovado": vd.get("aprovado"),
+                "rejeicoes": res.get("rejeicoes", 0),
+                "rebaixado": bool(res.get("rebaixado")),
+            },
+            "ancoras": ancoras,
+        })
         return {"acao": "DAR_DICA", "mensagem": env["texto"], "nivel": env["nivel"],
                 "proativa": (origem == "proativo")}
 
@@ -368,23 +454,38 @@ class Sessao:
         self._painel("🔬", "aluno parece travado — vou investigar antes de falar", {"tipo": "invest"})
         for passo in inv.get("log", []):
             tag = passo[0]
+            extra = passo[-1] if len(passo) > 1 and isinstance(passo[-1], dict) else {}
             if tag == "gerar_hipoteses":
-                self._painel("🔬", f"levantei {len(passo[1])} hipóteses concorrentes sobre o erro")
+                self._painel("🔬", f"levantei {len(passo[1])} hipóteses concorrentes sobre o erro",
+                             {"tipo": "invest", "hipoteses": _hips_evento(extra)})
             elif tag == "regenerar_hipoteses":
-                self._painel("🔬", "as hipóteses não bastaram — refiz o conjunto")
+                self._painel("🔬", "as hipóteses não bastaram — refiz o conjunto",
+                             {"tipo": "invest", "hipoteses": _hips_evento(extra)})
             elif tag == "analisar":
                 sep = "SEPAROU as hipóteses" if "divergiu=True" in str(passo[2]) else "não separou"
-                self._painel("🔬", f"experimento: rodei {passo[1]} → {sep}")
+                self._painel("🔬", f"experimento: rodei {passo[1]} → {sep}",
+                             {"tipo": "invest", "experimento": _experimento_evento(passo, extra)})
             elif tag == "nenhum_candidato_separou":
-                self._painel("🔬", "nenhum candidato separou as hipóteses; tento outros")
+                self._painel("🔬", "nenhum candidato separou as hipóteses; tento outros",
+                             {"tipo": "invest"})
             elif tag == "podar":
-                self._painel("🔬", f"descartei hipóteses; sobreviveram {passo[1]}")
+                self._painel("🔬", f"descartei hipóteses; sobreviveram {passo[1]}", {
+                    "tipo": "invest",
+                    "sobreviventes": extra.get("sobreviventes", passo[1]),
+                    "raciocinio": extra.get("raciocinio", ""),
+                })
             elif tag == "fallback_direto":
-                self._painel("🔬", f"sem separar tudo, olhei direto a entrada que falha ({passo[1]})")
+                self._painel("🔬", f"sem separar tudo, olhei direto a entrada que falha ({passo[1]})",
+                             {"tipo": "invest", "experimento": _experimento_evento(passo, extra)})
         eq = inv.get("equivoco")
         if eq:
-            self._painel("🔬", f"conclusão: o equívoco parece ser '{eq.get('equivoco')}'",
-                         {"conclusivo": inv.get("conclusivo")})
+            eq_id = eq.get("equivoco")
+            self._painel("🔬", f"conclusão: o equívoco parece ser '{eq_id}'", {
+                "tipo": "invest",
+                "equivoco": eq_id,
+                "rotulo": (catalogo.CATALOGO.get(eq_id) or {}).get("nome"),
+                "conclusivo": inv.get("conclusivo"),
+            })
 
     # ------------------------------------------------------------------ #
     def _on_rodou_entrada(self, dados: dict) -> dict:
@@ -412,6 +513,7 @@ class Sessao:
             self.achou_discriminante = True
         if self.cod_atual != self.bug["cod_bugado"]:
             self.editou_codigo = True
+        self.registro.rodou_entrada(entrada, bool(a["divergiu"]))
 
         evento_atual = {
             "tipo": "rodou_entrada", "entrada": entrada,
@@ -439,25 +541,30 @@ class Sessao:
         pergunta = dados.get("pergunta", "")
         resposta = dados.get("resposta", "")
         self._hist(f"respondeu ao agente: {resposta!r}")
-        aval = self.treinador.llm.chamar("avaliar_resposta", {
-            "pergunta": pergunta, "resposta": resposta,
-            "equivoco": self.bug["equivoco"] if self.bug else "",
-            "correcao": catalogo.texto_correcao(self.bug["equivoco"]) if self.bug else "",
-            "cod_aluno": self.cod_atual})
-        feedback = (aval.get("feedback") or "").strip()
-        compreensao = aval.get("compreensao")
-        # feedback também passa pelo Verificador (não pode vazar a solução)
-        env = {"texto": feedback, "nivel": 2, "revela_solucao": False, "ancoras": []}
-        vd = verificar(env, self.bug["cod_ref"], self.bug["testes"], exigir_ancora=False)
-        if not vd["aprovado"]:
-            feedback = "Boa tentativa — continue investigando o que a execução mostra."
-        # sinal de entendimento (evidência limpa: veio do próprio aluno)
         try:
-            c = float(compreensao)
-            self.modelo.registrar_depuracao({"forma_hipotese": c >= 0.5})
-        except (TypeError, ValueError):
-            pass
-        _log.info("respondeu %r -> compreensao=%s", resposta, compreensao)
+            aval = self.treinador.llm.chamar("avaliar_resposta", {
+                "pergunta": pergunta, "resposta": resposta,
+                "equivoco": self.bug["equivoco"] if self.bug else "",
+                "correcao": catalogo.texto_correcao(self.bug["equivoco"]) if self.bug else "",
+                "cod_aluno": self.cod_atual})
+        except Exception:
+            feedback = "Anotei a sua resposta. Continue investigando o que a execução mostra."
+            compreensao = None
+        else:
+            feedback = (aval.get("feedback") or "").strip()
+            compreensao = aval.get("compreensao")
+            # feedback também passa pelo Verificador (não pode vazar a solução)
+            env = {"texto": feedback, "nivel": 2, "revela_solucao": False, "ancoras": []}
+            vd = verificar(env, self.bug["cod_ref"], self.bug["testes"], exigir_ancora=False)
+            if not vd["aprovado"]:
+                feedback = "Boa tentativa — continue investigando o que a execução mostra."
+            # sinal de entendimento (evidência limpa: veio do próprio aluno)
+            try:
+                c = float(compreensao)
+                self.modelo.registrar_depuracao({"forma_hipotese": c >= 0.5})
+            except (TypeError, ValueError):
+                pass
+            _log.info("respondeu %r -> compreensao=%s", resposta, compreensao)
         self._painel("🧑", f"aluno respondeu: {resposta}", {"tipo": "aluno"})
         self._painel("💬", feedback, {"tipo": "fala", "acao": "FEEDBACK"})
         return {"resposta": "feedback_resposta", "feedback": feedback,
@@ -466,6 +573,7 @@ class Sessao:
     def _on_pediu_dica(self) -> dict:
         _log.info("pediu_dica (bug=%s)", self.bug["id"])
         self._hist("pediu dica")
+        self.registro.pediu_dica()
         interv = self._intervir_completo(origem="aluno")
         self.ts_ultima_intervencao = time.time()   # respeita o cooldown depois disso
         return {"resposta": "dica", "mensagem": interv["mensagem"],
@@ -476,6 +584,7 @@ class Sessao:
         self.tentativas += 1
         resultados = tools.rodar_suite(self.cod_atual, self.bug["testes"])
         passou_tudo = all(r["passou"] for r in resultados)
+        self.registro.submeteu(passou_tudo)
         _aprov = sum(r["passou"] for r in resultados)
         _log.info("submeteu_correcao (bug=%s): %d/%d testes passaram", self.bug["id"], _aprov, len(resultados))
         if not passou_tudo:
@@ -497,36 +606,50 @@ class Sessao:
 
     def _on_explicou(self, dados: dict) -> dict:
         explicacao = dados.get("texto", "")
-        aval = self.treinador.llm.chamar("avaliar_explicacao", {
-            "explicacao": explicacao,
-            "equivoco": self.bug["equivoco"],
-            "correcao": catalogo.texto_correcao(self.bug["equivoco"])})
-        qualidade = aval.get("nota", aval.get("qualidade", 0.0))
-        _log.info("explicou: %r -> nota=%s (rubrica id=%s causa=%s corr=%s)",
-                  explicacao, qualidade, aval.get("identificou"), aval.get("causa"), aval.get("correcao"))
-        # EVIDÊNCIA LIMPA: passar nos testes NÃO é domínio. Domínio só sobe se o aluno
-        # DEMONSTROU entender (explicação boa). Passar colando código de fora e não saber
-        # explicar é sinal de que NÃO domina -> o domínio deve CAIR, não subir.
         try:
-            q = float(qualidade)
-        except (TypeError, ValueError):
-            q = 0.0
-        demonstrou = (q >= 0.5) and (self.colou_codigo_bug == 0 or q >= 0.7)
-        self.modelo.registrar_conceitual(self.bug["equivoco"], acertou=demonstrou)
-        self.modelo.registrar_explicacao(q)
+            aval = self.treinador.llm.chamar("avaliar_explicacao", {
+                "explicacao": explicacao,
+                "equivoco": self.bug["equivoco"],
+                "correcao": catalogo.texto_correcao(self.bug["equivoco"])})
+        except Exception as e:
+            _log.info("explicou: avaliação falhou (%s)", e)
+            aval = None
+
+        if aval is None:
+            rubrica = {
+                "identificou": None,
+                "causa": None,
+                "correcao": None,
+                "nota": None,
+                "comentario": "Não consegui avaliar a explicação agora.",
+            }
+        else:
+            qualidade = aval.get("nota", aval.get("qualidade", 0.0))
+            _log.info("explicou: %r -> nota=%s (rubrica id=%s causa=%s corr=%s)",
+                      explicacao, qualidade, aval.get("identificou"), aval.get("causa"), aval.get("correcao"))
+            # EVIDÊNCIA LIMPA: passar nos testes NÃO é domínio. Domínio só sobe se o aluno
+            # DEMONSTROU entender (explicação boa). Passar colando código de fora e não saber
+            # explicar é sinal de que NÃO domina -> o domínio deve CAIR, não subir.
+            try:
+                q = float(qualidade)
+            except (TypeError, ValueError):
+                q = 0.0
+            demonstrou = (q >= 0.5) and (self.colou_codigo_bug == 0 or q >= 0.7)
+            self.modelo.registrar_conceitual(self.bug["equivoco"], acertou=demonstrou)
+            self.modelo.registrar_explicacao(q)
+            _log.info("modelo: demonstrou_entendimento=%s (qualidade=%.2f, colagens=%d)",
+                      demonstrou, q, self.colou_codigo_bug)
+            rubrica = {
+                "identificou": aval.get("identificou"),
+                "causa": aval.get("causa"),
+                "correcao": aval.get("correcao"),
+                "nota": qualidade,
+                "comentario": aval.get("comentario", ""),
+            }
         # resolvido para fins de PROGRESSÃO (passou nos testes), mesmo que não tenha dominado
         self.modelo.registrar_resultado_bug(self.bug["id"], self.bug["equivoco"], resolvido=True)
-        _log.info("modelo: demonstrou_entendimento=%s (qualidade=%.2f, colagens=%d)",
-                  demonstrou, q, self.colou_codigo_bug)
         bug_resolvido_id = self.bug["id"]
-        # rubrica transparente para a interface (nota por dimensão)
-        rubrica = {
-            "identificou": aval.get("identificou"),
-            "causa": aval.get("causa"),
-            "correcao": aval.get("correcao"),
-            "nota": qualidade,
-            "comentario": aval.get("comentario", ""),
-        }
+        self.registro.explicou(rubrica)
         # próximo bug ou encerra
         prox = self._proximo_bug()
         prox["rubrica"] = rubrica
