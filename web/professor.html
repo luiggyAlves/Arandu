@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arandu · Visão do professor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/css/arandu.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="marca" href="/professor.html">
+    <span class="marca__nome">Arandu</span>
+    <span class="marca__sub">Visão do professor</span>
+  </a>
+  <div class="topbar__meio"></div>
+  <div class="topbar__acoes">
+    <button class="btn btn--ghost btn--sm" id="btnAtualizar" type="button">Atualizar</button>
+    <a class="btn btn--ghost btn--sm" href="/painel.html">Painel do agente</a>
+  </div>
+</header>
+
+<main class="dash">
+  <div class="dash__titulo">
+    <div>
+      <h1>Sessões dos alunos</h1>
+      <p>O que cada aluno fez e o que já demonstrou entender. O raciocínio interno do agente fica no painel do agente.</p>
+    </div>
+  </div>
+
+  <div class="prof">
+    <section class="card prof__lista" aria-labelledby="ttlSessoes">
+      <div class="card__head">
+        <h2 class="card__titulo" id="ttlSessoes">Sessões registradas</h2>
+        <span class="espaco"></span>
+        <span class="stat__nota" id="contSessoes"></span>
+      </div>
+      <div class="card__corpo card__corpo--scroll">
+        <div class="vazio" id="sessoesVazio"><p>Nenhuma sessão registrada ainda. Cada aluno que abrir a sessão aparece aqui.</p></div>
+        <table class="tabela tabela-sessoes" id="tabelaSessoes" hidden>
+          <thead>
+            <tr>
+              <th scope="col">Quando</th>
+              <th scope="col" class="num">Duração</th>
+              <th scope="col" class="num">Resolvidos</th>
+              <th scope="col" class="num">Dicas</th>
+              <th scope="col" class="num">Explicação</th>
+            </tr>
+          </thead>
+          <tbody id="listaSessoes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card prof__detalhe" aria-labelledby="detTitulo">
+      <div class="vazio" id="detalheVazio"><p>Escolha uma sessão à esquerda para ver os desafios e o domínio do aluno.</p></div>
+
+      <div id="detalhe" hidden>
+        <div class="card__head prof__head">
+          <div class="prof__head-tx">
+            <h2 class="prof__titulo" id="detTitulo">—</h2>
+            <p class="stat__nota" id="detMeta"></p>
+          </div>
+          <span class="espaco"></span>
+          <span class="pill pill--neutro" id="detEstado">—</span>
+        </div>
+
+        <div class="card__corpo">
+          <div class="stats stats--5" aria-label="Resumo da sessão">
+            <div class="card stat">
+              <div class="stat__rotulo">Desafios resolvidos</div>
+              <div class="stat__valor" id="detResolvidos">0</div>
+              <div class="stat__nota" id="detIniciados">de 0 iniciados</div>
+            </div>
+            <div class="card stat">
+              <div class="stat__rotulo">Correções enviadas</div>
+              <div class="stat__valor" id="detSubmissoes">0</div>
+              <div class="stat__nota">inclui as que falharam</div>
+            </div>
+            <div class="card stat">
+              <div class="stat__rotulo">Dicas</div>
+              <div class="stat__valor" id="detDicas">0</div>
+              <div class="stat__nota">pedidas ou oferecidas</div>
+            </div>
+            <div class="card stat">
+              <div class="stat__rotulo">Explicação média</div>
+              <div class="stat__valor" id="detNota">—</div>
+              <div class="stat__nota">nota da rubrica</div>
+            </div>
+            <div class="card stat">
+              <div class="stat__rotulo">Custo</div>
+              <div class="stat__valor" id="detTokens">—</div>
+              <div class="stat__nota" id="detChamadas">chamadas ao modelo</div>
+            </div>
+          </div>
+
+          <h3 class="subtitulo">Desafios</h3>
+          <div class="tabela-rolagem">
+            <table class="tabela tabela-desafios">
+              <thead>
+                <tr>
+                  <th scope="col">Equívoco</th>
+                  <th scope="col" class="num">Tempo</th>
+                  <th scope="col" class="num">Execuções</th>
+                  <th scope="col" class="num" title="Entradas escolhidas pelo aluno que expuseram o erro">Expuseram o erro</th>
+                  <th scope="col" class="num">Correções</th>
+                  <th scope="col" class="num">Dicas</th>
+                  <th scope="col" class="num">Explicação</th>
+                  <th scope="col">Situação</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaDesafios"></tbody>
+            </table>
+          </div>
+
+          <div class="prof__colunas">
+            <div>
+              <h3 class="subtitulo">Domínio por equívoco</h3>
+              <div class="barras" id="detDominio"></div>
+            </div>
+            <div>
+              <h3 class="subtitulo">Habilidades de depuração</h3>
+              <div class="barras" id="detDepuracao"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<template id="tpl-sessao">
+  <tr>
+    <td><button class="linha-btn sessao__quando" type="button"></button><span class="sessao__estado"></span></td>
+    <td class="num sessao__duracao"></td>
+    <td class="num sessao__resolvidos"></td>
+    <td class="num sessao__dicas"></td>
+    <td class="num sessao__nota"></td>
+  </tr>
+</template>
+
+<template id="tpl-desafio">
+  <tr>
+    <td><span class="equivoco"><span class="equivoco__nome"></span><span class="equivoco__id"></span></span></td>
+    <td class="num desafio__tempo"></td>
+    <td class="num desafio__execucoes"></td>
+    <td class="num desafio__expuseram"></td>
+    <td class="num desafio__submissoes"></td>
+    <td class="num desafio__dicas"></td>
+    <td class="num desafio__nota"></td>
+    <td><span class="pill desafio__situacao"></span></td>
+  </tr>
+</template>
+
+<template id="tpl-barra">
+  <div class="barra">
+    <div class="barra__topo">
+      <span class="equivoco"><span class="equivoco__nome"></span><span class="equivoco__id"></span></span>
+      <b></b>
+    </div>
+    <div class="barra__trilho"><div class="barra__valor" style="--v:0"></div></div>
+  </div>
+</template>
+
+<script src="/js/professor.js" defer></script>
+</body>
+</html>
