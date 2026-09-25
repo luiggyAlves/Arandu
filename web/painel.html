@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arandu · Painel do agente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/css/arandu.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cerebro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 0 0-5.8 1A3 3 0 0 0 4 11a3 3 0 0 0 2 5 3 3 0 0 0 6 1zM12 5a3 3 0 0 1 5.8 1A3 3 0 0 1 20 11a3 3 0 0 1-2 5 3 3 0 0 1-6 1zM12 5v12"/></symbol>
+  <symbol id="i-aluno" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-grafico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+</svg>
+
+<header class="topbar">
+  <a class="marca" href="/painel.html">
+    <span class="marca__nome">Arandu</span>
+    <span class="marca__sub">Painel do agente</span>
+  </a>
+  <div class="topbar__meio"></div>
+  <div class="topbar__acoes">
+    <span class="pill pill--escuro" id="estadoSessao">aguardando</span>
+    <a class="btn btn--ghost btn--sm" href="/professor.html">Visão do professor</a>
+    <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener">Abrir sessão do aluno</a>
+  </div>
+</header>
+
+<main class="dash">
+  <div class="dash__titulo">
+    <div>
+      <h1>O que o agente está pensando</h1>
+      <p>Cada decisão do treinador, a evidência que a sustenta e o que o Verificador barrou.</p>
+    </div>
+    <span class="espaco"></span>
+    <div class="bug-atual">Desafio atual: <code id="bugAtual">—</code></div>
+    <span class="pill pill--neutro" id="infoLLM" title="Modelo de linguagem e versão do servidor">—</span>
+  </div>
+
+  <section class="stats" aria-label="Números da sessão">
+    <div class="card stat">
+      <div class="stat__rotulo">Decisões tomadas</div>
+      <div class="stat__valor" id="statDecisoes">0</div>
+      <div class="stat__nota" id="statSilencio">0 foram de ficar em silêncio</div>
+    </div>
+    <div class="card stat">
+      <div class="stat__rotulo">Intervenções mostradas</div>
+      <div class="stat__valor" id="statIntervencoes">0</div>
+      <div class="stat__nota">dicas, perguntas e valores</div>
+    </div>
+    <div class="card stat">
+      <div class="stat__rotulo">Experimentos rodados</div>
+      <div class="stat__valor" id="statExperimentos">0</div>
+      <div class="stat__nota">para testar hipóteses</div>
+    </div>
+    <div class="card stat stat--alerta">
+      <div class="stat__rotulo">Barradas pelo Verificador</div>
+      <div class="stat__valor" id="statBarradas">0</div>
+      <div class="stat__nota">sem evidência ou revelava a solução</div>
+    </div>
+    <div class="card stat">
+      <div class="stat__rotulo">Nível médio das dicas</div>
+      <div class="stat__valor" id="statNivel">—</div>
+      <div class="stat__nota">escala de 1 a 5</div>
+    </div>
+    <div class="card stat">
+      <div class="stat__rotulo">Desafios resolvidos</div>
+      <div class="stat__valor" id="statResolvidos">0</div>
+      <div class="stat__nota" id="statExplicacao">qualidade da explicação: —</div>
+    </div>
+  </section>
+
+  <div class="dash__grade">
+    <section class="card linha-tempo" aria-labelledby="ttlLinha">
+      <div class="card__head">
+        <span class="card__titulo" id="ttlLinha"><svg><use href="#i-cerebro"/></svg>Linha do tempo do raciocínio</span>
+        <span class="espaco"></span>
+        <label class="chip"><input type="checkbox" id="autoRolar" checked style="accent-color:var(--floresta);margin:0"> seguir o mais recente</label>
+      </div>
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar eventos">
+        <button class="chip" data-filtro="todos" aria-pressed="true">Tudo <span class="chip__cont" data-cont="todos">0</span></button>
+        <button class="chip" data-filtro="leitura" aria-pressed="false">Leitura <span class="chip__cont" data-cont="leitura">0</span></button>
+        <button class="chip" data-filtro="decisao" aria-pressed="false">Decisão <span class="chip__cont" data-cont="decisao">0</span></button>
+        <button class="chip" data-filtro="invest" aria-pressed="false">Investigação <span class="chip__cont" data-cont="invest">0</span></button>
+        <button class="chip" data-filtro="dica" aria-pressed="false">Fala e dica <span class="chip__cont" data-cont="dica">0</span></button>
+        <button class="chip" data-filtro="guard" aria-pressed="false">Verificador <span class="chip__cont" data-cont="guard">0</span></button>
+        <button class="chip" data-filtro="aluno" aria-pressed="false">Aluno <span class="chip__cont" data-cont="aluno">0</span></button>
+      </div>
+      <div class="card__corpo">
+        <div class="vazio" id="feedVazio"><p>Nada ainda. Assim que o aluno rodar a primeira entrada, as decisões aparecem aqui.</p></div>
+        <ol class="feed" id="feed"></ol>
+      </div>
+    </section>
+
+    <div class="dash__col">
+      <section class="card" aria-labelledby="ttlAluno">
+        <div class="card__head">
+          <span class="card__titulo" id="ttlAluno"><svg><use href="#i-aluno"/></svg>Retrato do aluno</span>
+          <span class="espaco"></span>
+          <code class="equivoco__id" id="alunoId">—</code>
+        </div>
+        <div class="card__corpo">
+          <h2 class="subtitulo">Domínio por equívoco</h2>
+          <div class="barras" id="dominio">
+            <p class="stat__nota">Sem dados ainda. O domínio aparece depois da primeira explicação.</p>
+          </div>
+
+          <h2 class="subtitulo">Habilidades de depuração</h2>
+          <div class="barras" id="habilidades">
+            <div class="barra">
+              <div class="barra__topo"><span>Forma hipóteses</span><b data-hab-tx="forma_hipotese">—</b></div>
+              <div class="barra__trilho"><div class="barra__valor barra__valor--sol" data-hab="forma_hipotese" style="--v:0"></div></div>
+            </div>
+            <div class="barra">
+              <div class="barra__topo"><span>Testa entradas que separam hipóteses</span><b data-hab-tx="testa_entrada_discriminante">—</b></div>
+              <div class="barra__trilho"><div class="barra__valor barra__valor--sol" data-hab="testa_entrada_discriminante" style="--v:0"></div></div>
+            </div>
+            <div class="barra">
+              <div class="barra__topo"><span>Lê os valores das variáveis</span><b data-hab-tx="le_variaveis">—</b></div>
+              <div class="barra__trilho"><div class="barra__valor barra__valor--sol" data-hab="le_variaveis" style="--v:0"></div></div>
+            </div>
+            <div class="barra">
+              <div class="barra__topo"><span>Localiza o erro antes de editar</span><b data-hab-tx="localiza_antes_de_editar">—</b></div>
+              <div class="barra__trilho"><div class="barra__valor barra__valor--sol" data-hab="localiza_antes_de_editar" style="--v:0"></div></div>
+            </div>
+          </div>
+
+          <h2 class="subtitulo">Sinais da interface</h2>
+          <div class="sinais">
+            <div class="sinal"><b data-sinal="num_execucoes">0</b><span>execuções</span></div>
+            <div class="sinal"><b data-sinal="num_execucoes_proprias_discriminantes">0</b><span>entradas que separam hipóteses</span></div>
+            <div class="sinal"><b data-sinal="usou_trace">0</b><span>vezes no passo a passo</span></div>
+            <div class="sinal"><b data-sinal="tempo_ate_primeira_execucao_s">—</b><span>segundos até a 1ª execução</span></div>
+            <div class="sinal"><b data-sinal="churn_edicao">0</b><span>caracteres apagados</span></div>
+            <div class="sinal"><b data-sinal="pausas_longas">0</b><span>pausas longas (mais de 8 s)</span></div>
+            <div class="sinal"><b data-sinal="colagens_externas">0</b><span>colagens de fora</span></div>
+            <div class="sinal"><b data-sinal="acertou_local_antes_de_rodar">0</b><span>acertou o local antes de rodar</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="ttlMetricas">
+        <div class="card__head">
+          <span class="card__titulo" id="ttlMetricas"><svg><use href="#i-grafico"/></svg>Métricas do experimento</span>
+        </div>
+        <div class="card__corpo metricas-exp">
+          <div class="metrica-exp">
+            <div class="metrica-exp__tx"><strong>Custo desta sessão</strong><span id="metCustoNota">Chamadas ao modelo de linguagem e tokens usados</span></div>
+            <div class="metrica-exp__valor" id="metCusto">—</div>
+          </div>
+          <div class="metrica-exp">
+            <div class="metrica-exp__tx"><strong>Taxa de bugs válidos</strong><span id="metBugsNota">Bugs gerados que o Validador aprovou rodando o código</span></div>
+            <div class="metrica-exp__valor" id="metBugs">—</div>
+          </div>
+          <details class="banco-validacao" id="detBanco" hidden>
+            <summary>Verificação de cada bug do banco <span class="banco-validacao__resumo" id="detBancoResumo"></span></summary>
+            <p class="banco-validacao__criterios">Rodamos cada bug de novo: a referência passa em todos os testes, o bug falha em pelo menos um e falha sem travar. O tamanho do conserto não é medido, porque a referência é a solução de outro aluno.</p>
+            <ul class="lista-banco" id="listaBanco"></ul>
+          </details>
+          <div class="metrica-exp">
+            <div class="metrica-exp__tx"><strong>Ganho do agente sobre sequência fixa</strong><span>Ablação ainda não medida</span></div>
+            <div class="metrica-exp__valor" id="metAblacao">—</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<template id="tpl-evento">
+  <li class="evento" data-tipo="">
+    <span class="evento__ic"></span>
+    <div class="evento__corpo">
+      <p class="evento__tx"></p>
+      <div class="evento__det" hidden><ul class="det-hips" hidden></ul></div>
+      <div class="evento__meta">
+        <time></time>
+        <span class="tag evento__tag" hidden></span>
+        <span class="conf" hidden><span class="conf__barra"><i></i></span><span class="conf__tx"></span></span>
+      </div>
+    </div>
+  </li>
+</template>
+
+<template id="tpl-det">
+  <div class="det"><span class="det__k"></span><code class="det__v"></code></div>
+</template>
+
+<template id="tpl-hip">
+  <li class="det-hip"><b class="det-hip__id"></b><span class="det-hip__tx"><span class="det-hip__desc"></span><span class="det-hip__eq"></span></span></li>
+</template>
+
+<template id="tpl-item-banco">
+  <li class="item-banco">
+    <span class="item-banco__estado"></span>
+    <span class="item-banco__tx"><code class="item-banco__id"></code><span class="item-banco__detalhe"></span></span>
+    <span class="item-banco__origem"></span>
+  </li>
+</template>
+
+<template id="tpl-dominio">
+  <div class="barra">
+    <div class="barra__topo">
+      <span class="equivoco"><span class="equivoco__nome"></span><span class="equivoco__id"></span></span>
+      <b></b>
+    </div>
+    <div class="barra__trilho"><div class="barra__valor" style="--v:0"></div></div>
+  </div>
+</template>
+
+<script src="/js/evidencia.js" defer></script>
+<script src="/js/painel.js" defer></script>
+</body>
+</html>
