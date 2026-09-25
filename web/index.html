@@ -1,356 +1,402 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arandu — Treinador de Depuração</title>
-<style>
-  :root { --verde:#1B6B5A; --verde2:#0F3D34; --claro:#EAF3F1; --cinza:#5A5A5A; --erro:#b3261e; }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: system-ui, Segoe UI, Roboto, sans-serif; color:#1c1c1c; background:#f6f8f7; }
-  header { background:var(--verde2); color:#fff; padding:14px 20px; }
-  header h1 { margin:0; font-size:20px; }
-  header small { color:#bfe0d8; }
-  .wrap { display:grid; grid-template-columns: 1fr 340px; gap:16px; padding:16px; max-width:1200px; margin:0 auto; }
-  @media (max-width: 900px){ .wrap{ grid-template-columns:1fr; } }
-  .card { background:#fff; border:1px solid #dbe6e3; border-radius:10px; padding:14px; margin-bottom:14px; }
-  .card h2 { margin:0 0 8px; font-size:15px; color:var(--verde2); }
-  textarea#codigo { width:100%; height:220px; font-family: Consolas, monospace; font-size:13px;
-      border:1px solid #cdd8d5; border-radius:8px; padding:10px; resize:vertical; }
-  input[type=text]{ padding:8px; border:1px solid #cdd8d5; border-radius:8px; font-family:Consolas,monospace; }
-  button { background:var(--verde); color:#fff; border:0; border-radius:8px; padding:9px 14px;
-      font-size:14px; cursor:pointer; margin:4px 4px 0 0; }
-  button.sec { background:#e7efed; color:var(--verde2); }
-  button:disabled{ opacity:.5; cursor:not-allowed; }
-  pre { background:#0f1c19; color:#d8f0e9; padding:10px; border-radius:8px; overflow:auto; font-size:13px; }
-  .dica { background:var(--claro); border-left:4px solid var(--verde); padding:10px 12px; border-radius:6px; }
-  table { width:100%; border-collapse:collapse; font-size:12px; font-family:Consolas,monospace; }
-  th,td { border:1px solid #dbe6e3; padding:4px 6px; text-align:left; vertical-align:top; }
-  th { background:var(--claro); }
-  .sinal { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2ebe8; font-size:13px; }
-  .sinal b { color:var(--verde2); }
-  .barra { height:6px; background:#e7efed; border-radius:4px; overflow:hidden; }
-  .barra > i { display:block; height:100%; background:var(--verde); }
-  .aviso { color:var(--cinza); font-size:12px; }
-  /* telinha do agente */
-  .agente { max-height:360px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;
-      font-size:13px; line-height:1.35; padding-right:4px; }
-  .linha { display:flex; gap:8px; align-items:flex-start; padding:5px 7px; border-radius:7px;
-      background:#f4f8f7; border:1px solid #e6efec; animation:surge .35s ease; }
-  .linha .ic { font-size:14px; line-height:1.35; }
-  .linha .tx { flex:1; }
-  .linha.decisao { background:#eef6f3; border-color:#cfe6df; }
-  .linha.decisao b { color:var(--verde2); }
-  .linha.leitura { background:#fff7ec; border-color:#f0e2c8; }
-  .linha.fala, .linha.dica { background:var(--claro); border-left:3px solid var(--verde); }
-  .linha.invest { background:#eef1fb; border-color:#d7ddf3; }
-  .linha.guard { background:#faf0ef; border-color:#f0d6d3; color:#7a3b36; }
-  @keyframes surge { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
-  .interv { background:var(--claro); border-left:4px solid var(--verde); padding:10px 12px;
-      border-radius:6px; }
-  .interv .tag { display:inline-block; font-size:11px; font-weight:600; color:#fff;
-      background:var(--verde); padding:2px 8px; border-radius:10px; margin-bottom:6px; }
-</style>
+<title>Arandu · Treino de depuração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/css/arandu.css">
 </head>
 <body>
-<header>
-  <h1>Arandu — Treinador de Depuração</h1>
-  <small id="info">carregando…</small>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-logo" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#1B6B5A"/><path d="M7.5 23.5C7.5 14.8 13.6 9 24.5 8.5c-.6 9.8-6.4 15.3-13.8 15.3-1.2 0-2.3-.1-3.2-.3z" fill="#E39B2D"/><path d="M8.5 23.5 19 13" stroke="#0E3B31" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L8.5 4.64A1 1 0 0 0 7 5.5z" fill="currentColor"/></symbol>
+  <symbol id="i-passos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 12h16M4 18h7"/><circle cx="18" cy="6" r="2"/><circle cx="15" cy="18" r="2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-coruja" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4l3 2.5h8L19 4v9a7 7 0 0 1-14 0z"/><circle cx="9.5" cy="11" r="1.6"/><circle cx="14.5" cy="11" r="1.6"/><path d="M11 15l1 1 1-1"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></symbol>
+  <symbol id="i-teste" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/></symbol>
+  <symbol id="i-esq" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-dir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-desfazer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11a5 5 0 0 1 0 10H9"/><path d="M8 5L4 9l4 4"/></symbol>
+  <symbol id="i-bastidores" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></symbol>
+  <symbol id="i-sair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/></symbol>
+  <symbol id="i-trofeu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/></symbol>
+</svg>
+
+<!-- ============ Topbar ============ -->
+<header class="topbar">
+  <a class="marca" href="/" aria-label="Arandu">
+    <svg><use href="#i-logo"/></svg>
+    <span class="marca__nome">Arandu</span>
+    <span class="marca__sub">Treino de depuração</span>
+  </a>
+  <div class="topbar__meio">
+    <div class="progresso" id="progresso">
+      <div class="progresso__trilha" id="progressoTrilha" aria-hidden="true"></div>
+      <span class="progresso__texto" id="progressoTexto">Desafio 1</span>
+    </div>
+  </div>
+  <div class="topbar__acoes">
+    <span class="pill pill--escuro" id="estadoSessao">Conectando…</span>
+    <button class="btn btn--ghost btn--sm" id="btnBastidores" hidden aria-pressed="false" title="Mostrar o raciocínio do agente (modo demonstração)">
+      <svg><use href="#i-bastidores"/></svg><span class="rotulo-longo">Bastidores</span>
+    </button>
+    <button class="btn btn--ghost btn--sm" id="btnSair" title="Encerrar a sessão">
+      <svg><use href="#i-sair"/></svg><span class="rotulo-longo">Encerrar</span>
+    </button>
+  </div>
 </header>
 
-<div class="wrap">
-  <div>
-    <div class="card">
-      <h2 id="enunciado">…</h2>
-      <textarea id="codigo" spellcheck="false"></textarea>
-      <div style="margin-top:8px">
-        <input type="text" id="entrada" placeholder="entrada (ex.: 2 4 6)" style="width:100%; margin-bottom:8px">
+<!-- ============ Session ============ -->
+<main class="sessao" id="sessao">
+
+  <div class="lateral">
+    <!-- Mission -->
+    <section class="card missao" aria-labelledby="missaoTitulo">
+      <div class="card__head">
+        <span class="card__titulo">Missão</span>
+        <span class="espaco"></span>
+        <span class="tag" id="modoBug" title="Como o programa recebe a entrada">função</span>
+      </div>
+      <div class="card__corpo">
+        <h1 class="missao__titulo" id="missaoTitulo">Encontre o erro escondido</h1>
+        <p class="missao__enunciado" id="enunciado">Carregando o desafio…</p>
+        <div class="missao__assinatura" id="assinatura" hidden><small>Assinatura</small><span id="assinaturaTexto"></span></div>
+
+        <ol class="passos-guia" id="guia">
+          <li><span>O programa roda, mas dá a resposta errada em algum caso. Teste entradas para descobrir qual.</span></li>
+          <li><span>Use <b>Passo a passo</b> para ver o valor de cada variável linha por linha.</span></li>
+          <li><span>Corrija o código, envie e explique o erro em uma frase.</span></li>
+          <button class="btn btn--ghost btn--sm passos-guia__fechar" id="btnFecharGuia" type="button">Entendi</button>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Coach -->
+    <section class="card treinador" aria-labelledby="treinadorNome">
+      <div class="card__head">
+        <span class="avatar"><svg><use href="#i-coruja"/></svg></span>
         <div>
-          <button onclick="rodar()">Rodar</button>
-          <button class="sec" onclick="verTrace()">Ver variáveis</button>
-          <button class="sec" onclick="pedirDica()">Pedir dica</button>
-          <button onclick="submeter()">Submeter correção</button>
+          <div class="treinador__nome" id="treinadorNome">Treinador</div>
+          <div class="treinador__status" id="treinadorStatus">Observando você investigar</div>
         </div>
       </div>
-    </div>
 
-    <div class="card"><h2>Saída</h2><pre id="saida">—</pre></div>
-
-    <div class="card" id="cardTrace" style="display:none">
-      <h2>Variáveis passo a passo</h2>
-      <div style="max-height:220px; overflow:auto"><table id="trace"></table></div>
-    </div>
-
-    <div class="card" id="cardDica" style="display:none">
-      <h2>Dica do Treinador</h2>
-      <div class="dica" id="dica"></div>
-    </div>
-
-    <div class="card" id="cardExplica" style="display:none">
-      <h2 id="explicaTitulo">Explique o erro em uma frase</h2>
-      <div class="aviso" style="margin-bottom:8px">
-        Você será avaliado (de forma transparente) em: <b>identificou o erro</b>,
-        <b>explicou a causa</b> e <b>relacionou à correção</b>.
+      <div class="conversa" id="conversa" aria-live="polite">
+        <div class="conversa__vazia" id="conversaVazia">
+          <svg><use href="#i-coruja"/></svg>
+          <p>Estou acompanhando. Não vou te dar a resposta, mas posso ajudar a chegar nela.</p>
+        </div>
+        <div class="pensando" id="pensando" hidden>
+          <span class="pensando__barra" aria-hidden="true"></span>
+          <span id="pensandoTexto">Rodando experimentos no seu código antes de responder</span>
+          <span class="pensando__tempo" id="pensandoTempo"></span>
+        </div>
       </div>
-      <textarea id="explicacao" placeholder="qual era o erro? (pode escrever em várias linhas)"
-                style="width:100%; min-height:80px; font-family:inherit; font-size:14px;
-                       padding:8px; border:1px solid #cdd8d5; border-radius:8px; resize:vertical;"></textarea>
-      <div style="margin-top:8px"><button onclick="explicar()">Enviar</button></div>
-    </div>
 
-    <div class="card" id="cardRubrica" style="display:none">
-      <h2>📝 Avaliação da sua explicação</h2>
-      <div id="rubrica"></div>
+      <div class="treinador__rodape">
+        <p>As dicas se apoiam em execuções reais do seu código.</p>
+        <button class="btn btn--sol" id="btnDica" type="button">
+          <span>Pedir dica</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="trabalho">
+    <!-- Editor -->
+    <section class="card editor-card" aria-label="Editor de código">
+      <div class="card__head">
+        <span class="arquivo" id="arquivo"><span class="arquivo__ponto"></span><span id="arquivoNome">programa.py</span></span>
+        <span class="espaco"></span>
+        <button class="btn btn--ghost btn--sm" id="btnRestaurar" type="button" title="Voltar ao código original do desafio">
+          <svg><use href="#i-desfazer"/></svg><span class="rotulo-longo">Restaurar</span>
+        </button>
+        <button class="btn btn--primario btn--sm" id="btnSubmeter" type="button" title="Rodar os testes escondidos (Ctrl+S)">
+          <svg><use href="#i-check"/></svg><span>Enviar correção</span>
+        </button>
+      </div>
+      <div class="editor" id="editor">
+        <div class="editor__grade">
+          <div class="editor__gutter" id="gutter" aria-hidden="true"><span>1</span></div>
+          <div style="position:relative">
+            <div class="editor__hl" id="linhaDestaque" hidden></div>
+            <textarea class="editor__area" id="codigo" spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-label="Código do programa"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test bench -->
+    <section class="card bancada" aria-label="Bancada de testes">
+      <div class="bancada__entrada">
+        <label class="campo">
+          <span class="campo__rotulo" id="entradaRotulo">Chamada</span>
+          <textarea id="entrada" rows="1" spellcheck="false" placeholder="search(42, (1, 5, 10))"></textarea>
+        </label>
+        <button class="btn btn--primario" id="btnRodar" type="button" title="Rodar com esta entrada (Ctrl+Enter)">
+          <svg><use href="#i-play"/></svg><span>Rodar</span><kbd>Ctrl ↵</kbd>
+        </button>
+        <button class="btn" id="btnTrace" type="button" title="Ver as variáveis linha por linha (Ctrl+Shift+Enter)">
+          <svg><use href="#i-passos"/></svg><span>Passo a passo</span>
+        </button>
+      </div>
+
+      <div class="abas" role="tablist">
+        <button class="aba" role="tab" id="abaSaida" aria-controls="painelSaida" aria-selected="true">
+          <svg width="15" height="15"><use href="#i-terminal"/></svg>Saída
+        </button>
+        <button class="aba" role="tab" id="abaTrace" aria-controls="painelTrace" aria-selected="false">
+          <svg width="15" height="15"><use href="#i-passos"/></svg>Passo a passo<span class="aba__contador" id="contTrace"></span>
+        </button>
+        <button class="aba" role="tab" id="abaTestes" aria-controls="painelTestes" aria-selected="false">
+          <svg width="15" height="15"><use href="#i-teste"/></svg>Testes<span class="aba__contador" id="contTestes"></span>
+        </button>
+      </div>
+
+      <!-- Output -->
+      <div class="painel-aba" role="tabpanel" id="painelSaida" aria-labelledby="abaSaida">
+        <div class="vazio" id="saidaVazia">
+          <svg><use href="#i-play"/></svg>
+          <p>Escreva uma entrada e clique em <b>Rodar</b> para ver o que o programa responde.</p>
+        </div>
+        <div id="saidaConteudo" hidden>
+          <div class="console__cab">Saída para <code id="saidaEntrada"></code></div>
+          <pre class="console" id="saida"></pre>
+          <div class="erro-exec" id="saidaErro" hidden>
+            <svg><use href="#i-alerta"/></svg>
+            <div><strong id="saidaErroTitulo">O programa parou com erro</strong><span id="saidaErroTexto"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trace -->
+      <div class="painel-aba" role="tabpanel" id="painelTrace" aria-labelledby="abaTrace" hidden>
+        <div class="vazio" id="traceVazio">
+          <svg><use href="#i-passos"/></svg>
+          <p>Clique em <b>Passo a passo</b> para ver o valor de cada variável linha por linha.</p>
+        </div>
+        <div id="traceConteudo" hidden>
+          <div class="trace__controles">
+            <button class="btn btn--icone btn--sm" id="tracePrev" type="button" aria-label="Passo anterior"><svg><use href="#i-esq"/></svg></button>
+            <input type="range" id="traceSlider" min="0" max="0" value="0" aria-label="Passo do programa">
+            <button class="btn btn--icone btn--sm" id="traceNext" type="button" aria-label="Próximo passo"><svg><use href="#i-dir"/></svg></button>
+            <span class="trace__contador" id="traceContador">Passo 1 de 1</span>
+          </div>
+          <p class="trace__entrada" id="traceEntrada">Entrada: <code></code></p>
+          <table class="tabela-trace">
+            <thead><tr><th class="col-passo">#</th><th class="col-linha">Linha</th><th class="col-codigo">Código</th><th>Variáveis</th></tr></thead>
+            <tbody id="traceCorpo"></tbody>
+          </table>
+          <p class="aviso-truncado" id="traceTruncado" hidden>Mostrando só os primeiros passos: o programa executou muitas linhas (talvez um laço que não termina).</p>
+        </div>
+      </div>
+
+      <!-- Tests -->
+      <div class="painel-aba" role="tabpanel" id="painelTestes" aria-labelledby="abaTestes" hidden>
+        <div class="vazio" id="testesVazio">
+          <svg><use href="#i-teste"/></svg>
+          <p>Quando achar que corrigiu, clique em <b>Enviar correção</b>. Rodamos testes escondidos e mostramos aqui os que falharem.</p>
+        </div>
+        <div id="testesConteudo" hidden>
+          <div class="resumo-testes" id="testesResumo">
+            <svg><use href="#i-alerta"/></svg>
+            <div><strong id="testesResumoTitulo">Ainda falha em 1 teste</strong><span>Compare o esperado com o obtido. Dá para rodar a mesma entrada e investigar.</span></div>
+          </div>
+          <ul class="lista-testes" id="listaTestes"></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ============ Bastidores (demo mode) ============ -->
+<aside class="drawer" id="bastidores" hidden aria-label="Raciocínio do agente">
+  <div class="drawer__head">
+    <span class="pill pill--vivo">ao vivo</span>
+    <h2>Raciocínio do agente</h2>
+    <button class="btn btn--ghost btn--icone btn--sm" id="btnFecharBastidores" aria-label="Fechar"><svg><use href="#i-x"/></svg></button>
+  </div>
+  <p class="drawer__aviso">Modo demonstração. O aluno não vê esta coluna, porque ela revela o equívoco.</p>
+  <div class="drawer__corpo"><ol class="feed" id="feedBastidores"></ol></div>
+  <div class="drawer__pe"><a href="/painel.html" target="_blank" rel="noopener">Abrir painel completo</a><span class="drawer__modelo" id="infoModelo"></span></div>
+</aside>
+
+<!-- ============ Explanation + rubric ============ -->
+<dialog class="modal" id="dlgExplicar" data-fase="explicar">
+  <div data-fase-conteudo="explicar">
+    <div class="modal__topo">
+      <div class="modal__selo"><svg><use href="#i-check"/></svg></div>
+      <h2 class="modal__titulo">Passou em todos os testes!</h2>
+      <p class="modal__sub" id="explicarMensagem">Agora, em uma frase: qual era o erro?</p>
+    </div>
+    <form class="modal__corpo" id="formExplicar" method="dialog">
+      <ul class="criterios" aria-label="Como a explicação é avaliada">
+        <li>O que estava errado</li><li>Por que acontecia</li><li>Como você corrigiu</li>
+      </ul>
+      <label class="sr-only" for="explicacao">Sua explicação</label>
+      <textarea class="area-explicacao" id="explicacao" placeholder="Ex.: o laço parava uma posição antes, então o último elemento nunca era somado…" required></textarea>
+    </form>
+    <div class="modal__rodape">
+      <span class="modal__dica"><kbd>Ctrl ↵</kbd> para enviar</span>
+      <span class="espaco"></span>
+      <button class="btn btn--primario btn--lg" id="btnExplicar" type="submit" form="formExplicar"><span>Enviar explicação</span></button>
     </div>
   </div>
 
+  <div data-fase-conteudo="rubrica" hidden>
+    <div class="modal__topo">
+      <div class="modal__selo"><svg><use href="#i-trofeu"/></svg></div>
+      <h2 class="modal__titulo">Desafio resolvido</h2>
+      <p class="modal__sub">Veja como ficou a sua explicação.</p>
+    </div>
+    <div class="modal__corpo">
+      <div class="nota-geral">
+        <div class="anel" id="rubricaAnel" style="--v:0"><span id="rubricaNota">0%</span></div>
+        <p id="rubricaComentario"></p>
+      </div>
+      <div class="barras">
+        <div class="barra">
+          <div class="barra__topo"><span>Identificou o erro</span><b id="rubIdentificouTx">0%</b></div>
+          <div class="barra__trilho"><div class="barra__valor" id="rubIdentificou" style="--v:0"></div></div>
+        </div>
+        <div class="barra">
+          <div class="barra__topo"><span>Explicou a causa</span><b id="rubCausaTx">0%</b></div>
+          <div class="barra__trilho"><div class="barra__valor barra__valor--sol" id="rubCausa" style="--v:0"></div></div>
+        </div>
+        <div class="barra">
+          <div class="barra__topo"><span>Descreveu a correção</span><b id="rubCorrecaoTx">0%</b></div>
+          <div class="barra__trilho"><div class="barra__valor barra__valor--info" id="rubCorrecao" style="--v:0"></div></div>
+        </div>
+      </div>
+      <p class="sua-explicacao" id="rubricaExplicacao"></p>
+    </div>
+    <div class="modal__rodape">
+      <button class="btn btn--primario btn--lg" id="btnProximo" type="button"><span>Próximo desafio</span><svg><use href="#i-dir"/></svg></button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============ End of session ============ -->
+<dialog class="modal" id="dlgFim">
+  <div class="modal__topo">
+    <div class="modal__selo"><svg><use href="#i-trofeu"/></svg></div>
+    <h2 class="modal__titulo">Sessão encerrada</h2>
+    <p class="modal__sub" id="fimMotivo">Você resolveu todos os desafios disponíveis.</p>
+  </div>
+  <div class="modal__corpo">
+    <div class="fim__lista">
+      <div class="fim__item"><b id="fimResolvidos">0</b><span>desafios resolvidos</span></div>
+      <div class="fim__item"><b id="fimExecucoes">0</b><span>execuções</span></div>
+      <div class="fim__item"><b id="fimDicas">0</b><span>dicas usadas</span></div>
+    </div>
+  </div>
+  <div class="modal__rodape">
+    <button class="btn btn--primario btn--lg" id="btnRecomecar" type="button"><span>Começar nova sessão</span></button>
+  </div>
+</dialog>
+
+<!-- ============ Initial loading ============ -->
+<div class="carregando" id="carregando">
   <div>
-    <div class="card" id="cardAgente">
-      <h2>🤖 Raciocínio do Agente <small style="color:var(--cinza);font-weight:normal">(ao vivo)</small></h2>
-      <div id="agente" class="agente"><span class="aviso">o agente está observando…</span></div>
-    </div>
-    <div class="card">
-      <h2>Sinais capturados (modelo do aluno)</h2>
-      <div id="painel"><span class="aviso">interaja para popular…</span></div>
-    </div>
-    <div class="card">
-      <h2>Domínio por equívoco</h2>
-      <div id="dominio"><span class="aviso">—</span></div>
-    </div>
+    <svg class="marca-anim"><use href="#i-logo"/></svg>
+    <p>Preparando o seu desafio…</p>
   </div>
 </div>
 
-<script>
-// ---- estado local de instrumentação ----
-let tInicio = Date.now(), primeiraExec = false;
-let lastLen = 0, lastEdit = 0, churn = 0, pausas = 0;
+<div class="toasts" id="toasts" aria-live="assertive"></div>
 
-const $ = id => document.getElementById(id);
-const ed = $("codigo");
+<!-- ============ Templates ============ -->
+<template id="tpl-msg">
+  <article class="msg" data-acao="">
+    <header class="msg__head">
+      <span class="tag msg__tag"></span>
+      <span class="nivel" data-nivel="0" hidden><i></i><i></i><i></i><i></i><i></i><span class="nivel__rotulo"></span></span>
+      <span class="espaco"></span>
+      <time class="msg__hora"></time>
+    </header>
+    <p class="msg__texto"></p>
+    <div class="msg__acoes"></div>
+  </article>
+</template>
 
-async function post(rota, corpo){ const r = await fetch(rota, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(corpo||{})}); return r.json(); }
-async function get(rota){ const r = await fetch(rota); return r.json(); }
+<template id="tpl-msg-aluno">
+  <article class="msg msg--aluno">
+    <header class="msg__head"><span>Você</span><span class="espaco"></span><time class="msg__hora"></time></header>
+    <p class="msg__texto"></p>
+  </article>
+</template>
 
-// ---- instrumentação de sinais (o que a interface capta) ----
-ed.addEventListener("input", () => {
-  const n = ed.value.length;
-  if (n < lastLen) churn += (lastLen - n);           // apagou/reescreveu
-  lastLen = n;
-  const agora = Date.now();
-  if (lastEdit && agora - lastEdit > 8000) pausas++;  // pausa longa
-  lastEdit = agora;
-});
-ed.addEventListener("paste", async (e) => {
-  // envia o TEXTO colado para o servidor distinguir cópia externa de trecho do próprio exercício
-  let txt = "";
-  try { txt = (e.clipboardData || window.clipboardData).getData("text") || ""; } catch(_){}
-  const r = await post("/evento", {tipo:"sinais", dados:{colagens_externas: 1, texto: txt}});
-  if (r && r.intervencao) mostrarIntervencao(r.intervencao);
-  atualizarAgente();
-});
+<template id="tpl-msg-sistema">
+  <div class="msg msg--sistema"><p class="msg__texto"></p></div>
+</template>
 
-function sinais(obj){ post("/evento", {tipo:"sinais", dados:obj}); }
-function flushSinais(){                                // envia deltas de churn/pausas
-  if (churn || pausas){ sinais({churn_edicao: churn, pausas_longas: pausas}); churn = 0; pausas = 0; }
-}
+<template id="tpl-resposta">
+  <form class="resposta">
+    <textarea rows="1" placeholder="Escreva sua hipótese…" aria-label="Sua resposta ao treinador" required></textarea>
+    <button class="btn btn--primario btn--sm" type="submit"><span>Responder</span></button>
+  </form>
+</template>
 
-// ---- ações ----
-let pollAgente = null;
-async function iniciar(){
-  const info = await get("/info"); $("info").textContent = "LLM: " + info.llm + (info.build ? "  ·  " + info.build : "");
-  agenteLen = 0; $("agente").innerHTML = "<span class='aviso'>o agente está observando…</span>";
-  $("cardDica").style.display = "none"; $("cardRubrica").style.display = "none";
-  const r = await post("/iniciar");
-  mostrarBug(r);
-  atualizarAgente();
-  if (!pollAgente) pollAgente = setInterval(atualizarAgente, 2500);  // rede de segurança (cada ação já atualiza na hora)
-}
-function mostrarBug(r){
-  if (r.encerrada){ $("enunciado").textContent = "Sessão encerrada 🎉 (" + (r.motivo||"") + ")"; ed.value=""; return; }
-  if (r.bug){
-    $("enunciado").textContent = r.bug.enunciado;
-    ed.value = r.bug.codigo; lastLen = ed.value.length;
-    const ent = $("entrada");
-    if (r.bug.modo === "chamada"){
-      // pré-preenche com uma chamada de exemplo real: o aluno só troca os números
-      ent.value = r.bug.exemplo_entrada || "";
-      ent.placeholder = r.bug.exemplo_entrada || "chamada de função";
-      ent.scrollLeft = 0;   // mostra o início da chamada, não o fim
-    } else {
-      ent.value = "";
-      ent.placeholder = "entrada (ex.: 2 4 6)";
-    }
-    tInicio = Date.now(); primeiraExec = false;
-    $("cardTrace").style.display="none"; $("cardDica").style.display="none"; $("cardExplica").style.display="none";
-    $("saida").textContent = "—";
-  }
-  atualizarPainel();
-}
-async function rodar(){
-  if (!primeiraExec){ sinais({tempo_ate_primeira_execucao_s: Math.round((Date.now()-tInicio)/1000)}); primeiraExec = true; }
-  flushSinais();
-  const r = await post("/evento", {tipo:"rodou_entrada", dados:{entrada:$("entrada").value, codigo:ed.value}});
-  $("saida").textContent = (r.saida||"").trim() + (r.erro ? ("\n[erro] "+r.erro) : "");
-  if (r.intervencao) mostrarIntervencao(r.intervencao);
-  atualizarPainel(); atualizarAgente();
-}
-async function verTrace(){
-  const r = await post("/evento", {tipo:"ver_trace", dados:{entrada:$("entrada").value, codigo:ed.value}});
-  renderTrace(r.passos);
-  if (r.intervencao) mostrarIntervencao(r.intervencao);
-  atualizarPainel(); atualizarAgente();
-}
-function renderTrace(passos){
-  const t = $("trace"); t.innerHTML = "<tr><th>linha</th><th>código</th><th>variáveis</th></tr>";
-  (passos||[]).forEach(p => {
-    const vars = Object.entries(p.variaveis||{}).map(([k,v])=>k+"="+v).join(", ");
-    t.innerHTML += `<tr><td>${p.linha}</td><td>${(p.codigo||"").replace(/</g,"&lt;")}</td><td>${vars}${p.imprimiu?(" · imprimiu "+p.imprimiu):""}</td></tr>`;
-  });
-  $("cardTrace").style.display="block";
-}
-async function pedirDica(){
-  flushSinais();
-  $("dica").textContent = "investigando…"; $("cardDica").style.display="block";
-  const r = await post("/evento", {tipo:"pediu_dica", dados:{codigo:ed.value}});
-  mostrarIntervencao({mensagem: r.mensagem || "(sem dica)", proativa: false});
-  atualizarPainel(); atualizarAgente();
-}
-async function submeter(){
-  flushSinais();
-  const r = await post("/evento", {tipo:"submeteu_correcao", dados:{codigo:ed.value}});
-  if (r.resposta === "correcao_incompleta"){
-    const f = (r.falhas||[]).map(x=>`entrada ${x.entrada}: esperado ${x.esperado}, obteve ${x.obtido}`).join("\n");
-    $("saida").textContent = "Ainda falha:\n" + f;
-  } else if (r.resposta === "peca_explicacao"){
-    $("saida").textContent = r.mensagem;
-    $("cardExplica").style.display="block";
-  }
-  if (r.intervencao) mostrarIntervencao(r.intervencao);
-  atualizarPainel(); atualizarAgente();
-}
-let proxDesafio = null;
-async function explicar(){
-  const r = await post("/evento", {tipo:"explicou", dados:{texto:$("explicacao").value}});
-  $("explicacao").value=""; $("cardExplica").style.display="none";
-  if (r.rubrica){
-    proxDesafio = r;            // segura o próximo desafio até o aluno LER a avaliação
-    mostrarRubrica(r.rubrica);  // mostra a nota por dimensão e PAUSA
-  } else {
-    mostrarBug(r);
-  }
-}
-function continuarProximo(){
-  $("cardRubrica").style.display = "none";
-  if (proxDesafio){ mostrarBug(proxDesafio); proxDesafio = null; }
-}
-function mostrarRubrica(rub){
-  const pct = v => Math.round((v==null?0:v)*100);
-  const dims = [["Identificou o erro", rub.identificou],
-                ["Explicou a causa", rub.causa],
-                ["Relacionou à correção", rub.correcao]];
-  const box = $("rubrica"); box.innerHTML = "";
-  dims.forEach(([k,v])=>{
-    const d = document.createElement("div"); d.style.marginBottom = "6px";
-    d.innerHTML = `<div class="sinal"><span></span><b>${pct(v)}%</b></div><div class="barra"><i style="width:${pct(v)}%"></i></div>`;
-    d.querySelector("span").textContent = k; box.appendChild(d);
-  });
-  const nota = document.createElement("div"); nota.className = "sinal"; nota.style.marginTop = "6px";
-  nota.innerHTML = `<span><b>Nota geral</b></span><b>${pct(rub.nota)}%</b>`;
-  box.appendChild(nota);
-  if (rub.comentario){
-    const c = document.createElement("div"); c.className = "dica"; c.style.marginTop = "8px";
-    c.textContent = rub.comentario; box.appendChild(c);
-  }
-  const btn = document.createElement("button"); btn.textContent = "Continuar para o próximo desafio →";
-  btn.style.marginTop = "10px"; btn.onclick = continuarProximo; box.appendChild(btn);
-  $("cardRubrica").style.display = "block";
-}
+<template id="tpl-passo">
+  <tr class="passo" data-indice="" data-linha="">
+    <td class="col-passo"></td>
+    <td class="col-linha"></td>
+    <td class="col-codigo"><code></code></td>
+    <td><div class="vars"></div></td>
+  </tr>
+</template>
 
-// ---- telinha do agente (raciocínio ao vivo) ----
-let agenteLen = 0, agenteEmVoo = false, ultimaPergunta = null;
-function classeLinha(ev){
-  if (ev.tipo) return ev.tipo;                 // leitura|decisao|fala|dica|invest
-  if (ev.icone === "🔒") return "guard";
-  if (ev.icone === "🔬") return "invest";
-  return "";
-}
-async function atualizarAgente(){
-  if (agenteEmVoo) return;                      // evita requisições de painel sobrepostas
-  agenteEmVoo = true;
-  let m;
-  try { m = await get("/painel"); }
-  catch(e){ return; }
-  finally { agenteEmVoo = false; }
-  const evs = m.eventos || [];
-  if (evs.length < agenteLen){ agenteLen = 0; $("agente").innerHTML = ""; }  // sessão reiniciou
-  if (evs.length === agenteLen) return;
-  const box = $("agente");
-  if (agenteLen === 0) box.innerHTML = "";
-  for (let i = agenteLen; i < evs.length; i++){
-    const ev = evs[i];
-    const d = document.createElement("div");
-    d.className = "linha " + classeLinha(ev);
-    d.innerHTML = `<span class="ic">${ev.icone||"•"}</span><span class="tx"></span>`;
-    d.querySelector(".tx").textContent = ev.texto || "";
-    box.appendChild(d);
-  }
-  agenteLen = evs.length;
-  box.scrollTop = box.scrollHeight;
-}
-function mostrarIntervencao(iv){
-  if (!iv) return;
-  ultimaPergunta = iv.espera_resposta ? (iv.mensagem || "") : null;
-  const proativa = iv.proativa !== false;
-  const tag = proativa ? "🤖 O agente decidiu intervir (sozinho)" : "🤖 Dica do agente";
-  $("cardDica").style.display = "block";
-  let extra = "";
-  if (iv.espera_resposta){
-    extra = `<div style="margin-top:8px;display:flex;gap:6px">
-        <input type="text" id="resposta" placeholder="responda ao treinador…" style="flex:1"
-               onkeydown="if(event.key==='Enter')responderTreinador()">
-        <button onclick="responderTreinador()">Responder</button></div>
-      <div id="feedbackResp" class="aviso" style="margin-top:6px"></div>`;
-  }
-  $("dica").innerHTML = `<span class="tag"></span><div class="txt"></div>${extra}`;
-  $("dica").querySelector(".tag").textContent = tag;
-  $("dica").querySelector(".txt").textContent = iv.mensagem || "";
-  // se o agente escolheu MOSTRAR_VALORES, ele já rodou o trace: exibe as variáveis
-  if (iv.trace && iv.trace.passos){ renderTrace(iv.trace.passos); }
-  atualizarAgente();
-}
-async function responderTreinador(){
-  const inp = $("resposta"); if (!inp) return;
-  const resposta = inp.value.trim(); if (!resposta) return;
-  inp.disabled = true;
-  const r = await post("/evento", {tipo:"respondeu_pergunta", dados:{pergunta: ultimaPergunta||"", resposta}});
-  if ($("feedbackResp")) $("feedbackResp").textContent = "🤖 " + (r.feedback || "");
-  atualizarPainel(); atualizarAgente();
-}
+<template id="tpl-var">
+  <span class="var"><b></b><code></code></span>
+</template>
 
-// ---- painel de sinais ----
-async function atualizarPainel(){
-  const m = await get("/modelo");
-  const s = m.sinais_interface || {}, d = m.depuracao || {};
-  const linhas = [
-    ["Execuções", s.num_execucoes||0],
-    ["Entradas discriminantes (sozinho)", s.num_execucoes_proprias_discriminantes||0],
-    ["Usou o trace", s.usou_trace||0],
-    ["Tempo até 1ª execução (s)", s.tempo_ate_primeira_execucao_s ?? "—"],
-    ["Churn de edição", s.churn_edicao||0],
-    ["Colagens externas", s.colagens_externas||0],
-    ["Pausas longas", s.pausas_longas||0],
-    ["Bugs resolvidos", (m.bugs_resolvidos||[]).length],
-  ];
-  $("painel").innerHTML = linhas.map(([k,v])=>`<div class="sinal"><span>${k}</span><b>${v}</b></div>`).join("")
-    + "<hr><b style='color:var(--verde2)'>Depuração</b>"
-    + Object.entries(d).map(([k,v])=>`<div class="sinal"><span>${k}</span><b>${(v*100).toFixed(0)}%</b></div>`).join("");
-  const dom = m.dominio_por_equivoco || {};
-  $("dominio").innerHTML = Object.keys(dom).length ? Object.entries(dom).map(([k,v])=>
-    `<div style="margin-bottom:6px"><div class="sinal"><span>${k}</span><b>${(v*100).toFixed(0)}%</b></div><div class="barra"><i style="width:${(v*100).toFixed(0)}%"></i></div></div>`).join("")
-    : "<span class='aviso'>—</span>";
-}
+<template id="tpl-teste">
+  <li>
+    <dl class="teste">
+      <dt>Entrada</dt><dd class="entrada"></dd>
+      <dt>Esperado</dt><dd class="esperado"></dd>
+      <dt>Obtido</dt><dd class="obtido"></dd>
+      <dt class="erro-dt" hidden>Erro</dt><dd class="erro" hidden></dd>
+      <div class="teste__acao"><button class="btn btn--sm btn-usar-entrada" type="button"><svg><use href="#i-passos"/></svg><span>Investigar esta entrada</span></button></div>
+    </dl>
+  </li>
+</template>
 
-iniciar();
-</script>
+<template id="tpl-evento">
+  <li class="evento" data-tipo="">
+    <span class="evento__ic"></span>
+    <div class="evento__corpo">
+      <p class="evento__tx"></p>
+      <div class="evento__det" hidden><ul class="det-hips" hidden></ul></div>
+      <div class="evento__meta">
+        <time></time>
+        <span class="tag evento__tag" hidden></span>
+        <span class="conf" hidden><span class="conf__barra"><i></i></span><span class="conf__tx"></span></span>
+      </div>
+    </div>
+  </li>
+</template>
+
+<template id="tpl-det">
+  <div class="det"><span class="det__k"></span><code class="det__v"></code></div>
+</template>
+
+<template id="tpl-hip">
+  <li class="det-hip"><b class="det-hip__id"></b><span class="det-hip__tx"><span class="det-hip__desc"></span><span class="det-hip__eq"></span></span></li>
+</template>
+
+<template id="tpl-toast">
+  <div class="toast" role="status"><span class="toast__tx"></span></div>
+</template>
+
+<script src="/js/evidencia.js" defer></script>
+<script src="/js/aluno.js" defer></script>
 </body>
 </html>
