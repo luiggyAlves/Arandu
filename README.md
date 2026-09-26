@@ -1,4 +1,4 @@
-# Projeto Arandu 🪶
+# Projeto Arandu
 
 **Um treinador de depuração autônomo: o aluno recebe um programa curto com um
 bug de lógica realista, investiga (roda entradas, vê variáveis passo a passo),
