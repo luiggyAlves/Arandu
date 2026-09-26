@@ -20,14 +20,15 @@ Projeto do **AKCIT Camp 2026** (Agentes de IA) — Trilha Norte / Manaus.
 2. [A solução e os 4 módulos](#2-a-solução-e-os-4-módulos)
 3. [O pipeline completo (Fase A offline → Fase B runtime)](#3-o-pipeline-completo)
 4. [Fluxo de informação em runtime](#4-fluxo-de-informação-em-runtime)
-5. [Exemplo prático (uma sessão real, passo a passo)](#5-exemplo-prático)
-6. [Detalhe crucial: o que o agente "vê" para decidir (o retrato)](#6-o-retrato)
-7. [Detalhe crucial: as tarefas de LLM (prompts)](#7-as-tarefas-de-llm)
-8. [Modelo do aluno](#8-modelo-do-aluno)
-9. [Verificador (guardrail)](#9-verificador)
-10. [Como rodar](#10-como-rodar)
-11. [Estrutura de pastas e o que cada arquivo faz](#11-estrutura-e-arquivos)
-12. [Datasets, fundamentação e limitações](#12-datasets-e-limitações)
+5. [Fluxo do agente: inputs, lógica e outputs](#5-fluxo-do-agente)
+6. [Exemplo prático (uma sessão real, passo a passo)](#6-exemplo-prático)
+7. [Detalhe crucial: o que o agente "vê" para decidir (o retrato)](#7-o-retrato)
+8. [Detalhe crucial: as tarefas de LLM (prompts)](#8-as-tarefas-de-llm)
+9. [Modelo do aluno](#9-modelo-do-aluno)
+10. [Verificador (guardrail)](#10-verificador)
+11. [Como rodar](#11-como-rodar)
+12. [Estrutura de pastas e o que cada arquivo faz](#12-estrutura-e-arquivos)
+13. [Datasets, fundamentação e limitações](#13-datasets-e-limitações)
 
 ---
 
@@ -125,13 +126,175 @@ flowchart TD
 `respondeu_pergunta`, `sinais` (churn/pausas/colagem), `inativo`, `sair`.
 
 Depois de `rodou_entrada`, `submeteu_correcao` (quando falha) e da colagem de
-código externo, a sessão chama o **monitor**: monta o **retrato** (seção 6) e
+código externo, a sessão chama o **monitor**: monta o **retrato** (seção 7) e
 pergunta ao agente o que fazer. A decisão e a ação entram na resposta **e** no
 painel. `ver_trace` (abrir variáveis) é ação boa do aluno — só observamos.
 
 ---
 
-## 5. Exemplo prático
+## 5. Fluxo do agente
+
+O agente é o **Treinador** (`arandu-m3/treinador.py`), acionado pelo orquestrador
+da sessão (`arandu-m3/sessao.py`). Ele trabalha em quatro etapas: **decidir** se
+intervém, **investigar** o bug (ReAct), **redigir uma dica verificada** e
+**avaliar** o que o aluno responde ou explica. Esta seção descreve o contrato de
+cada etapa: o que entra, o que acontece e o que sai.
+
+### 5.1 Inputs
+
+| Gatilho (evento da interface) | Etapa acionada | O que o agente recebe |
+|---|---|---|
+| `rodou_entrada` | Decidir | Retrato + baralho de ações. `evento_atual`: `entrada`, `saida`, `entrada_expoe_o_erro`, `e_repeticao_da_anterior` |
+| `submeteu_correcao` que falhou | Decidir | Retrato + baralho. `evento_atual`: `submeteu_e_falhou`, `testes_passaram`, `testes_total` |
+| `sinais` com colagem de código externo | Decidir | Retrato + baralho. `evento_atual`: `colou_codigo_externo` (colar trecho do próprio exercício **não** conta) |
+| `pediu_dica`, ou decisão `DAR_DICA` | Investigar → Dica | Código atual do aluno, código de referência, entrada que falha (1º teste reprovado da suíte), testes, modo (`stdin`/`chamada`) e assinatura da função |
+| `respondeu_pergunta` | Avaliar resposta | Pergunta feita, resposta do aluno, equívoco do bug, correção de referência, código do aluno |
+| `explicou` (depois de passar nos testes) | Avaliar explicação | Explicação do aluno, equívoco do bug, correção de referência |
+
+**Não acionam o agente:** `ver_trace` (só registra que o aluno abriu as
+variáveis), `sinais` sem colagem (atualizam o modelo do aluno) e `inativo`/`sair`
+(encerram a sessão).
+
+O **retrato** reúne só fatos, em cinco blocos: `evento_atual`, `progresso` no
+bug, `historico_recente` (as últimas 8 ações em linguagem natural),
+`modelo_aluno`, e `bug` com flags (`ja_usou_dica`, `ja_intervim_neste_bug`,
+`ultima_intervencao_do_agente`). Campo a campo na [seção 7](#7-o-retrato).
+
+### 5.2 Lógica
+
+```mermaid
+flowchart TD
+    EV["Evento do aluno<br/>rodou entrada · submeteu e falhou · colou código de fora"] --> RT["Monta o retrato (só fatos)"]
+    RT --> DA["LLM: decidir_acao"]
+    DA -->|OBSERVAR| SL["Silêncio<br/>(a leitura vai para o painel)"]
+    DA -->|outra ação| GC{"Guarda-corpos<br/>teto de 8 · cooldown de 15 s"}
+    GC -->|bloqueou| SL
+    GC -->|mensagem curta| V1{"Verificador<br/>(não exige âncora)"}
+    GC -->|DAR_DICA| INV["investigar() — laço ReAct com o M1"]
+    PD["Aluno pede dica"] --> INV
+    INV --> RD["LLM: redigir_dica (começa no nível 3)"]
+    RD --> V2{"Verificador<br/>(exige âncora)"}
+    V2 -->|"reprovou: desce 1 nível<br/>(3ª reprovação → dica segura nível 1)"| RD
+    V2 -->|aprovou| OUT["Intervenção → aluno + painel"]
+    V1 -->|aprovou| OUT
+    V1 -->|barrou| SL
+```
+
+**Etapa 1: Decidir.** A cada gatilho, o LLM (tarefa `decidir_acao`) lê o retrato
+e escolhe **uma** ação do baralho: `OBSERVAR · ENCORAJAR · PERGUNTAR ·
+SUGERIR_TESTE · MOSTRAR_VALORES · DAR_DICA · AVANCAR`. `OBSERVAR` é o padrão; o
+prompt manda intervir só com razão clara e escalar (não repetir o mesmo tipo de
+ação no mesmo bug). A leitura e a decisão vão **sempre** para o painel, mesmo
+quando a escolha é observar. Se a ação não é `OBSERVAR`, os guarda-corpos
+conferem o teto de intervenções e o cooldown. Eles não decidem *quando* ajudar,
+só evitam atrapalhar. Depois disso:
+
+- `ENCORAJAR`, `PERGUNTAR`, `SUGERIR_TESTE`, `AVANCAR`: a mensagem escrita pelo
+  LLM passa pelo Verificador (que dispensa âncora, mas barra vazamento da
+  solução). `PERGUNTAR` abre uma caixa de resposta para o aluno.
+- `MOSTRAR_VALORES`: além da mensagem, o agente **roda o trace de verdade** no M1
+  com a última entrada e envia as variáveis passo a passo.
+- `DAR_DICA`: segue para as etapas 2 e 3.
+
+**Etapa 2: Investigar (ReAct).** Antes de dizer qualquer coisa, o agente prova o
+diagnóstico executando código:
+
+1. `gerar_hipoteses`: 2–3 hipóteses concorrentes sobre o **equívoco**, a partir
+   dos dois códigos e do catálogo de equívocos (ProgMiscon).
+2. Enquanto restar mais de uma hipótese (até 6 passos):
+   - `projetar_entrada` propõe de 2 a 4 entradas em que as hipóteses preveem
+     saídas **diferentes** (nunca repete uma já tentada);
+   - o M1 roda cada entrada no código do aluno **e** no de referência até uma
+     divergir. Cada execução vira uma **âncora** (entrada, saída do aluno, saída
+     esperada);
+   - `podar` recebe o resultado real e mantém só as hipóteses compatíveis.
+   - Se não houver entrada nova para testar, ou se a poda eliminar todas as
+     hipóteses, elas são regeneradas (até 2 vezes); depois disso, o laço para.
+3. Se não convergir para uma hipótese, cai no **modo direto**: roda a entrada que
+   falha na suíte e usa esse resultado como âncora.
+
+Sai daqui: `{equivoco, ancoras, conclusivo, log}`. O `log` alimenta o painel.
+
+**Etapa 3: Dica verificada.** `redigir_dica` escreve a dica no nível 3 (a escada
+vai de 1 = pergunta socrática a 5 = nomear o equívoco; entregar a correção nunca
+é permitido), ancorada nos valores reais. O Verificador **exige âncora** e barra
+a revelação da solução. A cada reprovação, a dica é reescrita um nível abaixo; na
+3ª, sai uma dica segura de nível 1 (*"Qual a sua hipótese sobre o erro? Que
+entrada você poderia rodar para testá-la?"*).
+
+**Etapa 4: Avaliar.**
+- `avaliar_resposta`: feedback de 1–2 frases, ancorado no exercício (não é chat
+  livre), mais uma nota de `compreensao` de 0 a 1. O feedback também passa pelo
+  Verificador.
+- `avaliar_explicacao`: rubrica com `identificou`, `causa` e `correcao` (0–1),
+  mais `nota` e `comentario`.
+
+**Quando algo falha, o agente degrada com segurança e nunca derruba a sessão:**
+
+| Falha | Comportamento |
+|---|---|
+| `decidir_acao` dá erro (rede, JSON inválido) | Assume `OBSERVAR` |
+| Investigação dá erro | Envia a dica segura de nível 1 |
+| `avaliar_resposta` dá erro | Feedback genérico: *"Anotei a sua resposta…"* |
+| `avaliar_explicacao` dá erro | Rubrica vazia com *"Não consegui avaliar a explicação agora."* |
+| Ação desconhecida vinda do LLM | Tratada como `OBSERVAR` |
+
+**Limites** (em `arandu-m3/config.py`):
+
+| Parâmetro | Valor | Protege contra |
+|---|---|---|
+| `MAX_PASSOS_REACT` | 6 | Laço de investigação longo demais |
+| `MAX_REGENERACOES_HIPOTESE` | 2 | Hipóteses que nunca convergem |
+| `MAX_REJEICOES_VERIFICADOR` | 3 | Dica reprovada em loop |
+| `MAX_INTERVENCOES_PROATIVAS` | 8 por sessão | Agente falando demais |
+| `COOLDOWN_INTERVENCAO_S` | 15 s | Intervenções em sequência |
+| `MAX_CHAMADAS_LLM_SESSAO` | 150 por sessão | Custo descontrolado |
+
+### 5.3 Outputs
+
+| Output | Onde aparece | Formato |
+|---|---|---|
+| Intervenção proativa | Campo `intervencao` na resposta do `POST /evento` | `{acao, mensagem, proativa: true}` + `espera_resposta` (em `PERGUNTAR`), `trace: {entrada, passos}` (em `MOSTRAR_VALORES`) ou `nivel` (em `DAR_DICA`) |
+| Dica pedida pelo aluno | Resposta do `pediu_dica` | `{resposta: "dica", mensagem, nivel}` |
+| Feedback de uma resposta | Resposta do `respondeu_pergunta` | `{resposta: "feedback_resposta", feedback, compreensao}` |
+| Rubrica da explicação | Resposta do `explicou` | `rubrica: {identificou, causa, correcao, nota, comentario}` + `bug_resolvido` + o próximo bug (ou o encerramento) |
+| Raciocínio ao vivo | `GET /painel` (tela "Raciocínio do Agente") | Eventos: 🧠 leitura · 🎯 decisão com confiança · 🔬 hipóteses, experimentos, poda e conclusão · 💬 fala/dica com veredito do Verificador, rejeições e âncoras · 🔒 guarda-corpo acionado |
+| Modelo do aluno | `arandu-m3/dados_alunos/<aluno>.json` | Atualizado só com evidência limpa (ver abaixo) |
+| Registro da sessão | `arandu-m3/dados_sessoes/<sessão>.json` (visão do professor) | Intervenções, dicas, rubricas e custo (chamadas e tokens por tarefa) |
+
+**Como o fluxo do agente alimenta o modelo do aluno (evidência limpa):**
+- O aluno roda uma entrada que expõe o erro → sobe `testa_entrada_discriminante`.
+  Se quem rodou foi o agente, não conta.
+- Resposta com `compreensao` ≥ 0,5 → conta como `forma_hipotese`.
+- O domínio do equívoco (BKT) só recebe o crédito de acerto se a nota da
+  explicação for ≥ 0,5, ou ≥ 0,7 se o aluno colou código de fora. Caso
+  contrário, conta como erro: passar nos testes não é prova de domínio. Por
+  exemplo, partindo de 0,5, um acerto leva a 0,87 e um erro a 0,38.
+- Variáveis abertas pelo agente (`MOSTRAR_VALORES`) não contam como `le_variaveis`.
+
+**Exemplo de um ciclo de decisão** (retrato abreviado):
+
+```jsonc
+// Input: parte do retrato enviado ao LLM
+{
+  "evento_atual": {"tipo": "rodou_entrada", "entrada": "search(42, (-5, 1, 3, 5, 7, 10))",
+                   "saida": "6", "entrada_expoe_o_erro": false, "e_repeticao_da_anterior": true},
+  "progresso": {"execucoes_neste_bug": 3, "repeticoes_seguidas_da_mesma_entrada": 2,
+                "ja_achou_entrada_que_expoe_o_erro": false},
+  "ja_intervim_neste_bug": false
+}
+// Output do LLM (decidir_acao)
+{"acao": "SUGERIR_TESTE", "confianca": 0.7,
+ "motivo": "Ele repetiu a mesma entrada duas vezes seguidas sem tirar conclusão.",
+ "mensagem": "Que tal tentar uma entrada bem diferente, tipo um caso extremo, pra ver como o programa reage?"}
+// O que a interface recebe (depois dos guarda-corpos e do Verificador)
+"intervencao": {"acao": "SUGERIR_TESTE", "mensagem": "Que tal tentar uma entrada bem diferente…",
+                "proativa": true, "espera_resposta": false}
+```
+
+---
+
+## 6. Exemplo prático
 
 Uma sessão real com o bug `search(x, seq)` cujo equívoco é comparar com um
 booleano (`if seq == False:` — equívoco *ComparisonWithBoolLiteral*):
@@ -160,7 +323,7 @@ agência demonstrável.
 
 ---
 
-## 6. O retrato
+## 7. O retrato
 
 **Este é o detalhe mais importante da decisão agêntica.** A cada ação, o
 orquestrador monta um "retrato" da situação (só **fatos**, não decide nada) e o
@@ -205,7 +368,7 @@ Verificador), que não decidem *quando* ajudar, só evitam atrapalhar.
 
 ---
 
-## 7. As tarefas de LLM
+## 8. As tarefas de LLM
 
 Todas as chamadas ao LLM passam por uma porta única, `llm.chamar(tarefa, dados)`
 (`arandu-m3/llm.py`). Há três implementações: `AnthropicLLM` (Claude Sonnet por
@@ -226,7 +389,7 @@ Os textos completos dos prompts estão em `llm.py` (dicionário `_PROMPTS`).
 
 ---
 
-## 8. Modelo do aluno
+## 9. Modelo do aluno
 
 Quatro dimensões (`modelo_aluno.py`), atualizadas **só com evidência limpa**
 (estratégias forçadas por falha de ferramenta, ou ações do próprio agente, não
@@ -244,7 +407,7 @@ Persistência: um JSON por aluno em `arandu-m3/dados_alunos/` (pseudônimo — L
 
 ---
 
-## 9. Verificador
+## 10. Verificador
 
 Toda mensagem passa por `verificar()` antes de chegar ao aluno. Barra:
 - dicas **sem âncora** de execução (afirmou sem rodar);
@@ -256,7 +419,7 @@ de vazar solução continua valendo.
 
 ---
 
-## 10. Como rodar
+## 11. Como rodar
 
 **Requisitos:** Python 3.10+ e `anthropic` ou `openai` (só para a chave real).
 
@@ -297,7 +460,7 @@ stdin: `ARANDU_BANCO=exemplos py arandu-m3/servidor_web.py`.
 
 ---
 
-## 11. Estrutura e arquivos
+## 12. Estrutura e arquivos
 
 ```
 Arandu/
@@ -335,7 +498,7 @@ Gerados em runtime dentro de `arandu-m3/` e ignorados no Git: `logs/`,
 
 ---
 
-## 12. Datasets e limitações
+## 13. Datasets e limitações
 
 - **ProgMiscon** — catálogo de equívocos (base do `catalogo.py` e das etiquetas).
 - **Refactory** — pares (código com bug, código correto) de funções Python de
