@@ -23,10 +23,11 @@ _log = get_logger("llm")
 
 
 def _carregar_dotenv():
-    """Lê o arquivo .env (ao lado deste módulo) e popula variáveis de ambiente
-    que ainda não estejam setadas. Sem dependência externa. Assim a chave da
-    OpenAI vem do .env automaticamente, em qualquer ponto de entrada."""
-    caminho = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    """Lê o arquivo .env (na raiz do repositório) e popula variáveis de ambiente
+    que ainda não estejam setadas. Sem dependência externa. Assim a chave do
+    LLM vem do .env automaticamente, em qualquer ponto de entrada."""
+    raiz = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    caminho = os.path.join(raiz, ".env")
     if not os.path.exists(caminho):
         return
     try:
@@ -339,3 +340,46 @@ class OpenAILLM(LLM):
                   getattr(u, "prompt_tokens", "?"), getattr(u, "completion_tokens", "?"),
                   self.tokens_entrada, self.tokens_saida)
         return json.loads(resp.choices[0].message.content)
+
+
+# --------------------------------------------------------------------------- #
+# AnthropicLLM — implementação real (Claude Sonnet). Mesma porta chamar().
+# --------------------------------------------------------------------------- #
+class AnthropicLLM(LLM):
+    def __init__(self, modelo: str = "claude-sonnet-5", api_key: str | None = None):
+        from anthropic import Anthropic    # import tardio (só quando usado)
+        self.cliente = Anthropic(api_key=api_key, timeout=20.0, max_retries=1)  # lê ANTHROPIC_API_KEY do ambiente se None
+        self.modelo = modelo
+        self.chamadas = 0
+        self.tokens_entrada = 0
+        self.tokens_saida = 0
+
+    def chamar(self, tarefa: str, dados: dict) -> dict:
+        self.chamadas += 1
+        instrucao = _PROMPTS[tarefa]
+        conteudo = (instrucao + "\n\nDADOS:\n" + json.dumps(dados, ensure_ascii=False) +
+                    "\n\nResponda SOMENTE com o JSON, sem texto antes ou depois.")
+        resp = self.cliente.messages.create(
+            model=self.modelo,
+            max_tokens=2048,
+            messages=[{"role": "user", "content": conteudo}],
+        )
+        u = getattr(resp, "usage", None)
+        if u:
+            self.tokens_entrada += getattr(u, "input_tokens", 0)
+            self.tokens_saida += getattr(u, "output_tokens", 0)
+        _log.info("LLM(%s) tarefa=%s tokens=%s/%s (acum %s/%s)", self.modelo, tarefa,
+                  getattr(u, "input_tokens", "?"), getattr(u, "output_tokens", "?"),
+                  self.tokens_entrada, self.tokens_saida)
+        # o modelo pode antepor blocos de "thinking" ao bloco de texto — pega o 1º com .text
+        bloco = next((b for b in resp.content if getattr(b, "type", None) == "text"), None)
+        if bloco is None:
+            raise ValueError(f"resposta sem bloco de texto (tipos={[getattr(b, 'type', '?') for b in resp.content]})")
+        texto = bloco.text.strip()
+        # Claude às vezes cerca o JSON com ```json ... ``` apesar da instrução — remove.
+        if texto.startswith("```"):
+            texto = texto.strip("`")
+            if texto.startswith("json"):
+                texto = texto[4:]
+            texto = texto.strip()
+        return json.loads(texto)

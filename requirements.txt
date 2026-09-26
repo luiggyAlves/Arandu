@@ -1,5 +1,7 @@
 # Dependências do M3 (Treinador).
 # O núcleo roda só com a biblioteca padrão do Python (servidor web, sessão,
-# modelo do aluno). A única dependência externa é o cliente da OpenAI, usado
-# quando há OPENAI_API_KEY no .env (sem a chave, roda com o MockLLM).
+# modelo do aluno). As dependências externas são os clientes de LLM, usados
+# quando há OPENAI_API_KEY ou ANTHROPIC_API_KEY no .env (sem chave, roda com
+# o MockLLM). Com as duas chaves presentes, a Anthropic tem prioridade.
 openai>=1.0
+anthropic>=0.40

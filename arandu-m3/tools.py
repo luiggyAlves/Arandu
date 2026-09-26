@@ -20,13 +20,10 @@ import os
 import sys
 from itertools import zip_longest
 
-# Encontra o pacote arandu_motor (M1) ao lado deste arquivo (arandu-m1/) ou já instalado.
-_AQUI = os.path.dirname(os.path.abspath(__file__))
-for _cand in (os.path.join(_AQUI, "arandu-m1"), _AQUI, os.path.join(_AQUI, "..", "arandu-m1")):
-    if os.path.isdir(os.path.join(_cand, "arandu_motor")):
-        if _cand not in sys.path:
-            sys.path.insert(0, _cand)
-        break
+# Encontra o pacote arandu_motor (M1) em <raiz>/arandu-m1/ ou já instalado.
+_M1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "arandu-m1")
+if os.path.isdir(os.path.join(_M1, "arandu_motor")) and _M1 not in sys.path:
+    sys.path.insert(0, _M1)
 
 try:
     from arandu_motor import (
@@ -38,7 +35,7 @@ try:
 except ImportError as e:  # ajuda quem for rodar
     raise ImportError(
         "Não encontrei o motor do M1 (arandu_motor). Deixe a pasta 'arandu-m1' "
-        "ao lado deste arquivo, ou rode 'pip install -e .' dentro de arandu-m1. "
+        "na raiz do repositório, ou rode 'pip install -e .' dentro de arandu-m1. "
         f"Detalhe: {e}"
     )
 

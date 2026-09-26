@@ -22,15 +22,15 @@ Online judges only say right or wrong. Arandu teaches the act of debugging itsel
 
 ## Operating Context
 
-- Used on desktop/notebook browsers with a normal internet connection; served locally by `python3 servidor_web.py` at `http://localhost:8002`.
+- Used on desktop/notebook browsers with a normal internet connection; served locally by `python3 arandu-m3/servidor_web.py` at `http://localhost:8002`.
 - Live demo in front of a jury: the student session is shown, and the agent reasoning is toggled on to prove autonomy.
 - A session runs challenge after challenge: investigate, submit, explain, see the rubric, next challenge. Agent calls take ~2–4 s; a hint with investigation can take much longer (no streaming).
 
 ## Capabilities and Constraints
 
-- Student surface (`web/index.html`): problem statement, editable buggy code, input (function call or stdin), run output and runtime errors, step-by-step variable trace, hidden-test submission with failing cases (input, expected, obtained, error), trainer messages (hint with level 1–5, question with reply, show values, suggest test, encourage), one-sentence explanation, rubric (identified, cause, correction, score, comment), end of session.
-- Agent panel (`web/painel.html`) and an in-session toggleable "Bastidores" drawer: timeline of reading, decision (+ confidence), investigation, speech/hint, Verifier blocks, student actions; student model (mastery per misconception, debugging skills, interface signals).
-- Integration contract: plain HTML/CSS with `<template>` elements cloned by vanilla JS (`web/js/aluno.js`, `web/js/painel.js`); element IDs are part of the contract. No framework, no build step.
+- Student surface (`arandu-m3/web/index.html`): problem statement, editable buggy code, input (function call or stdin), run output and runtime errors, step-by-step variable trace, hidden-test submission with failing cases (input, expected, obtained, error), trainer messages (hint with level 1–5, question with reply, show values, suggest test, encourage), one-sentence explanation, rubric (identified, cause, correction, score, comment), end of session.
+- Agent panel (`arandu-m3/web/painel.html`) and an in-session toggleable "Bastidores" drawer: timeline of reading, decision (+ confidence), investigation, speech/hint, Verifier blocks, student actions; student model (mastery per misconception, debugging skills, interface signals).
+- Integration contract: plain HTML/CSS with `<template>` elements cloned by vanilla JS (`arandu-m3/web/js/aluno.js`, `arandu-m3/web/js/painel.js`); element IDs are part of the contract. No framework, no build step.
 - Not yet available in the backend: class/teacher aggregation, ablation metric, cost per session, valid-bug rate, total number of challenges, multi-user sessions. The UI may reserve places for them but must not fabricate values.
 - Terminology (Portuguese UI): desafio, treinador, dica, passo a passo, equívoco, Verificador, bastidores.
 
@@ -42,7 +42,7 @@ The user approved the current palette (deep forest green, amber, warm neutrals, 
 
 ## Evidence on Hand
 
-- Project brief: `Projeto-Arandu.pdf`, `contexto-projeto-arandu.md`.
+- Project brief: `Projeto-Arandu.pdf` (repo root), `docs/contexto-projeto-arandu.md`.
 - Real bug bank: 8 items from Refactory (misconceptions `ComparisonWithBoolLiteral`, `MapToBooleanWithIf`, `ParenthesesOnlyIfArgument`); synthetic variants for LGPD.
 - Cited stats (from the brief): INEP ~23% failure/dropout in programming logic; UFPR study: 79% of those who failed Algorithms dropped out.
 - No logo, testimonials, pilot results, or ablation numbers exist yet; do not invent them.

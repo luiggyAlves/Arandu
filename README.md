@@ -56,7 +56,7 @@ paralelo). Este repositório é o **runtime do M3** integrado ao **M1** e aos
 | **M1 — Motor de execução** | Roda o código do aluno com segurança (sandbox) e devolve fatos: `executar`, `trace`, `rodar_suite`, `diff_comportamental`. É a **fonte de verdade**. | Runtime |
 | **M2 — Banco de bugs** | Pipeline **offline** (roda uma vez): do dataset bruto do Refactory até um banco curado de bugs rotulados (ProgMiscon), variações validadas e uma loja de trajetórias. | Offline (Fase A) |
 | **M3 — Treinador** | O agente: decide se/quando/como intervir, investiga (ReAct), redige dicas; mantém o modelo do aluno; o Verificador (guardrail). | Runtime (Fase B) |
-| **M4 — Interface/métricas/pitch** | A interface web do aluno e as métricas. *(Neste repo, a interface `web/index.html` já cumpre esse papel para a demo.)* | Runtime |
+| **M4 — Interface/métricas/pitch** | A interface web do aluno e as métricas. *(Neste repo, a interface em `arandu-m3/web/` já cumpre esse papel para a demo.)* | Runtime |
 
 Ideia central em uma frase: **o agente decide como um tutor decidiria; as
 ferramentas determinísticas do M1 produzem os fatos; o Verificador impede
@@ -208,9 +208,9 @@ Verificador), que não decidem *quando* ajudar, só evitam atrapalhar.
 ## 7. As tarefas de LLM
 
 Todas as chamadas ao LLM passam por uma porta única, `llm.chamar(tarefa, dados)`
-(`llm.py`). Há duas implementações: `OpenAILLM` (gpt-4o por padrão, com timeout) e
-`MockLLM` (respostas roteirizadas, roda sem chave). As **tarefas** e o que cada
-prompt faz:
+(`arandu-m3/llm.py`). Há três implementações: `AnthropicLLM` (Claude Sonnet por
+padrão), `OpenAILLM` (gpt-4o por padrão) — ambas com timeout — e `MockLLM`
+(respostas roteirizadas, roda sem chave). As **tarefas** e o que cada prompt faz:
 
 | Tarefa | Para quê | Devolve |
 |---|---|---|
@@ -240,7 +240,7 @@ contam):
    (sinal-ouro), uso do trace, tempo até a 1ª execução, churn, colagens, pausas.
 4. **Qualidade da explicação** — nota geral da rubrica.
 
-Persistência: um JSON por aluno em `dados_alunos/` (pseudônimo — LGPD).
+Persistência: um JSON por aluno em `arandu-m3/dados_alunos/` (pseudônimo — LGPD).
 
 ---
 
@@ -258,64 +258,81 @@ de vazar solução continua valendo.
 
 ## 10. Como rodar
 
-**Requisitos:** Python 3.10+ e `openai` (só para a chave real).
+**Requisitos:** Python 3.10+ e `anthropic` ou `openai` (só para a chave real).
 
 ```bash
 pip install -r requirements.txt
 ```
 
-1. `arandu-m1/` (motor M1) deve estar ao lado dos arquivos do M3 (já está).
-2. Crie um `.env` nesta pasta com a sua chave:
+1. `arandu-m1/` (motor M1) e `Arandu-m2/` (dados do M2) devem estar na raiz do
+   repositório, ao lado de `arandu-m3/` (já estão).
+2. Crie um `.env` na **raiz do repositório** com a sua chave (uma das duas; se
+   houver as duas, a Anthropic tem prioridade):
    ```
-   OPENAI_API_KEY=sk-...
-   # opcional: modelo (padrão gpt-4o). Ex.: gpt-4o-mini para economizar
-   ARANDU_MODELO=gpt-4o
+   ANTHROPIC_API_KEY=sk-ant-...
+   # ou: OPENAI_API_KEY=sk-...
+   # opcional: modelo (padrão claude-sonnet-5 / gpt-4o)
+   ARANDU_MODELO=claude-sonnet-5
    ```
-3. Rode o servidor:
+3. Rode o servidor (a partir da raiz):
    ```bash
-   py servidor_web.py            # Windows
-   # python3 servidor_web.py     # Linux/Mac
+   py arandu-m3/servidor_web.py            # Windows
+   # python3 arandu-m3/servidor_web.py     # Linux/Mac
    ```
 4. Abra **http://localhost:8002**.
+
+**Demos isoladas** (rodam sem chave, com o `MockLLM`):
+`python3 arandu-m3/demos/demo_tools.py` (idem `demo_treinador`, `demo_sessao`,
+`demo_m2`).
 
 **Confirme a versão:** o boot imprime `... [build N · ...]` e o topo da página
 mostra o mesmo selo. O Python **não recarrega** arquivos editados — após mudar um
 `.py`, **Ctrl+C e rode de novo** (o `.html` pede só um Ctrl+F5).
 
 **Sem a chave:** cai no `MockLLM` (a estrutura roda de graça; a inteligência real
-é o modelo da OpenAI). Custo típico com a chave: alguns centavos por sessão.
+é o LLM). Custo típico com a chave: alguns centavos por sessão.
 
 **Banco de bugs:** padrão = M2 (bugs reais do Refactory). Para os exemplos de
-stdin: `ARANDU_BANCO=exemplos py servidor_web.py`.
+stdin: `ARANDU_BANCO=exemplos py arandu-m3/servidor_web.py`.
 
 ---
 
 ## 11. Estrutura e arquivos
 
 ```
-arandu/
-├── servidor_web.py      # ponto de entrada: servidor HTTP + escolha do LLM + selo de build
-├── sessao.py            # orquestrador: máquina de estados + monitor agêntico + painel
-├── treinador.py         # o agente: decidir_intervencao(), investigar() (ReAct), intervir()
-├── modelo_aluno.py      # retrato do aluno (4 dimensões, BKT) + persistência JSON
-├── verificador.py       # guardrail (exige âncora; barra vazamento da solução)
-├── llm.py               # porta única do LLM (OpenAI) + MockLLM + TODOS os prompts (_PROMPTS)
-├── catalogo.py          # catálogo de equívocos (ProgMiscon)
-├── tools.py             # adaptador M3 ↔ motor do M1 (executar/trace/diff/suíte)
-├── banco_m2.py          # carrega banco de bugs + variações do M2; estima dificuldade
-├── config.py            # tetos do laço, cooldown/teto de intervenções, níveis de dica
-├── log.py               # logging (terminal + logs/arandu.log)
-├── web/index.html       # interface: editor, telinha do agente, rubrica, sinais
-├── demo_*.py            # demonstrações isoladas de cada peça (não fazem parte do servidor)
-├── requirements.txt     # dependências (openai)
-├── README.md            # este arquivo
-├── PONTOS-DE-ATENCAO.md # auditoria para a banca (forças, riscos, plano)
-├── arandu-m1/           # M1 — motor de execução isolada (subprocesso/sandbox) + servidor MCP/REST
-└── Arandu-m2/           # M2 — só os dados de bugs usados entram no repo (o pipeline é offline)
+Arandu/
+├── README.md               # este arquivo
+├── Projeto-Arandu.pdf      # enunciado do projeto
+├── requirements.txt        # dependências (anthropic, openai)
+├── .env                    # chave do LLM (não versionado)
+├── docs/
+│   ├── contexto-projeto-arandu.md  # resumo do contexto do projeto
+│   ├── PONTOS-DE-ATENCAO.md        # auditoria para a banca (forças, riscos, plano)
+│   ├── PRODUCT.md                  # produto: público, superfícies, restrições
+│   └── DESIGN.md                   # sistema visual da interface
+├── arandu-m1/              # M1 — motor de execução isolada (subprocesso/sandbox) + servidor MCP/REST
+├── Arandu-m2/              # M2 — só os dados de bugs usados entram no repo (o pipeline é offline)
+└── arandu-m3/              # M3 — o Treinador (+ a interface web que cumpre o papel do M4)
+    ├── servidor_web.py     # ponto de entrada: servidor HTTP + escolha do LLM + selo de build
+    ├── sessao.py           # orquestrador: máquina de estados + monitor agêntico + painel
+    ├── treinador.py        # o agente: decidir_intervencao(), investigar() (ReAct), intervir()
+    ├── modelo_aluno.py     # retrato do aluno (4 dimensões, BKT) + persistência JSON
+    ├── verificador.py      # guardrail (exige âncora; barra vazamento da solução)
+    ├── llm.py              # porta única do LLM (Anthropic/OpenAI) + MockLLM + TODOS os prompts (_PROMPTS)
+    ├── catalogo.py         # catálogo de equívocos (ProgMiscon)
+    ├── tools.py            # adaptador M3 ↔ motor do M1 (executar/trace/diff/suíte)
+    ├── banco_m2.py         # carrega banco de bugs + variações do M2; estima dificuldade
+    ├── validacao_banco.py  # métricas do banco de bugs (revalida as variações)
+    ├── registro.py         # gravação de cada sessão (visão do professor)
+    ├── config.py           # tetos do laço, cooldown/teto de intervenções, níveis de dica
+    ├── log.py              # logging (terminal + logs/arandu.log)
+    ├── web/                # interface: aluno (index), painel do agente, visão do professor
+    └── demos/              # demonstrações isoladas de cada peça (não fazem parte do servidor)
 ```
 
-Ignorados no Git (`.gitignore`): `.env`, `logs/`, `dados_alunos/`,
-`__pycache__/`, `_to_delete/`, e o grosso do M2 (mantém-se só `data/bugs/`).
+Gerados em runtime dentro de `arandu-m3/` e ignorados no Git: `logs/`,
+`dados_alunos/`, `dados_sessoes/`. Também ignorados: `.env`, `__pycache__/`,
+`_to_delete/` e o grosso do M2 (mantém-se só `data/bugs/`).
 
 ---
 
@@ -329,7 +346,7 @@ Ignorados no Git (`.gitignore`): `.env`, `logs/`, `dados_alunos/`,
 **Segurança:** o M1 executa código não-confiável em **subprocesso isolado**, com
 timeout, lista de módulos proibidos e limites de recurso.
 
-**Limitações conhecidas** (detalhe completo em `PONTOS-DE-ATENCAO.md`): o servidor
+**Limitações conhecidas** (detalhe completo em `docs/PONTOS-DE-ATENCAO.md`): o servidor
 de demo atende **um aluno por vez** (proposital para a gravação); o comportamento
 do agente é não-determinístico (mitigado por guarda-corpos + Verificador); o
 modelo do aluno é um protótipo (BKT não calibrado); e o RAG de trajetórias ainda

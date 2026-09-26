@@ -3,6 +3,11 @@ Demo das ferramentas do Arandu (Contrato A) — sem LLM.
 Exercício: contar números PARES. Aluno com bug conta ÍMPARES (condição invertida).
 """
 
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # módulos do M3
+
 from tools import executar, rodar_suite, analisar
 
 REF = """\

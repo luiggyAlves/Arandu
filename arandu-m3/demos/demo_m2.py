@@ -5,15 +5,20 @@ RAG Fonte A, sessão completa). Com OPENAI_API_KEY, usa gpt-4o-mini de verdade.
 """
 
 import os
+import sys
+
+M3 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, M3)  # os módulos do M3 ficam na pasta acima de demos/
+
 import tools
 from banco_m2 import carregar_banco, carregar_trajetorias, recuperar_trajetorias
 from llm import MockLLM, OpenAILLM
 from treinador import Treinador
 from sessao import Sessao
 
-AQUI = os.path.dirname(os.path.abspath(__file__))
-BANCO_JSON = os.path.join(AQUI, "Arandu-m2", "Mod2", "data", "bugs", "banco_de_bugs.json")
-TRAJ_JSON = os.path.join(AQUI, "Arandu-m2", "Mod2", "data", "bugs", "loja_trajetorias.json")
+PASTA_BUGS = os.path.join(os.path.dirname(M3), "Arandu-m2", "Mod2", "data", "bugs")
+BANCO_JSON = os.path.join(PASTA_BUGS, "banco_de_bugs.json")
+TRAJ_JSON = os.path.join(PASTA_BUGS, "loja_trajetorias.json")
 
 
 def h(t): print("\n" + "=" * 68 + "\n" + t + "\n" + "=" * 68)

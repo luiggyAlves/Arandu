@@ -4,11 +4,11 @@ Projeto Arandu — Interface web simples (M3/M4 para testes e demo).
 Servidor da biblioteca padrão do Python (sem instalar nada). Serve a página e
 expõe a porta única do motor da sessão: POST /evento -> sessao.processar_evento.
 
-Rodar:
-    py servidor_web.py
-Depois abra no navegador: http://localhost:8000
+Rodar (da raiz do repositório):
+    py arandu-m3/servidor_web.py
+Depois abra no navegador: http://localhost:8002
 
-Se OPENAI_API_KEY estiver definida, usa gpt-4o-mini; senão, o MockLLM.
+Com ANTHROPIC_API_KEY usa Claude; com OPENAI_API_KEY usa a OpenAI; senão, o MockLLM.
 """
 
 from __future__ import annotations
@@ -24,12 +24,14 @@ import catalogo
 import validacao_banco
 from sessao import Sessao
 from treinador import Treinador
-from llm import MockLLM, OpenAILLM
+from llm import MockLLM, OpenAILLM, AnthropicLLM
 
 PORTA = 8002   # trocada de 8001 -> 8002 para escapar de um servidor antigo preso na porta
 AQUI = os.path.dirname(os.path.abspath(__file__))
+RAIZ = os.path.dirname(AQUI)
+PASTA_BUGS_M2 = os.path.join(RAIZ, "Arandu-m2", "Mod2", "data", "bugs")
 # selo de versão: aparece no topo da página e no boot. Se não bater, o servidor
-# que está no ar é antigo -> Ctrl+C e rode "py servidor_web.py" de novo.
+# que está no ar é antigo -> Ctrl+C e rode "py arandu-m3/servidor_web.py" de novo.
 BUILD = "build 12 · porta 8002 · registro de sessão + métricas"
 
 # ---- banco de bugs de exemplo (viria do M2) ----
@@ -57,16 +59,15 @@ BANCO = [
 
 # Banco padrão = exemplos de stdin (você digita números, ex.: "2 4 6").
 # Para usar o banco do M2 (bugs do Refactory, estilo função/chamada), rode com:
-#   ARANDU_BANCO=m2 py servidor_web.py     (PowerShell: $env:ARANDU_BANCO="m2")
+#   ARANDU_BANCO=m2 py arandu-m3/servidor_web.py     (PowerShell: $env:ARANDU_BANCO="m2")
 # Padrão = banco do M2 (bugs reais do Refactory + variações geradas, estilo função).
 # O campo de entrada vem pré-preenchido com uma chamada de exemplo (o aluno só edita).
 # Para usar os exemplos de stdin (digitar números): ARANDU_BANCO=exemplos
 if os.environ.get("ARANDU_BANCO", "m2").lower() != "exemplos":
     try:
         from banco_m2 import carregar_banco
-        _dir = os.path.join(AQUI, "Arandu-m2", "Mod2", "data", "bugs")
-        BANCO = carregar_banco(os.path.join(_dir, "banco_de_bugs.json"),
-                               os.path.join(_dir, "variacoes_etapa3.json"))
+        BANCO = carregar_banco(os.path.join(PASTA_BUGS_M2, "banco_de_bugs.json"),
+                               os.path.join(PASTA_BUGS_M2, "variacoes_etapa3.json"))
         print(f"Banco do M2: {len(BANCO)} bugs (reais do Refactory + variações geradas).")
     except Exception as e:
         print("Aviso: falha ao carregar M2, usando exemplos de stdin:", e)
@@ -75,6 +76,10 @@ else:
 
 
 def _fazer_llm():
+    # Anthropic tem prioridade quando ambas as chaves estiverem presentes.
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        modelo = os.environ.get("ARANDU_MODELO", "claude-sonnet-5")
+        return AnthropicLLM(modelo), modelo
     if os.environ.get("OPENAI_API_KEY"):
         # modelo trocável sem mexer no código: ARANDU_MODELO no .env
         # (ex.: gpt-4o para julgamento/dicas melhores; gpt-4o-mini p/ economizar)
@@ -104,8 +109,7 @@ SESSAO = nova_sessao()
 _METRICAS_BUGS = {"estado": "calculando"}
 _METRICAS_LOCK = threading.Lock()
 _ID_SESSAO = re.compile(r"^[0-9A-Za-z_-]{1,64}$")
-_CAMINHO_VARIACOES = os.path.join(
-    AQUI, "Arandu-m2", "Mod2", "data", "bugs", "variacoes_etapa3.json")
+_CAMINHO_VARIACOES = os.path.join(PASTA_BUGS_M2, "variacoes_etapa3.json")
 
 
 def _calcular_metricas_bugs(banco, caminho):

@@ -7,6 +7,10 @@ A interface real (M4) faria exatamente estas mesmas chamadas a processar_evento(
 """
 
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # módulos do M3
+
 from llm import MockLLM, OpenAILLM
 from treinador import Treinador
 from sessao import Sessao
