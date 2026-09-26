@@ -42,7 +42,7 @@ The user approved the current palette (deep forest green, amber, warm neutrals, 
 
 ## Evidence on Hand
 
-- Project brief: `Projeto-Arandu.pdf` (repo root), `docs/contexto-projeto-arandu.md`.
+- Project brief: `docs/contexto-projeto-arandu.md`.
 - Real bug bank: 8 items from Refactory (misconceptions `ComparisonWithBoolLiteral`, `MapToBooleanWithIf`, `ParenthesesOnlyIfArgument`); synthetic variants for LGPD.
 - Cited stats (from the brief): INEP ~23% failure/dropout in programming logic; UFPR study: 79% of those who failed Algorithms dropped out.
 - No logo, testimonials, pilot results, or ablation numbers exist yet; do not invent them.

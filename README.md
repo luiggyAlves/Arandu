@@ -302,7 +302,6 @@ stdin: `ARANDU_BANCO=exemplos py arandu-m3/servidor_web.py`.
 ```
 Arandu/
 ├── README.md               # este arquivo
-├── Projeto-Arandu.pdf      # enunciado do projeto
 ├── requirements.txt        # dependências (anthropic, openai)
 ├── .env                    # chave do LLM (não versionado)
 ├── docs/
